@@ -1,0 +1,625 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.11.1 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HBase Benchmarking - Site Title</title>
+<meta name="description" content="Currently I am working with new setup of Apache HBase cluster to query data using Phoenix  on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Site Title">
+<meta property="og:title" content="HBase Benchmarking">
+<meta property="og:url" content="http://localhost:4000/hbase-benchmarking/">
+
+
+  <meta property="og:description" content="Currently I am working with new setup of Apache HBase cluster to query data using Phoenix  on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2017-03-06T03:58:23+05:30">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/hbase-benchmarking/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Your Name",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Site Title Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Site Title</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/" >Quick-Start Guide</a>
+            </li>
+          
+        </ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HBase Benchmarking">
+    <meta itemprop="description" content="Currently I am working with new setup of Apache HBase cluster to query data using Phoenix  on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved.">
+    <meta itemprop="datePublished" content="March 06, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HBase Benchmarking
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Currently I am working with new setup of Apache HBase cluster to query data using <a href="//phoenix.apache.org/" target="_blank" rel="noopener noreferrer">Phoenix</a>  on top of <a href="//hortonworks.com/products/data-center/hdp/" target="_blank" rel="noopener noreferrer">HDP</a> Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved.<!--more--></p>
+
+<p>Now for the improvement part, understanding of  HBase internals is needed. How does a write work in HBase. What is the read path. What is the data access and data writing patterns. By analyzing these aspects, you vary parameters. But after varying, one needs to see the effect of variance right? And thus you need something to measure performance and benchmark the cluster.</p>
+
+<p>I found two tools for this purpose:</p>
+
+<h3 id="performanceevaluation">PerformanceEvaluation</h3>
+
+<p>This comes built-in with the HBase. It has various parameters to run different kinds of workloads. So first we write data. I am using `–nomapred` option because I have not installed YARN. To get list of supported options and parameters just run the command without any options.</p>
+
+<p>So here we first load the data. I am using randonWrite here. With 1 thread.</p>
+
+<p><span class="lang:default decode:true crayon-inline">$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation –nomapred randomWrite 1</span></p>
+
+<p>The result may show something like:</p>
+
+<pre class="lang:default decode:true ">2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Min      = 2.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Avg      = 28.936847686767578
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest StdDev   = 3293.3700704030302
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 50th     = 3.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 75th     = 3.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 95th     = 5.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99th     = 9.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.9th   = 93.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.99th  = 34495.983499997295
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.999th = 158854.06521204324
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Max      = 2486451.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest valueSize after 0 measures
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Min      = 0.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Avg      = 0.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest StdDev   = 0.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 50th     = 0.0
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 75th     = 0.0
+2017-02-24 08:22:41,492 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 95th     = 0.0
+2017-02-24 08:22:41,492 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99th     = 0.0
+2017-02-24 08:22:41,492 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.9th   = 0.0
+2017-02-24 08:22:41,492 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.99th  = 0.0
+2017-02-24 08:22:41,492 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.999th = 0.0
+2017-02-24 08:22:41,492 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Max      = 0.0
+2017-02-24 08:22:41,572 INFO  [TestClient-0] client.ConnectionManager$HConnectionImplementation: Closing zookeeper sessionid=0x25a46883b870366
+2017-02-24 08:22:41,578 INFO  [TestClient-0] zookeeper.ZooKeeper: Session: 0x25a46883b870366 closed
+2017-02-24 08:22:41,578 INFO  [TestClient-0-EventThread] zookeeper.ClientCnxn: EventThread shut down
+2017-02-24 08:22:41,589 INFO  [TestClient-0] hbase.PerformanceEvaluation: Finished class org.apache.hadoop.hbase.PerformanceEvaluation$RandomWriteTest in 32134ms at offset 0 for 1048576 rows (32.08 MB/s)
+2017-02-24 08:22:41,589 INFO  [TestClient-0] hbase.PerformanceEvaluation: Finished TestClient-0 in 32134ms over 1048576 rows
+2017-02-24 08:22:41,590 INFO  [main] hbase.PerformanceEvaluation: [RandomWriteTest] Summary of timings (ms): [32134]
+2017-02-24 08:22:41,590 INFO  [main] hbase.PerformanceEvaluation: [RandomWriteTest]	Min: 32134ms	Max: 32134ms	Avg: 32134ms
+2017-02-24 08:22:41,590 INFO  [main] client.ConnectionManager$HConnectionImplementation: Closing zookeeper sessionid=0x25a46883b870365
+2017-02-24 08:22:41,647 INFO  [main] zookeeper.ZooKeeper: Session: 0x25a46883b870365 closed
+2017-02-24 08:22:41,647 INFO  [main-EventThread] zookeeper.ClientCnxn: EventThread shut down
+
+real	0m38.204s
+user	0m44.662s
+sys	0m2.264s
+</pre>
+
+<p>To write in parallel:</p>
+
+<p><span class="lang:sh decode:true crayon-inline ">$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation –nomapred randomWrite 3</span></p>
+
+<p>And to read:</p>
+
+<pre class="lang:sh decode:true">$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation --nomapred randomRead 1 
+$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation --nomapred --rows=100000 sequentialRead 1</pre>
+
+<p>Again, there are so many options to this utility, try them as needed.</p>
+
+<h3 id="ycsb">YCSB</h3>
+
+<p><a href="//github.com/brianfrankcooper/YCSB" target="_blank" rel="noopener noreferrer">Yahoo! Cloud Serving Benchmark</a> is tool for benchmarking various kind of databases like Cassandra, MongoGB, Voldemort, HBase etc. The steps for setup are explained <a href="//github.com/brianfrankcooper/YCSB/wiki/Getting-Started" target="_blank" rel="noopener noreferrer">here</a>. These will the steps to follow while using this tool:</p>
+
+<ul>
+  <li>Create table named <em>usertable</em></li>
+  <li>Load the data</li>
+  <li>Run workload tests</li>
+</ul>
+
+<p>Now after creating table, we first need to load the data into this table. There are various kinds of <a href="//github.com/brianfrankcooper/YCSB/wiki/Core-Workloads" target="_blank" rel="noopener noreferrer">workloads</a> for different purpose. We will use workload A to load the data in table we created.</p>
+
+<h4 id="loading-the-data">Loading the data:</h4>
+
+<p>first parameter `load` which tells to write data to table. Second parameter is type of database. `-P` tells type of workload. Next three parameters are self explanatory. `<code class="highlighter-rouge">-s`</code> prints  progress as loading happens.</p>
+
+<pre class="lang:default decode:true">$ ./bin/ycsb load hbase10 -P workloads/workloada -p columnfamily=f1 -p recordcount=1000000 -threads 10 -s &gt; new-A-load-1M.dat</pre>
+
+<p>The output looks something like:</p>
+
+<pre class="lang:default decode:true ">[OVERALL], RunTime(ms), 396804.0
+[OVERALL], Throughput(ops/sec), 2520.1358857269583
+[TOTAL_GCS_PS_Scavenge], Count, 566.0
+...
+[TOTAL_GC_TIME_%], Time(%), 0.4821019949395672
+[CLEANUP], Operations, 20.0
+[CLEANUP], AverageLatency(us), 2676.6
+[CLEANUP], MinLatency(us), 4.0
+[CLEANUP], MaxLatency(us), 53055.0
+[CLEANUP], 95thPercentileLatency(us), 252.0
+[CLEANUP], 99thPercentileLatency(us), 53055.0
+[INSERT], Operations, 1000000.0
+[INSERT], AverageLatency(us), 3941.506955
+[INSERT], MinLatency(us), 1125.0
+[INSERT], MaxLatency(us), 664575.0
+[INSERT], 95thPercentileLatency(us), 6155.0
+[INSERT], 99thPercentileLatency(us), 8391.0
+[INSERT], Return=OK, 1000000</pre>
+
+<p>So here I was getting around 2500 operations/sec</p>
+
+<h4 id="reading-the-data">Reading the data</h4>
+
+<p>I will use workload C which is read only. You can read more on types of workloads on link given above. Here first parameter is `run` as we are running the tests, as opposed to loading the data. All other parameters are familiar looking.</p>
+
+<pre class="lang:default decode:true ">$ ./bin/ycsb run hbase10 -P workloads/workloadc -p columnfamily=f1 -p recordcount=100000 -p operationcount=100000 -threads 10 -s &gt; new-C-run-100k.dat</pre>
+
+<p>The output for above test should look like</p>
+
+<pre class="lang:default decode:true ">[OVERALL], RunTime(ms), 12776.0
+[OVERALL], Throughput(ops/sec), 7827.175954915467
+[TOTAL_GCS_PS_Scavenge], Count, 17.0
+...
+[TOTAL_GC_TIME_%], Time(%), 0.9862241703193488
+[READ], Operations, 100000.0
+[READ], AverageLatency(us), 1073.35956
+[READ], MinLatency(us), 302.0
+[READ], MaxLatency(us), 471551.0
+[READ], 95thPercentileLatency(us), 1972.0
+[READ], 99thPercentileLatency(us), 5703.0
+[READ], Return=OK, 100000
+...</pre>
+
+<p>So for reads I was getting around 7800 operations/second.</p>
+
+<p>Find a workload suitable for your usecase. Or create one. Run tests on them. And let me know how is your cluster doing 🙂 I am also planning to write some of my thoughts and findings on tuning the cluster. Until then, happy hadooping…</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#hbase" class="page__taxonomy-item" rel="tag">Hbase</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#hbase" class="page__taxonomy-item" rel="tag">HBase</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-03-06T03:58:23+05:30">March 06, 2017</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=HBase+Benchmarking%20http%3A%2F%2Flocalhost%3A4000%2Fhbase-benchmarking%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhbase-benchmarking%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fhbase-benchmarking%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fhbase-benchmarking%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/resize-ebs-root-volume-centos-ami/" class="pagination--pager" title="Resize EBS Root Volume of CentOS 6 AMI
+">Previous</a>
+    
+    
+      <a href="/tuning-hbase/" class="pagination--pager" title="Stuff You Can Do While Tuning HBase
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/jekyll/update/welcome-to-jekyll/" rel="permalink">Welcome to Jekyll!
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/aws-vpc-peering-latency-test/" rel="permalink">Setting up Inter Region AWS VPC Peering and Latency Tests
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/upgrading-apache-phoenix-hdp/" rel="permalink">Upgrading Apache Phoenix in HDP Cluster
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI quer...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/tcp-fast-open-python/" rel="permalink">TCP Fast Open: In Action with Python
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same reveale...</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+    
+    
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Your Name. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

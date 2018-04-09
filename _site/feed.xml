@@ -1,0 +1,1791 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-04-09T21:56:47+05:30</updated><id>http://localhost:4000/</id><title type="html">Site Title</title><subtitle>An amazing website.</subtitle><author><name>Your Name</name></author><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/welcome-to-jekyll/" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2018-03-20T00:26:24+05:30</published><updated>2018-03-20T00:26:24+05:30</updated><id>http://localhost:4000/jekyll/update/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/welcome-to-jekyll/">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name>Your Name</name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry><entry><title type="html">Setting up Inter Region AWS VPC Peering and Latency Tests</title><link href="http://localhost:4000/aws-vpc-peering-latency-test/" rel="alternate" type="text/html" title="Setting up Inter Region AWS VPC Peering and Latency Tests" /><published>2017-12-14T22:01:21+05:30</published><updated>2017-12-14T22:01:21+05:30</updated><id>http://localhost:4000/aws-vpc-peering-latency-test</id><content type="html" xml:base="http://localhost:4000/aws-vpc-peering-latency-test/">&lt;p&gt;Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India. Of course there was a significant latency involved when users connect to US from other part of the world. And we wanted to test that, if a user from India connects to Mumbai region(faster handshake) and then that region uses VPC peering to us-east-1 to talk to other services. Here’s how it went:&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;First thing we looked out for was AWS provided VPC peering, it does exist, but for limited number of regions (4, 3 US, 1 UK, at the time of writing this) and it did not include Mumbai. So we had to setup our own IPSec VPN tunnels.&lt;/p&gt;
+
+&lt;p&gt;The tool we chose for IPSec tunnel was OpenSwan. Found it easy to setup. We tried two different setups:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;EC2  &amp;lt;=== tunnel ===&amp;gt; EC2&lt;/li&gt;
+  &lt;li&gt;EC2  &amp;lt;=== tunnel ===&amp;gt; AWS Managed VPN&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;vpc-peering-ec2--ec2&quot;&gt;VPC Peering: EC2 &amp;lt;=&amp;gt; EC2&lt;/h3&gt;
+
+&lt;p&gt;Following steps can be taken for setting up EC2, on both the regions.&lt;/p&gt;
+
+&lt;li style=&quot;list-style-type: none;&quot;&gt;
+  &lt;ol&gt;
+    &lt;li&gt;
+      Spin up an EC2 instance. Have an EIP, disable `source-destination` checks.
+    &lt;/li&gt;
+    &lt;li&gt;
+      Open ports 500, 4500 UDP and Custom Protocol 50. Allow from the other side/EC2.
+    &lt;/li&gt;
+    &lt;li&gt;
+      Modify route tables to forward traffic for other VPC to this EC2 instance. (And this EC2 will tunnel it to the other VPC)
+    &lt;/li&gt;
+    &lt;li&gt;
+      Change kernel conf: add following in `/etc/sysctl.conf` and to bring it in effect: `sudo service network restart`
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;pre class=&quot;remarkup-code&quot;&gt;net.ipv4.ip_forward = 1
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.all.send_redirects = 0&lt;/pre&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;install OpenSwan: `sudo yum install openswan`&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;6.`sudo vi /etc/ipsec.conf` and uncomment last line to include files from `ipsec.d folder.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create conf files:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot; title=&quot;/etc/ipsec.d/us-mum.conf&quot;&gt;conn us-mum
+	type=tunnel
+	authby=secret
+	left=%defaultroute
+	leftid=&amp;lt;your pub IP&amp;gt;
+	leftnexthop=%defaultroute
+	leftsubnet=&amp;lt;your VPC CIDR&amp;gt;
+	right=&amp;lt;opposite side pub IP&amp;gt;
+	rightsubnet=&amp;lt;opposite side VPC CIDR&amp;gt;
+	pfs=yes
+	auto=start&lt;/pre&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot; title=&quot;/etc/ipsec.d/us-mum.secrets&quot;&gt;&amp;lt;your pub IP&amp;gt; &amp;lt;other side pub IP&amp;gt; : PSK &quot;changemeplease&quot;&lt;/pre&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;You would want to do similar setup in the other region’s VPC EC2. Obviously, the PSK will the same and new conf files will be created ie:`/etc/ipsec.d/us-mum.secrets` and `us-mum.conf` with values changed appropriately.&lt;/p&gt;
+
+&lt;h5 id=&quot;establishing-tunnel&quot;&gt;Establishing tunnel:&lt;/h5&gt;
+
+&lt;pre class=&quot;lang:default decode:true remarkup-code&quot;&gt;sudo service ipsec start
+sudo ipsec verify
+sudo service ipsec status&lt;/pre&gt;
+
+&lt;p&gt;If you see any problems with `verify` output, you may want to rectify it. For example if you have not set `send_redirects` or not set it properly, you can do:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;echo 0 &amp;gt; /proc/sys/net/ipv4/conf/all/send_redirects
+echo 0 &amp;gt; /proc/sys/net/ipv4/conf/default/send_redirects
+echo 0 &amp;gt; /proc/sys/net/ipv4/conf/eth0/send_redirects
+echo 0 &amp;gt; /proc/sys/net/ipv4/conf/lo/send_redirects&lt;/pre&gt;
+
+&lt;h3 id=&quot;vpc-peering-ec2--aws-managed-vpn&quot;&gt;VPC Peering: EC2 &amp;lt;=&amp;gt; AWS Managed VPN&lt;/h3&gt;
+
+&lt;p&gt;In this case, one instance will be taken care by AWS and one will be EC2 as setup above.&lt;/p&gt;
+
+&lt;p&gt;To setup AWS side VPN:&lt;/p&gt;
+
+&lt;ol class=&quot;remarkup-list&quot;&gt;
+  &lt;li class=&quot;remarkup-list-item&quot;&gt;
+    Create Virtual Private Gateway on one VPC (let&amp;#8217;s assume Mumbai) and attach it to VPC.
+  &lt;/li&gt;
+  &lt;li class=&quot;remarkup-list-item&quot;&gt;
+    Create Consumer gateway (again, in Mumbai) and as IP address, give our openswan US EC2&amp;#8217;s public IP.
+  &lt;/li&gt;
+  &lt;li class=&quot;remarkup-list-item&quot;&gt;
+    Create a VPN connection (again, in Mumbai), select the consumer gateway you created above. Select static routing and give our US VPC CIDR as a route.
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Once you create VPN connection, you will get two public IPs. Use one of them in our EC2 conf as a &lt;tt class=&quot;remarkup-monospaced&quot;&gt;rightid. &lt;/tt&gt;&lt;/p&gt;
+
+&lt;p&gt;The rest settings should be same as EC2-EC2 setup and self explanatory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Still not working?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul class=&quot;remarkup-list&quot;&gt;
+  &lt;li class=&quot;remarkup-list-item&quot;&gt;
+    is the kernel settings in place?
+  &lt;/li&gt;
+  &lt;li class=&quot;remarkup-list-item&quot;&gt;
+    are the ports open for the other side to connect?
+  &lt;/li&gt;
+  &lt;li class=&quot;remarkup-list-item&quot;&gt;
+    have you set correct routes?
+  &lt;/li&gt;
+  &lt;li class=&quot;remarkup-list-item&quot;&gt;
+    are the values for pub IP,CIDR and PSK correct in conf of both side?
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Ref: &lt;a href=&quot;https://aws.amazon.com/articles/connecting-multiple-vpcs-with-ec2-instances-ipsec/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/articles/connecting-multiple-vpcs-with-ec2-instances-ipsec/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;latency-tests&quot;&gt;Latency Tests:&lt;/h2&gt;
+
+&lt;p&gt;Here’s how we performed latency tests. We had a webserver running in US region. We had one instance in both US and Mumbai region, both had nginx, proxying requests to US region.&lt;/p&gt;
+
+&lt;p&gt;Here are the results:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Connecting Directly to US from Bangalore:&lt;/strong&gt;&lt;figure id=&quot;attachment_242&quot; style=&quot;max-width: 533px&quot; class=&quot;wp-caption alignleft&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;wp-image-242 size-full&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/12/us_initial.jpg&quot; alt=&quot;&quot; width=&quot;533&quot; height=&quot;277&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/12/us_initial.jpg 533w, https://superuser.blog/wp-content/uploads/2017/12/us_initial-300x156.jpg 300w&quot; sizes=&quot;(max-width: 533px) 100vw, 533px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;Initial connection: Bangalore to US&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;figure id=&quot;attachment_243&quot; style=&quot;max-width: 520px&quot; class=&quot;wp-caption alignleft&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;size-full wp-image-243&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/12/us_repeat.jpg&quot; alt=&quot;&quot; width=&quot;520&quot; height=&quot;251&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/12/us_repeat.jpg 520w, https://superuser.blog/wp-content/uploads/2017/12/us_repeat-300x145.jpg 300w&quot; sizes=&quot;(max-width: 520px) 100vw, 520px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;Socket reuse: connection from Bangalore to US&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Connecting to Mumbai from Bangalore , request will be tunneled to US:&lt;/strong&gt;&lt;figure id=&quot;attachment_244&quot; style=&quot;max-width: 521px&quot; class=&quot;wp-caption alignleft&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;wp-image-244 size-full&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/12/mum_initial.jpg&quot; alt=&quot;&quot; width=&quot;521&quot; height=&quot;271&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/12/mum_initial.jpg 521w, https://superuser.blog/wp-content/uploads/2017/12/mum_initial-300x156.jpg 300w&quot; sizes=&quot;(max-width: 521px) 100vw, 521px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;Initial connection: Bangalore to Mumbai&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt; &lt;figure id=&quot;attachment_245&quot; style=&quot;max-width: 520px&quot; class=&quot;wp-caption alignleft&quot;&gt;&lt;img class=&quot;wp-image-245 size-full&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/12/mum_repeat.jpg&quot; alt=&quot;&quot; width=&quot;520&quot; height=&quot;247&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/12/mum_repeat.jpg 520w, https://superuser.blog/wp-content/uploads/2017/12/mum_repeat-300x143.jpg 300w&quot; sizes=&quot;(max-width: 520px) 100vw, 520px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;socket reuse: from bangalore to mumbai, tunneled to US&amp;lt;/figcaption&amp;gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;As you can see, for the first request, handshake is much faster (approx 10x) to Mumbai as it is near to client. But when you have the socket established, it’s clear that if you take Mumbai route (VPN) to US instead of going directly US, it is approx 1.5x slower as we encounter penalty for VPN encryption and decryption operations.&lt;/p&gt;
+
+&lt;p&gt;So that’s how that one went. Let me know if any doubts or you’re stuck anywhere. Also I would love to know how did it work for you and what improvements you saw with your setup.&lt;/p&gt;</content><author><name>sanket</name></author><summary type="html">Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India. Of course there was a significant latency involved when users connect to US from other part of the world. And we wanted to test that, if a user from India connects to Mumbai region(faster handshake) and then that region uses VPC peering to us-east-1 to talk to other services. Here’s how it went:</summary></entry><entry><title type="html">Upgrading Apache Phoenix in HDP Cluster</title><link href="http://localhost:4000/upgrading-apache-phoenix-hdp/" rel="alternate" type="text/html" title="Upgrading Apache Phoenix in HDP Cluster" /><published>2017-11-18T16:56:20+05:30</published><updated>2017-11-18T16:56:20+05:30</updated><id>http://localhost:4000/upgrading-apache-phoenix-hdp</id><content type="html" xml:base="http://localhost:4000/upgrading-apache-phoenix-hdp/">&lt;p&gt;About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;So that’s what I tried. And it kind of worked. (It still is working)&lt;/p&gt;
+
+&lt;h3 id=&quot;these-are-the-steps&quot;&gt;These are the steps:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;download latest phoenix binaries (4.10 at that time)&lt;/li&gt;
+  &lt;li&gt;Find installed files (under /usr/hdp/current/phoenix)&lt;/li&gt;
+  &lt;li&gt;Correlate installed ones with the ones in new binary package/tar&lt;/li&gt;
+  &lt;li&gt;Replace older files with new ones and also rename them or make appropriate links.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here a very lame/lousy bash script I used:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Disclaimer: It is not meant to use as a copy-paste script. Use it only for reference. Also we did it when cluster was not having production workloads. You might want to be extra cautious and read more around this if your cluster is having production workloads.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre class=&quot;lang:sh decode:true&quot;&gt;cp -R /usr/hdp/2.5.3.0-37/phoenix /usr/hdp/2.5.3.0-37/phoenix-bk
+
+cd $NEW_PHOENIX
+
+cp phoenix-4.10.0-HBase-1.1-client.jar phoenix-4.10.0-HBase-1.1-hive.jar  phoenix-4.10.0-HBase-1.1-queryserver.jar phoenix-4.10.0-HBase-1.1-server.jar phoenix-4.10.0-HBase-1.1-thin-client.jar /usr/hdp/2.5.3.0-37/phoenix/
+rm -f /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-client.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-hive.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-queryserver.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-server.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-thin-client.jar
+
+
+
+cd /usr/hdp/2.5.3.0-37/phoenix/
+
+rm -f phoenix-client.jar phoenix-hive.jar phoenix-server.jar phoenix-thin-client.jar
+ln -s phoenix-4.10.0-HBase-1.1-client.jar phoenix-client.jar
+ln -s phoenix-4.10.0-HBase-1.1-hive.jar phoenix-hive.jar
+ln -s phoenix-4.10.0-HBase-1.1-server.jar phoenix-server.jar
+ln -s phoenix-4.10.0-HBase-1.1-thin-client.jar phoenix-thin-client.jar
+
+
+
+cd $NEW_PHOENIX
+
+cp phoenix-core-4.10.0-HBase-1.1.jar phoenix-core-4.10.0-HBase-1.1-sources.jar phoenix-flume-4.10.0-HBase-1.1.jar phoenix-hive-4.10.0-HBase-1.1.jar phoenix-hive-4.10.0-HBase-1.1-sources.jar phoenix-pherf-4.10.0-HBase-1.1.jar phoenix-pherf-4.10.0-HBase-1.1-minimal.jar phoenix-pherf-4.10.0-HBase-1.1-sources.jar phoenix-pig-4.10.0-HBase-1.1.jar phoenix-queryserver-4.10.0-HBase-1.1.jar phoenix-queryserver-4.10.0-HBase-1.1-sources.jar phoenix-queryserver-client-4.10.0-HBase-1.1.jar phoenix-spark-4.10.0-HBase-1.1.jar phoenix-spark-4.10.0-HBase-1.1-sources.jar /usr/hdp/2.5.3.0-37/phoenix/lib
+
+
+cd /usr/hdp/2.5.3.0-37/phoenix/lib
+
+rm -f phoenix-core-4.7.0.2.5.3.0-37.jar phoenix-core-4.7.0.2.5.3.0-37-sources.jar phoenix-flume-4.7.0.2.5.3.0-37.jar phoenix-hive-4.7.0.2.5.3.0-37.jar phoenix-hive-4.7.0.2.5.3.0-37-sources.jar phoenix-pherf-4.7.0.2.5.3.0-37.jar phoenix-pherf-4.7.0.2.5.3.0-37-minimal.jar phoenix-pherf-4.7.0.2.5.3.0-37-sources.jar phoenix-pig-4.7.0.2.5.3.0-37.jar phoenix-queryserver-4.7.0.2.5.3.0-37.jar phoenix-queryserver-4.7.0.2.5.3.0-37-sources.jar phoenix-queryserver-client-4.7.0.2.5.3.0-37.jar phoenix-spark-4.7.0.2.5.3.0-37.jar phoenix-spark-4.7.0.2.5.3.0-37-sources.jar
+
+
+
+cd /usr/hdp/2.5.3.0-37/phoenix/bin
+
+rm -f end2endTest.py performance.py pherf-cluster.py pherf-standalone.py pherf-standalone.py phoenix_utils.pyc queryserver.py sqlline.py sqlline-thin.py traceserver.py
+
+
+cd $NEW_PHOENIX/bin
+
+cp end2endTest.py performance.py pherf-cluster.py pherf-standalone.py queryserver.py sqlline.py sqlline-thin.py traceserver.py /usr/hdp/2.5.3.0-37/phoenix/bin
+&lt;/pre&gt;
+
+&lt;p&gt;You can see:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I first copied new jars&lt;/li&gt;
+  &lt;li&gt;Deleted old ones&lt;/li&gt;
+  &lt;li&gt;Make links with the new jars&lt;/li&gt;
+  &lt;li&gt;Copied new jars to lib folder and removed older ones.&lt;/li&gt;
+  &lt;li&gt;Removed old binaries and copied new ones.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;That’s it!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Also you would want to add your zookeeper address in sqline.py which was there in the previous binary installed by HDP. Else you can pass it as cmdline.&lt;/p&gt;
+
+&lt;p&gt;And restart the cluster [server and then clients] 🙂&lt;/p&gt;
+
+&lt;p&gt;Do read: &lt;a href=&quot;https://phoenix.apache.org/upgrading.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://phoenix.apache.org/upgrading.html &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;You might also want to look at &lt;a href=&quot;//superuser.blog/tuning-hbase/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Tuning HBase&lt;/a&gt; and &lt;a href=&quot;//superuser.blog/hbase-benchmarking/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Benchmarking&lt;/a&gt; the same.&lt;/p&gt;</content><author><name>sanket</name></author><category term="Hbase" /><category term="hdp" /><category term="phoenix" /><summary type="html">About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.</summary></entry><entry><title type="html">TCP Fast Open: In Action with Python</title><link href="http://localhost:4000/tcp-fast-open-python/" rel="alternate" type="text/html" title="TCP Fast Open: In Action with Python" /><published>2017-11-09T01:44:58+05:30</published><updated>2017-11-09T01:44:58+05:30</updated><id>http://localhost:4000/tcp-fast-open-python</id><content type="html" xml:base="http://localhost:4000/tcp-fast-open-python/">&lt;p&gt;Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-tcp-fast-open&quot;&gt;What is TCP Fast Open?&lt;/h2&gt;
+
+&lt;p&gt;TCP Fast Open is an optimization over TCP which eliminates the need to wait for 3 way handshake before application can send data over it.&lt;/p&gt;
+
+&lt;p&gt;Here’s roughly how it happens: First time 3 way handshake happens, server will generate a cookie and pass it to the client. Next time, in first step on 3 way handshake (SYN), client will send cookie+data along with SYN. If cookie stands valid, data is delivered to application, then application can process data and reply. Here we do not wait for 3 way handshake to complete next time.&lt;/p&gt;
+
+&lt;p&gt;Here is the traditional 3 way handshake.&lt;figure id=&quot;attachment_216&quot; style=&quot;max-width: 600px&quot; class=&quot;wp-caption aligncenter&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;wp-image-216 size-full&quot; src=&quot;https://superuser.blog/wp-content/uploads/2017/11/3whs.png&quot; alt=&quot;&quot; width=&quot;600&quot; height=&quot;330&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/11/3whs.png 600w, https://superuser.blog/wp-content/uploads/2017/11/3whs-300x165.png 300w&quot; sizes=&quot;(max-width: 600px) 100vw, 600px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;Credits: lwn.net&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;So here, if round trip time is 100ms, application will have to wait at least 200ms before it can send any data to server.&lt;/p&gt;
+
+&lt;p&gt;If client had set TCP Fast Option set (we will see server and client code soon), server will create a cookie and send back the cookie to client, as shown in the following diagram.&lt;figure id=&quot;attachment_217&quot; style=&quot;max-width: 600px&quot; class=&quot;wp-caption aligncenter&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;size-full wp-image-217&quot; src=&quot;https://superuser.blog/wp-content/uploads/2017/11/foc_creation.png&quot; alt=&quot;&quot; width=&quot;600&quot; height=&quot;310&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/11/foc_creation.png 600w, https://superuser.blog/wp-content/uploads/2017/11/foc_creation-300x155.png 300w&quot; sizes=&quot;(max-width: 600px) 100vw, 600px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;credits: lwn.net&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Now from next time onward, client will send cookie in SYN and if it stands valid, server can immediately send reply back without waiting for handshake to complete as shown below.&lt;figure id=&quot;attachment_218&quot; style=&quot;max-width: 600px&quot; class=&quot;wp-caption aligncenter&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;size-full wp-image-218&quot; src=&quot;https://superuser.blog/wp-content/uploads/2017/11/foc_use.png&quot; alt=&quot;&quot; width=&quot;600&quot; height=&quot;365&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/11/foc_use.png 600w, https://superuser.blog/wp-content/uploads/2017/11/foc_use-300x183.png 300w&quot; sizes=&quot;(max-width: 600px) 100vw, 600px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;credits: lwn.net&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;We can see that 3 way handshake still happens but application does not need to wait for it as data is delivered to it immediately if valid cookie is present.&lt;/p&gt;
+
+&lt;p&gt;This can potentially halve the latency depending upon the application.&lt;/p&gt;
+
+&lt;h2 id=&quot;problems&quot;&gt;Problems:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Not all the devices support it. (Although they will at some point)&lt;/li&gt;
+  &lt;li&gt;Some middleware (firewall,NAT) can cause problems as this is relatively new changes to an old protocol.&lt;/li&gt;
+  &lt;li&gt;If data that client need to send with SYN is large (&amp;gt; ~1400 bytes), TCP Fast open does not optimize anything.&lt;/li&gt;
+  &lt;li&gt;Requests may get duplicated. (The first SYN packet) So applications need to handle that.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;in-action&quot;&gt;In Action:&lt;/h2&gt;
+
+&lt;p&gt;We will build simple echo server with TCP Fast Open enabled and see the wireshark traces along with request time to see how fast does it get with TFO enabled.&lt;/p&gt;
+
+&lt;p&gt;Echo server:&lt;/p&gt;
+
+&lt;pre class=&quot;theme:monokai lang:python decode:true&quot;&gt;import socket
+
+def listen():
+    connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    connection.setsockopt(socket.SOL_TCP, 23, 5)
+    connection.bind(('0.0.0.0', 8000))
+    connection.listen(10)
+    while True:
+        current_connection, address = connection.accept()
+        while True:
+            data = current_connection.recv(2048)
+
+            if data:
+                current_connection.send(data)
+                print data
+	    current_connection.close()
+	    break
+
+
+if __name__ == &quot;__main__&quot;:
+    try:
+        listen()
+    except KeyboardInterrupt:
+        pass
+&lt;/pre&gt;
+
+&lt;p&gt;The only new/different we do here is the line `connection.setsockopt(socket.SOL_TCP, 23, 5)` here 23 is the protocol number of &lt;strong&gt;TCP_FASTOPEN &lt;/strong&gt;it is not defined in socket module if python2 so writing manually here and 5 is the queue length for number of TFO request which are yet to complete 3 way handshake.&lt;/p&gt;
+
+&lt;p&gt;Echo client:&lt;/p&gt;
+
+&lt;pre class=&quot;theme:monokai lang:python decode:true&quot;&gt;import socket
+
+addr = (&quot;ssh.movienight.gq&quot;, 8000)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+s.setsockopt(socket.SOL_TCP, 23, 5)
+
+s.sendto(&quot;hello!&quot;,536870912,addr)
+
+print s.recv(1000)
+&lt;/pre&gt;
+
+&lt;p&gt;Here we used `sendto` to send SYN packet along with data. second argument is protocol number for MSG_FASTOPEN. Again because of python2. Setting this will send a TFO request to server.&lt;/p&gt;
+
+&lt;p&gt;To enable TFO support in linux:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true &quot;&gt;echo 3 &amp;gt; /proc/sys/net/ipv4/tcp_fastopen&lt;/pre&gt;
+
+&lt;p&gt;number 3 will add support for both TFO client and server.&lt;/p&gt;
+
+&lt;p&gt;Let’s look at network traces to see TFO working in action:&lt;figure id=&quot;attachment_219&quot; style=&quot;max-width: 1672px&quot; class=&quot;wp-caption aligncenter&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;size-full wp-image-219&quot; src=&quot;https://superuser.blog/wp-content/uploads/2017/11/normal_3way.png&quot; alt=&quot;&quot; width=&quot;1672&quot; height=&quot;160&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/11/normal_3way.png 1672w, https://superuser.blog/wp-content/uploads/2017/11/normal_3way-300x29.png 300w, https://superuser.blog/wp-content/uploads/2017/11/normal_3way-768x73.png 768w, https://superuser.blog/wp-content/uploads/2017/11/normal_3way-1024x98.png 1024w&quot; sizes=&quot;(max-width: 1672px) 100vw, 1672px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;3 way handshake of a curl request&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;This was trace for simple curl request to server. No TFO set. As we can see, first 3 way handshake happens [first 3 packets] then application (curl) sends HTTP request and after that it gets response.&lt;figure id=&quot;attachment_220&quot; style=&quot;max-width: 1699px&quot; class=&quot;wp-caption aligncenter&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;size-full wp-image-220&quot; src=&quot;https://superuser.blog/wp-content/uploads/2017/11/tfo_curl.png&quot; alt=&quot;&quot; width=&quot;1699&quot; height=&quot;458&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/11/tfo_curl.png 1699w, https://superuser.blog/wp-content/uploads/2017/11/tfo_curl-300x81.png 300w, https://superuser.blog/wp-content/uploads/2017/11/tfo_curl-768x207.png 768w, https://superuser.blog/wp-content/uploads/2017/11/tfo_curl-1024x276.png 1024w&quot; sizes=&quot;(max-width: 1699px) 100vw, 1699px&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;curl with TFO enabled&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Here with –tcp-fastopen option to curl, in the fist packet itself [46645] client will send request data. and it was immediately delivered to application (echo server). Also note that the three way handshake still happens.&lt;/p&gt;
+
+&lt;p&gt;Also see how cookie was sent with SYN packet[46645] itself.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;aligncenter size-full wp-image-221&quot; src=&quot;https://superuser.blog/wp-content/uploads/2017/11/cookie_tfo.png&quot; alt=&quot;&quot; width=&quot;1022&quot; height=&quot;283&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/11/cookie_tfo.png 1022w, https://superuser.blog/wp-content/uploads/2017/11/cookie_tfo-300x83.png 300w, https://superuser.blog/wp-content/uploads/2017/11/cookie_tfo-768x213.png 768w&quot; sizes=&quot;(max-width: 1022px) 100vw, 1022px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;how-fast-was-it&quot;&gt;How fast was it?&lt;/h2&gt;
+
+&lt;p&gt;Let the results speak for themselves: [ okay, 270ms (TFO) vs 690ms (regular TCP) ]&lt;/p&gt;
+
+&lt;pre class=&quot;lang:sh decode:true&quot;&gt;sanket@iamgroot /home/sanket/workspace/z_trivial/knetstat (0)  (master)&amp;gt; time curl ssh.movienight.gq:8000      19:59:12
+GET / HTTP/1.1
+Host: ssh.movienight.gq:8000
+User-Agent: curl/7.56.1
+Accept: */*
+
+0.00user 0.00system 0:00.69elapsed 1%CPU (0avgtext+0avgdata 8860maxresident)k
+0inputs+0outputs (0major+492minor)pagefaults 0swaps
+
+
+
+sanket@iamgroot /home/sanket/workspace/z_trivial/knetstat (0)  (master)&amp;gt; 
+time curl ssh.movienight.gq:8000 --tcp-fastopen
+GET / HTTP/1.1
+Host: ssh.movienight.gq:8000
+User-Agent: curl/7.56.1
+Accept: */*
+
+0.00user 0.00system 0:00.27elapsed 1%CPU (0avgtext+0avgdata 8728maxresident)k
+0inputs+0outputs (0major+494minor)pagefaults 0swaps&lt;/pre&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;Of course I did not tell the fine details. Please refer:&lt;/p&gt;
+
+&lt;p&gt;[1] &lt;a href=&quot;https://lwn.net/Articles/508865/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://lwn.net/Articles/508865/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;[2] &lt;a href=&quot;https://bradleyf.id.au/nix/shaving-your-rtt-wth-tfo/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://bradleyf.id.au/nix/shaving-your-rtt-wth-tfo/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If Websockets excites you, which is kinda long open TCP connection, speaking it’s own language, why don’t you look up to &lt;a href=&quot;https://superuser.blog/websocket-server-python/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;this article&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>sanket</name></author><summary type="html">Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.</summary></entry><entry><title type="html">Writing Simple WebSocket Server in Python: PyWSocket</title><link href="http://localhost:4000/websocket-server-python/" rel="alternate" type="text/html" title="Writing Simple WebSocket Server in Python: PyWSocket" /><published>2017-08-26T20:10:53+05:30</published><updated>2017-08-26T20:10:53+05:30</updated><id>http://localhost:4000/websocket-server-python</id><content type="html" xml:base="http://localhost:4000/websocket-server-python/">&lt;p&gt;Journey to websocket was pretty long. I started with an idea to make an app which can play music in sync across the devices during college period. No wonder I couldn’t get thru it. Later this year I stumbled upon this new thing called WebSockets and they were intriguing. I thought I could finish that app with websockets (and I did, with partial success). Spinned of another app out of it. And websockets were on a roll. It was time I digged further in and ended up writing a websocket server. (GitHub link at the bottom)&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;so-what-is-a-websocket-server&quot;&gt;So what is a websocket server?&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A WebSocket server is a TCP application listening on any port of a server that follows a specific protocol, simple as that.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;How does it work? : It uses HTTP protocol for handshake and after handshake is complete, it works over TCP protocol and exchanges data in it’s agreed-upon format called frames. Connections are bi-directional and any party can send message anytime. Unlike HTTP where new TCP connection is made every time you want to communicate, WebSockets maintains a connection using which any side can send message anytime, reducing the message delivery time by using the existing connection.&lt;figure style=&quot;max-width: 1223px&quot; class=&quot;wp-caption aligncenter&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;//www.fullstackpython.com/img/visuals/websockets-flow-with-client-push.png&quot; alt=&quot;&quot; width=&quot;1223&quot; height=&quot;747&quot; /&gt;&amp;lt;figcaption class=&quot;wp-caption-text&quot;&amp;gt;Credits: fullstackpython.com&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;the-websocket-server&quot;&gt;The WebSocket Server:&lt;/h2&gt;
+
+&lt;p&gt;We will be writing our server in 4 parts:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Writing a TCP/HTTP server to identify a websocket request.&lt;/li&gt;
+  &lt;li&gt;Performing a handshake&lt;/li&gt;
+  &lt;li&gt;Decoding/Receiving data/frames&lt;/li&gt;
+  &lt;li&gt;Sending data/frames&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I will be discussing the protocol implementations as we go thru steps. You can also take a pause have a look at &lt;a href=&quot;//developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;this&lt;/a&gt; awesome piece written by Mozilla on WebSocket Servers. It is a must read. Now or later.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-size: 29px; font-weight: bold;&quot;&gt;1. Writing a TCP/HTTP Server to Identify WebSocket Request &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;We will be using python’s SocketServer library which ptovides simple TCP server. The client will send an HTTP request which looks something like this:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;GET /chat HTTP/1.1
+Host: example.com:8000
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+Sec-WebSocket-Version: 13&lt;/pre&gt;
+
+&lt;p&gt;So what we need to lookout for is that if the request is of type GET and it has these three headers namely `Upgrade: websocket` `Connection: Upgrade` and `Sec-WebSocket-key: &lt;some random=&quot;&quot; characters=&quot;&quot;&gt;\`&lt;/some&gt;&lt;/p&gt;
+
+&lt;p&gt;If you find all this, we can proceed towards the next step which is completing the handshake. In our implementation we will check if all the three headers are present and we will proceed with the handshake. The request handler function will look something like this:&lt;/p&gt;
+
+&lt;pre class=&quot;theme:monokai nums:true lang:python decode:true&quot;&gt;def handle(self):
+        # self.request is the TCP socket connected to the client
+        self.data = self.request.recv(1024).strip()
+        headers = self.data.split(&quot;\r\n&quot;)
+
+        # is it a websocket request?
+        if &quot;Connection: Upgrade&quot; in self.data and &quot;Upgrade: websocket&quot; in self.data:
+            # getting the websocket key out
+            for h in headers:
+                if &quot;Sec-WebSocket-Key&quot; in h:
+                    key = h.split(&quot; &quot;)[1]
+            # let's shake hands shall we?
+            self.shake_hand(key)
+
+            while True:
+                payload = self.decode_frame(bytearray(self.request.recv(1024).strip()))
+                decoded_payload = payload.decode('utf-8')
+                self.send_frame(payload)
+                if &quot;bye&quot; == decoded_payload.lower():
+                    &quot;Bidding goodbye to our client...&quot;
+                    return
+        else:
+            self.request.sendall(&quot;HTTP/1.1 400 Bad Request\r\n&quot; + \
+                                 &quot;Content-Type: text/plain\r\n&quot; + \
+                                 &quot;Connection: close\r\n&quot; + \
+                                 &quot;\r\n&quot; + \
+                                 &quot;Incorrect request&quot;)&lt;/pre&gt;
+
+&lt;p&gt;This is the rough flow: If we find a valid websocket request, we proceed with handshake and then in while loop, we just do echo. ie sending back whatever we received. If it’s not a valid request we send HTTP 400 in response.&lt;/p&gt;
+
+&lt;p&gt;Pretty simple till now, innit?&lt;/p&gt;
+
+&lt;h2 id=&quot;2-performing-a-handshake&quot;&gt;2. Performing a Handshake&lt;/h2&gt;
+
+&lt;p&gt;This is where the protocol details kicks in. You will need to send a specific HTTP response back to client in order to establish the bidirectional connection. The response will look something like this:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=&lt;/pre&gt;
+
+&lt;p&gt;You see there a new header called `Sec-WebSocket-Accept` with some random looking characters. Now there’s a method to calculate this. As per protocol, you concatenate the key you received in request header (‘dGhlIHNhb…’) and the &lt;a href=&quot;//en.wikipedia.org/wiki/Magic_string&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;magic string&lt;/a&gt; (“258EAFA5-E914-47DA-95CA-C5AB0DC85B11”) , calcualte SHA1 hash of them and send back the base64 encoding of the hash (which is ‘s3pPLMB…’) This is done so that client can also confirm that the server understands the protocol. So handshake is basically HTTP response with a header containg SHA1 of the key and magic-string and key client sent and those same two headers.&lt;/p&gt;
+
+&lt;p&gt;Here’s how it’s done in python:&lt;/p&gt;
+
+&lt;pre class=&quot;theme:monokai nums:true lang:python decode:true&quot;&gt;def shake_hand(self,key):
+        # calculating response as per protocol RFC
+        key = key + WS_MAGIC_STRING
+        resp_key = base64.standard_b64encode(hashlib.sha1(key).digest())
+
+        resp=&quot;HTTP/1.1 101 Switching Protocols\r\n&quot; + \
+             &quot;Upgrade: websocket\r\n&quot; + \
+             &quot;Connection: Upgrade\r\n&quot; + \
+             &quot;Sec-WebSocket-Accept: %s\r\n\r\n&quot;%(resp_key)&lt;/pre&gt;
+
+&lt;p&gt;Here we send the key we received in request header as an argument and we use &lt;em&gt;hashlib&lt;/em&gt; to calculate SHA1 and &lt;em&gt;base64&lt;/em&gt; to encode it.&lt;/p&gt;
+
+&lt;h2 id=&quot;3-decoding-an-incoming-frame&quot;&gt;3. Decoding an Incoming Frame&lt;/h2&gt;
+
+&lt;p&gt;Now that the connection is established, client/the other side can send us data. Now the data won’t be in plain-text. It is using a special frame format defined in protocol. A frame looks something like this:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true &quot;&gt;Frame format:  
+​​
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-------+-+-------------+-------------------------------+
+     |F|R|R|R| opcode|M| Payload len |    Extended payload length    |
+     |I|S|S|S|  (4)  |A|     (7)     |             (16/64)           |
+     |N|V|V|V|       |S|             |   (if payload len==126/127)   |
+     | |1|2|3|       |K|             |                               |
+     +-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +
+     |     Extended payload length continued, if payload len == 127  |
+     + - - - - - - - - - - - - - - - +-------------------------------+
+     |                               |Masking-key, if MASK set to 1  |
+     +-------------------------------+-------------------------------+
+     | Masking-key (continued)       |          Payload Data         |
+     +-------------------------------- - - - - - - - - - - - - - - - +
+     :                     Payload Data continued ...                :
+     + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+     |                     Payload Data continued ...                |
+     +---------------------------------------------------------------+
+&lt;/pre&gt;
+
+&lt;p&gt;I will discuss the fields which we will be using here. Please read that &lt;a href=&quot;//developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Mozilla article&lt;/a&gt; I mentioned before to get more idea around this.&lt;/p&gt;
+
+&lt;p&gt;The FIN bit suggests that this is the last frame.We will assume/set it to 1 as we will be sending small amount of data only. Next 3 bits are reserved. The opcode suggests what kind of operation is this. 0x0 for continuation, 0x1 for text, 0x2 for binary etc. We will be using 0x1. The MASK bit we will discuss shortly.&lt;/p&gt;
+
+&lt;p&gt;Payload length is somewhat tricky. I am quoting the Mozilla Article here:&lt;/p&gt;
+
+&lt;h6 id=&quot;Decoding_Payload_Length&quot;&gt;Decoding Payload Length&lt;/h6&gt;
+
+&lt;p&gt;To read the payload data, you must know when to stop reading. That’s why the payload length is important to know. Unfortunately, this is somewhat complicated. To read it, follow these steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Read bits 9-15 (inclusive) and interpret that as an unsigned integer. If it’s 125 or less, then that’s the length; you’re &lt;strong&gt;done&lt;/strong&gt;. If it’s 126, go to step 2. If it’s 127, go to step 3.&lt;/li&gt;
+  &lt;li&gt;Read the next 16 bits and interpret those as an unsigned integer. You’re &lt;strong&gt;done&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Read the next 64 bits and interpret those as an unsigned integer (The most significant bit MUST be 0). You’re &lt;strong&gt;done&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We are assuming it to be &amp;lt;125. That will leave byte 2 to 6 as masking bytes. If you are using web browser console as a client (which we will) it will set the mask bit to 1. Hence the payload will be masked. You can use XOR operation with the mask to get the original data back. The code to help you understand it better:&lt;/p&gt;
+
+&lt;pre class=&quot;theme:monokai nums:true lang:python decode:true &quot;&gt;def decode_frame(self,frame):
+        opcode_and_fin = frame[0]
+
+        # assuming it's masked, hence removing the mask bit(MSB) to get len. also assuming len is &amp;lt;125
+        payload_len = frame[1] - 128
+
+        mask = frame [2:6]
+        encrypted_payload = frame [6: 6+payload_len]
+
+        payload = bytearray([ encrypted_payload[i] ^ mask[i%4] for i in range(payload_len)])
+
+        return payload&lt;/pre&gt;
+
+&lt;p&gt;We sent frame as a bytearray as you noticed in the first function (`handle`). The operations are quite self explanatory. To get the payload length, we are subtracting 128 (the mask bit) from byte 1. (look at the frame structure and you’ll have a clear picture) Encrypted payload XORed with the mask will give us the decrypted payload.&lt;/p&gt;
+
+&lt;h2 id=&quot;4-sending-frames&quot;&gt;4. Sending Frames&lt;/h2&gt;
+
+&lt;p&gt;While sending frames, we will do nothing fancy. We will not set MASK bit and we will send data unmasked i.e. in plain text. So that will leave us with filling the FIN bit, the OPCODE, the LEN and finally the payload. Have a look:&lt;/p&gt;
+
+&lt;pre class=&quot;theme:monokai nums:true lang:python decode:true &quot;&gt;def send_frame(self, payload):
+        # setting fin to 1 and opcpde to 0x1
+        frame = [129]
+        # adding len. no masking hence not doing +128
+        frame += [len(payload)]
+        # adding payload
+        frame_to_send = bytearray(frame) + payload
+
+        self.request.sendall(frame_to_send)&lt;/pre&gt;
+
+&lt;p&gt;Yep, that easy. So that wraps up our server. Now let’s have a look at how can we make it on roll. Fire up a web browser console and try these out:&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;aligncenter size-full wp-image-190&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/08/websocket_js.png&quot; alt=&quot;&quot; width=&quot;619&quot; height=&quot;361&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/08/websocket_js.png 619w, https://superuser.blog/wp-content/uploads/2017/08/websocket_js-300x175.png 300w&quot; sizes=&quot;(max-width: 619px) 100vw, 619px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We asked our browser side websocket to print whatever it receives in console. And our server is sending back whatever the client sends. So there you are. The mighty WebSockets with &amp;lt;80 lines of python code 😀 Check it out on &lt;a href=&quot;//github.com/sanketplus/PyWSocket&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some interesting links which helped me get here:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&amp;lt;//www.fullstackpython.com/websockets.html&amp;gt;&lt;/li&gt;
+  &lt;li&gt;&amp;lt;//blog.pusher.com/websockets-from-scratch/&amp;gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>sanket</name></author><category term="python" /><category term="websocket" /><summary type="html">Journey to websocket was pretty long. I started with an idea to make an app which can play music in sync across the devices during college period. No wonder I couldn’t get thru it. Later this year I stumbled upon this new thing called WebSockets and they were intriguing. I thought I could finish that app with websockets (and I did, with partial success). Spinned of another app out of it. And websockets were on a roll. It was time I digged further in and ended up writing a websocket server. (GitHub link at the bottom)</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/wp-content/uploads/2017/08/pywsocket-825x463.jpg" /></entry><entry><title type="html">HBase YouAreDeadException: Dead RegionServer due to GC Pause</title><link href="http://localhost:4000/hbase-dead-regionserver/" rel="alternate" type="text/html" title="HBase YouAreDeadException: Dead RegionServer due to GC Pause" /><published>2017-05-26T22:54:15+05:30</published><updated>2017-05-26T22:54:15+05:30</updated><id>http://localhost:4000/hbase-dead-regionserver</id><content type="html" xml:base="http://localhost:4000/hbase-dead-regionserver/">&lt;p&gt;So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;The following was the logline:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;2017-05-23 06:59:22,173 FATAL [regionserver/&amp;lt;hostname&amp;gt;/10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server &amp;lt;hostname&amp;gt;,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing&amp;lt;hostname&amp;gt;,16020,1493962926376 as dead server&lt;/pre&gt;
+
+&lt;p&gt;This alone did not tell much. Further scrolling up in logs, I found this:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;2017-05-24 04:55:34,712 INFO  [RS_OPEN_REGION-hdps01:16020-2-SendThread(&amp;lt;zkhost&amp;gt;:2181)] zookeeper.ClientCnxn: Client session timed out, have not heard from server in 31947ms for sessionid 0x15be7e4d09e1c4c, closing socket connection and attempting reconnect
+2017-05-24 04:55:34,713 WARN  [regionserver/&amp;lt;rs-host&amp;gt;/10.10.205.55:16020] util.Sleeper: We slept 16865ms instead of 3000ms, this is likely due to a long garbage collecting pause and it's usually bad, see //hbase.apache.org/book.html#trouble.rs.runtime.zkexpired
+2017-05-24 04:55:34,718 WARN  [JvmPauseMonitor] util.JvmPauseMonitor: Detected pause in JVM or host machine (eg GC): pause of approximately 15598ms
+1434184 No GCs detected
+&lt;/pre&gt;
+
+&lt;p&gt;So according to these lines, something paused the JVM and it was not able to send hart-beat to zookeeper. The node there in zookeeper expired and the HBase Master marked it as dead regionserver. They also have given a &lt;a href=&quot;//hbase.apache.org/book.html#trouble.rs.runtime.zkexpired&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;link&lt;/a&gt; in log line which points out to a solution. Go ahead and have a look at it. So basically it says these could be the reasons behind:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Not enough RAM while running large imports.&lt;/li&gt;
+  &lt;li&gt;Swap partition enabled&lt;/li&gt;
+  &lt;li&gt;Something hogging the CPU&lt;/li&gt;
+  &lt;li&gt;Low ZooKeeper timeout.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So first three options were ruled out for my dead regionserver. What I had to do was increase zookeeper timeout. BUT! I already had set the zookeeper session timeout (zookeeper.session.timeout) to 30min. And dead regionserver appeared only after 30sec or so.&lt;/p&gt;
+
+&lt;p&gt;As suggested in link above, I tried to set tickTime value (hbase.zookeeper.property.tickTime)  to 6s. The calculation is something like this:&lt;/p&gt;
+
+&lt;p&gt;Min timeout = 2 * tickTime&lt;/p&gt;
+
+&lt;p&gt;Max timeout = 20 * tickTime&lt;/p&gt;
+
+&lt;p&gt;So here it must be 120 sec as a zookeeper timeout. But still timeouts were occurring about 40s after.I pulled up GC longs, there was no such long GC. So I went in and checked zookeeper config. Zookeeper also had tickTime value. Confusing it was and now I was not sure which tickTime was be applicable to the dead regionserver. There were two different values of ticktime. One in ZK and one in HBase.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;size-full wp-image-177 aligncenter&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/05/zookeeper_config.png&quot; alt=&quot;&quot; width=&quot;443&quot; height=&quot;272&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/05/zookeeper_config.png 443w, https://superuser.blog/wp-content/uploads/2017/05/zookeeper_config-300x184.png 300w&quot; sizes=&quot;(max-width: 443px) 100vw, 443px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As confusing as it was, I went to check zookeeper logs. There I found the cause; the sessions negotiated with zookeeper from dead regionserver were of 40s (20*2s of original ticktime) So clearly the timeout and ticktime we set in regionserver on hbase side were not taking effect. Strange! Roaming around in HDP Server’s UI, I found this glorious piece of help-text. (Could not take a screenshot as that pop-up appeared only when I hover 😛 )&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;alignnone size-full wp-image-178&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/05/IMG_20170524_150126.jpeg&quot; alt=&quot;&quot; width=&quot;720&quot; height=&quot;960&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/05/IMG_20170524_150126.jpeg 720w, https://superuser.blog/wp-content/uploads/2017/05/IMG_20170524_150126-225x300.jpeg 225w&quot; sizes=&quot;(max-width: 720px) 100vw, 720px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now it was evident that if you are using different set of zookeeper quorum, the value set in hbase wont affect! &lt;strong&gt;What? Why do you not print this in bold on some heading?? &lt;/strong&gt;So this was the cause and the ticktime was needed to set in zookeeper (as done already: see the screenshot ^^). Many times GC cause long delays. Apart from increasing timeout, you may also want to &lt;a href=&quot;//www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;tune your GC&lt;/a&gt;. Also you may want to look into &lt;a href=&quot;//superuser.blog/tuning-hbase/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Tuning Your HBase&lt;/a&gt; or maybe &lt;a href=&quot;//superuser.blog/hbase-benchmarking/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;benchmark&lt;/a&gt; it.&lt;/p&gt;
+
+&lt;p&gt;After increasing tickTime in zookeeper, it’s running fine and it’s been two days. Let’s hope it just stays that way 🙂&lt;/p&gt;</content><author><name>sanket</name></author><category term="Hbase" /><category term="hdp" /><summary type="html">So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/wp-content/uploads/2017/05/hbase_rs_status-811x510.png" /></entry><entry><title type="html">How to reconfigure Zynq-PL on-the-go?</title><link href="http://localhost:4000/reconfigure-zynq-pl-go/" rel="alternate" type="text/html" title="How to reconfigure Zynq-PL on-the-go?" /><published>2017-05-08T00:57:39+05:30</published><updated>2017-05-08T00:57:39+05:30</updated><id>http://localhost:4000/reconfigure-zynq-pl-go</id><content type="html" xml:base="http://localhost:4000/reconfigure-zynq-pl-go/">&lt;p&gt;You would have wondered if it’s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, it’s possible and as simple as,&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;pre class=&quot;lang:default decode:true &quot;&gt;#echo '0' &amp;gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream
+//echo '1' for partial bitstreams
+#cat whatever_the_bit_file_name_is.bit &amp;gt; /dev/xdevcfg&lt;/pre&gt;
+
+&lt;p&gt;Yeah, that’s it! Make sure you’re running it as root.&lt;/p&gt;
+
+&lt;p&gt;Don’t have a nice Linux running on ZedBoard yet? have a look at &lt;a href=&quot;//superuser.blog/pynq-linux-on-zedboard/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;PYNQ Linux on ZedBoard&lt;/a&gt;&lt;/p&gt;</content><author><name>parth parikh</name></author><category term="FPGA" /><category term="linux" /><category term="Vivado" /><category term="Zynq" /><summary type="html">You would have wondered if it’s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, it’s possible and as simple as,</summary></entry><entry><title type="html">PYNQ Linux on ZedBoard</title><link href="http://localhost:4000/pynq-linux-on-zedboard/" rel="alternate" type="text/html" title="PYNQ Linux on ZedBoard" /><published>2017-05-08T00:39:58+05:30</published><updated>2017-05-08T00:39:58+05:30</updated><id>http://localhost:4000/pynq-linux-on-zedboard</id><content type="html" xml:base="http://localhost:4000/pynq-linux-on-zedboard/">&lt;p&gt;Hi There!&lt;/p&gt;
+
+&lt;p&gt;The PYNQ Linux is a fun, easy and maker-friendly Ubuntu 15.04 rootfs. It comes bundled with the PYNQ-Z1 board, and the official documentations doesn’t even utter a word on how to build or port this image on any other Zynq. Maybe because it’s too obvious how to do so.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;What you need to run Linux on any ARM board?&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;BOOT image (BOOT.bin)&lt;/li&gt;
+  &lt;li&gt;kernel image (uImage)&lt;/li&gt;
+  &lt;li&gt;devicetree blob (devicetree.dtb)&lt;/li&gt;
+  &lt;li&gt;rootfs&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;What we need to worry about? everything but the rootfs.&lt;/p&gt;
+
+&lt;h2 id=&quot;tldr&quot;&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Write the image file on SD card same as in the pynq tutorial, and replace the files in BOOT partition with these…
+	&lt;a class=&quot;download-link&quot; title=&quot;Version 1.0&quot; href=&quot;https://superuser.blog/download/160/&quot; rel=&quot;nofollow&quot;&gt; ZedBoard BOOT files&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;use older image of pynq from &lt;a href=&quot;https://files.digilent.com/Products/PYNQ/pynq_z1_image_2016_09_14.zip&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;detailed-explanationas-if-you-asked-for-it&quot;&gt;Detailed Explanation (as if you asked for it)&lt;/h2&gt;
+
+&lt;h3 id=&quot;0-set-up-environment&quot;&gt;0. Set up environment.&lt;/h3&gt;
+
+&lt;p&gt;You’ll obviously need to do this all a Desktop Linux system. I’ve tried doing onWindows, doesn’t work well with MinGW. Haven’t tried CygWin or Linux Subsystem for Windows, you may give it a try if you’re brave enough.&lt;/p&gt;
+
+&lt;h4 id=&quot;01-set-up-the-bash-environment-to-work-with-xilinx-sdk-tools&quot;&gt;0.1 Set up the Bash environment to work with Xilinx SDK tools,&lt;/h4&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;source /opt/Xilinx/SDK/2016.3/settings64.sh
+source /opt/Xilinx/Vivado/2016.3/settings64.sh
+# For Older SDKs before 2017.1
+export CROSS_COMPILE=arm-xilinx-linux-gnueabi-
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For latest SDK version 2017.3 the cross compiler is arm-linux-gnueabihf-gcc.&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;# For new SDKs on or after 2017.1
+export CROSS_COMPILE=arm-linux-gnueabihf-gcc-&lt;/pre&gt;
+
+&lt;h4 id=&quot;02-sd-card-patitioning&quot;&gt;0.2 SD Card Patitioning&lt;/h4&gt;
+
+&lt;p&gt;you don’t really need to create partitions of the SD card because loading the image file from the PYNQ linux will do that for you, however you can do it anyways which should look like… (Use GParted or something)&lt;/p&gt;
+
+&lt;p&gt;Partition-1:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Type: fat32&lt;/li&gt;
+  &lt;li&gt;Free Space Preceding: 4MB (IMPORTANT!!!)&lt;/li&gt;
+  &lt;li&gt;Size: 52MB&lt;/li&gt;
+  &lt;li&gt;Label: BOOT (Optional)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Partition-2:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Type: ext4&lt;/li&gt;
+  &lt;li&gt;Size: whatever is left&lt;/li&gt;
+  &lt;li&gt;Label: rootfs (Optional)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;notes&quot;&gt;Notes&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;DO NOT REMOVE SD CARD WITHOUT UNMOUNTING IT! Really, don’t. It creates badblocks in the SD card which might cause issues booting up the Zynq.&lt;/li&gt;
+  &lt;li&gt;You can check my GitHub @parthpower for the modified u-boot and Linux codes to work around this.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1-make-bootbin&quot;&gt;1. Make BOOT.bin&lt;/h3&gt;
+
+&lt;p&gt;-&amp;gt; To create BOOT.bin, you’ll need 3 things (which you’d have heard everywhere).&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;First Stage Bootloader to dump the bitstream and call the second stage bootloader&lt;/li&gt;
+  &lt;li&gt;bitstream&lt;/li&gt;
+  &lt;li&gt;Second Stage Bootloader (u-boot.elf)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I’m not going in details of first two things, as they are simple and you can just google them… Come on now! Ok, in short, make Vivado project with only PS, export it to the SDK, create FSLB application project and you’re good!&lt;/p&gt;
+
+&lt;p&gt;Let’s get to the main part, MAKING u-boot.elf!!!!&lt;/p&gt;
+
+&lt;p&gt;Clone the Xilinx UBoot repo from the Xilinx github, checkout to the latest stable release (I used xilinx-v2016.4) (in case you need code)&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot; title=&quot;Git checkout&quot;&gt;git clone //github.com/Xilinx/u-boot-xlnx.git
+cd u-boot-xlnx
+git checkout xilinx-v2016.4&lt;/pre&gt;
+
+&lt;p&gt;Now, you got to change some stuff in u-boot-xlnx/include/configs/zynq-common.h, find this line “sdboot=if mmcinfo;” and make it look like as below&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;&quot;sdboot=if mmcinfo; then &quot; \
+			&quot;run uenvboot; &quot; \
+			&quot;echo Copying Linux from SD to RAM...RFS in ext4 &amp;amp;&amp;amp; &quot; \
+			&quot;load mmc 0 ${kernel_load_address} ${kernel_image} &amp;amp;&amp;amp; &quot; \
+			&quot;load mmc 0 ${devicetree_load_address} ${devicetree_image} &amp;amp;&amp;amp; &quot; \
+			&quot;bootm ${kernel_load_address} - ${devicetree_load_address}; &quot; \&lt;/pre&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;Wait, what did we just messed with? Like what the hell happened?&lt;/p&gt;
+
+&lt;p&gt;If you go through the “Ubuntu on ZedBoard” tutorial by Avnet, they explain it’s for using the rootfs from the filesystem instead of a RAM disk.&lt;/p&gt;
+
+&lt;p&gt;To make u-boot,&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;make zynq_zed_config
+make&lt;/pre&gt;
+
+&lt;p&gt;You should add _u-boot-xlnx/tools _to the PATH. It’ll be useful making the Linux Image later on.&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;export PATH='uboot-xlnx/tools:'$PATH&lt;/pre&gt;
+
+&lt;p&gt;Get the “u-boot” file from the root of the u-boot source directory, rename it to u-boot.elf. Now just make the &lt;strong&gt;BOOT.bin&lt;/strong&gt;, open “Create Boot Image” in SDK use the FSBL.elf, bit file and the u-boot.elf. Mind the order of the files because that’s how the Zynq will be booted. FSBL configures the PL with the bit file then loads the second stage bootloader; u-boot.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;alignnone size-full wp-image-148&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/05/BOOT.png&quot; alt=&quot;&quot; width=&quot;764&quot; height=&quot;997&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/05/BOOT.png 764w, https://superuser.blog/wp-content/uploads/2017/05/BOOT-230x300.png 230w&quot; sizes=&quot;(max-width: 764px) 100vw, 764px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;h3 id=&quot;2-make-linux-kernel-image&quot;&gt;2. Make Linux Kernel Image&lt;/h3&gt;
+
+&lt;p&gt;The Linux Kernel Image is the actual Kernel being loaded by the u-boot and which has the rootfs of pynq distribution. In less technical words, Linux Kernel is the base system which loads the higher-level root filesystem from the mount point. Now we’re done with the theory part, Let’s make the kernel!&lt;/p&gt;
+
+&lt;p&gt;Fetch the sources,&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;git clone //github.com/Xilinx/linux-xlnx.git
+git checkout -b xlnx_3.17&lt;/pre&gt;
+
+&lt;p&gt;Just default config, and make it!&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;make ARCH=arm xilinx_zynq_defconfig
+
+make ARCH=arm UIMAGE_LOADADDR=0x8000 uImage
+&lt;/pre&gt;
+
+&lt;p&gt;That’s it and you have your Linux kernel image ready at _linux-xlnx/arch/arm/boot/&lt;strong&gt;uImage&lt;/strong&gt; _save it somewhere safe.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-device-tree-blob&quot;&gt;3. Device Tree Blob&lt;/h3&gt;
+
+&lt;p&gt;What? Device tree blob is a “block-of-binary” which specifies memory location of the peripherals, their compatible driver names, and some configurations of the peripherals. It’s lots of information about the hardware specification of the SoC.&lt;/p&gt;
+
+&lt;p&gt;The dtb is compiled from dts (device tree string). For a PS-only design, the dts is already there in the linux-xlnx repository at &lt;em&gt;/linux-xlnx/arch/arm/boot/dts/zynq-zed.dts&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;We need to modify it a little bit to load the rootfs, (yeah, lots of efforts just to load the rootfs)&lt;/p&gt;
+
+&lt;p&gt;find the line starting with _bootargs _and change it to,&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;bootargs = &quot;console=ttyPS0,115200 root=/dev/mmcblk0p2 rw earlyprintk rootfstype=ext4 rootwait devtmpfs.mount=1&quot;;&lt;/pre&gt;
+
+&lt;p&gt;By default, it has bootargs are set to load the rootfs from a ramdisk. But we configured the u-boot not to load the rootfs as ramdisk. So we are mounting it from /dev/mmcblk0p2 (partition 2 of the memory card)&lt;/p&gt;
+
+&lt;p&gt;Now go to the root of linux-xlnx and&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true &quot;&gt;make ARCH=arm zynq-zed.dtb&lt;/pre&gt;
+
+&lt;p&gt;and you have the dtb file at  &lt;em&gt;/linux-xlnx/arch/arm/boot/dts/&lt;strong&gt;zynq-zed.dtb&lt;/strong&gt;&lt;/em&gt; rename it to devicetree.dtb and copy it somewhere safe.&lt;/p&gt;
+
+&lt;h3 id=&quot;4-rootfs&quot;&gt;4. rootfs&lt;/h3&gt;
+
+&lt;p&gt;The root file system we want to use if the one provided by the PYNQ. Download the latest version from //pynq.io. Extract it, and write the image to the sd card. Use _dd _or Win32DiskImage tool or whatever you wish.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;The latest PYNQ distribution has kernel v4.6. You can use older image from,&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;https://files.digilent.com/Products/PYNQ/pynq_z1_image_2016_09_14.zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://files.digilent.com/Products/PYNQ/pynq_z1_image_2016_09_14.zip&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Mount the SD card, look into the BOOT partition, replace all the files, BOOT.bin, uImage, devicetree.dtb with the ones we’ve created, and you’re done. Seriously, you’re done!&lt;/p&gt;
+
+&lt;p&gt;Good thing is, you can put any Linux distribution as long as it is made up on Linux Kernel 3.17 in the rootfs file system and it should work. I tried Linaro , it quite didn’t work well with me. Try playing around, let me know what works and what don’t work!&lt;/p&gt;
+
+&lt;p&gt;Happy Hacking!&lt;/p&gt;
+
+&lt;p&gt;Some Really Good References,&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;//www.instructables.com/id/Embedded-Linux-Tutorial-Zybo/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;//www.instructables.com/id/Embedded-Linux-Tutorial-Zybo/ &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;//forums.xilinx.com/xlnx/attachments/xlnx/ELINUX/12801/1/Ubuntu_on_Zynq_Tutorial_03.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;//forums.xilinx.com/xlnx/attachments/xlnx/ELINUX/12801/1/Ubuntu_on_Zynq_Tutorial_03.pdf &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;//fpga.org/2013/05/24/yet-another-guide-to-running-linaro-ubuntu-desktop-on-xilinx-zynq-on-the-zedboard/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;//fpga.org/2013/05/24/yet-another-guide-to-running-linaro-ubuntu-desktop-on-xilinx-zynq-on-the-zedboard/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;//www.wiki.xilinx.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;//www.wiki.xilinx.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;update&quot;&gt;&lt;strong&gt;Update&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;PYNQ has recently updated their repository and included instructions to make sd card image section. &lt;a href=&quot;https://pynq.readthedocs.io/en/latest/pynq_sd_card.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://pynq.readthedocs.io/en/latest/pynq_sd_card.html&lt;/a&gt;  Thanks to &lt;b class=&quot;fn&quot;&gt;Cathal McCabe &lt;/b&gt;for this update.&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>parth parikh</name></author><category term="FPGA" /><category term="linux" /><category term="Zynq" /><summary type="html">Hi There!</summary></entry><entry><title type="html">Migrating OpenTSDB to Another HBase Cluster</title><link href="http://localhost:4000/migrate-opentsdb-hbase/" rel="alternate" type="text/html" title="Migrating OpenTSDB to Another HBase Cluster" /><published>2017-04-25T04:22:16+05:30</published><updated>2017-04-25T04:22:16+05:30</updated><id>http://localhost:4000/migrate-opentsdb-hbase</id><content type="html" xml:base="http://localhost:4000/migrate-opentsdb-hbase/">&lt;p&gt;As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was &lt;a href=&quot;//hbase.apache.org/0.94/book/ops.snapshots.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;ExportSnapshot&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img class=&quot;aligncenter wp-image-122 size-medium&quot; src=&quot;//superuser.blog/wp-content/uploads/2017/04/opentsdb-300x62.png&quot; alt=&quot;opentsdb logo&quot; width=&quot;300&quot; height=&quot;62&quot; srcset=&quot;https://superuser.blog/wp-content/uploads/2017/04/opentsdb-300x62.png 300w, https://superuser.blog/wp-content/uploads/2017/04/opentsdb.png 364w&quot; sizes=&quot;(max-width: 300px) 100vw, 300px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;So these are the steps roughly:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Stop TSDs&lt;/li&gt;
+  &lt;li&gt;Take snapshot(s)&lt;/li&gt;
+  &lt;li&gt;Transfer snapshots&lt;/li&gt;
+  &lt;li&gt;Restore snapshots&lt;/li&gt;
+  &lt;li&gt;Modify and start TSDs&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Steps 1 and 5 are self understood. We will look at how to take,transfer and restore snapshots.&lt;/p&gt;
+
+&lt;h2 id=&quot;snapshot-opentsdb-tables&quot;&gt;Snapshot OpenTSDB Tables:&lt;/h2&gt;
+
+&lt;p&gt;Fire up hbase shell and take snapshot of opentsdb tables. You can choose any name for snapshot to be created.&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true &quot;&gt;hbase&amp;gt; snapshot 'tsdb', 'tsdb-&amp;lt;date&amp;gt;'
+hbase&amp;gt; snapshot 'tsdb-uid', 'tsdb-uid-&amp;lt;date&amp;gt;'
+hbase&amp;gt; snapshot 'tsdb-meta', 'tsdb-meta-&amp;lt;date&amp;gt;'
+hbase&amp;gt; snapshot 'tsdb-tree', 'tsdb-tree-&amp;lt;date&amp;gt;'&lt;/pre&gt;
+
+&lt;h2 id=&quot;transfer-opentsdb-tables-to-new-hbase-cluster&quot;&gt;Transfer OpenTSDB Tables to New HBase Cluster&lt;/h2&gt;
+
+&lt;p&gt;Here we will use ExportSnapshot utility provided by HBase. It takes snapshot name, destination cluster address as primary arguments. As it will run as a map-reduce job, you can also specify number of mapper to use.&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true&quot;&gt;$ sudo su - hdfs
+export HADOOP_MAPRED_HOME=/usr/lib/hadoop-0.20-mapreduce/
+export HADOOP_HOME=/usr/lib/hadoop
+export HBASE_HOME=/usr/lib/hbase
+$ hbase org.apache.hadoop.hbase.snapshot.ExportSnapshot -snapshot tsdb-&amp;lt;date&amp;gt; -copy-to hdfs://&amp;lt;dest-hdfs&amp;gt;:8020/hbase -mappers 4&lt;/pre&gt;
+
+&lt;p&gt;Repeat last line for other three opentsdb tables also. This will copy all the snapshot meta data and related HFiles to destination cluster. Make sure you set correct hbase path in destination cluster.&lt;/p&gt;
+
+&lt;p&gt;Once done you can check for copied snapshot files in destination cluster. You also want to check owner of the copied files so that HBase can access it properly. In case of HDP cluster it needed to get changed to _hbase:hdfs _and here is how to do it.&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true &quot;&gt;$ sudo su - hdfs
+hadoop fs -chown -R hbase:hdfs /apps/hbase/data/archive
+hadoop fs -chown -R hbase:hdfs /apps/hbase/data/.hbase-snapshot/tsdb-&amp;lt;date&amp;gt;&lt;/pre&gt;
+
+&lt;p&gt;You may want to repeat last line for all four opentsdb tables snapshots.&lt;/p&gt;
+
+&lt;h2 id=&quot;restoring-opentsdb-table-snapshots&quot;&gt;Restoring OpenTSDB Table Snapshots&lt;/h2&gt;
+
+&lt;p&gt;Now to list and restore snapshots on destination cluster, you can do the following in HBase shell. The first command should list all the snapshot and that should include all four opentsdb table snapshots we just transferred. The second line will restore a snapshot into a table.&lt;/p&gt;
+
+&lt;pre class=&quot;lang:default decode:true &quot;&gt;hbase&amp;gt; list_snapshots
+hbase&amp;gt; restore_snapshot 'tsdb-&amp;lt;date&amp;gt;'&lt;/pre&gt;
+
+&lt;p&gt;If you have already created tables in destination cluster then you may want to disable table first and then restore snapshot and then enable it. Repeat the second line for all four tsdb tables.&lt;/p&gt;
+
+&lt;p&gt;Once all tables are restored and you have verified it, you can change HBase address in TSDs and start them.&lt;/p&gt;</content><author><name>sanket</name></author><category term="Hbase" /><category term="metrics" /><category term="opentsdb" /><summary type="html">As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was ExportSnapshot.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/wp-content/uploads/2017/04/tsdb-hbase.jpg" /></entry><entry><title type="html">Configure PS of PYNQ to work with SDK</title><link href="http://localhost:4000/configure-ps-pynq-work-sdk/" rel="alternate" type="text/html" title="Configure PS of PYNQ to work with SDK" /><published>2017-04-11T09:35:30+05:30</published><updated>2017-04-11T09:35:30+05:30</updated><id>http://localhost:4000/configure-ps-pynq-work-sdk</id><content type="html" xml:base="http://localhost:4000/configure-ps-pynq-work-sdk/">&lt;p&gt;Hi,&lt;/p&gt;
+
+&lt;p&gt;If you’re an FPGA fan or someone who’s got PYNQ board for fun, you might be having a hard time making it run Vivado SDK projects. That’s because, the PYNQ-Z1, the cheap Zynq-7020 board doesn’t have any popular DDR ram on board. You need to configure it by hand, however, tcl is at your rescue.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;When you create a project and include Zynq-PS system to the block diagram, most of the time you don’t need to change the DDR timing properties because of most of the popular boards ie. Zedboard and Zybo use standard memory parts which are pre-configured in the Vivado. However, if you’ve created an Overlay and used it with the Pynq Linux, it doesn’t make any difference because overlays are PL configurations only, they don’t mess with PS part or DDR interface of PS part.&lt;/p&gt;
+
+&lt;h3 id=&quot;tldr&quot;&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;To configure the memory on the PYNQ just do this copy paste in tcl console and you’re all set for SDK.&lt;/p&gt;
+
+&lt;pre class=&quot;scroll:true lang:default decode:true&quot; title=&quot;Pynq_Configure TCL&quot;&gt;set_property -dict [ list \
+CONFIG.PCW_USE_M_AXI_GP0 {1}\
+CONFIG.PCW_DDR_RAM_BASEADDR {0x00100000}  \
+    CONFIG.PCW_DDR_RAM_HIGHADDR {0x1FFFFFFF}  \
+    CONFIG.PCW_UART0_BASEADDR {0xE0000000}  \
+    CONFIG.PCW_UART0_HIGHADDR {0xE0000FFF}  \
+    CONFIG.PCW_UART1_BASEADDR {0xE0001000}  \
+    CONFIG.PCW_UART1_HIGHADDR {0xE0001FFF}  \
+    CONFIG.PCW_I2C0_BASEADDR {0xE0004000}  \
+    CONFIG.PCW_I2C0_HIGHADDR {0xE0004FFF}  \
+    CONFIG.PCW_I2C1_BASEADDR {0xE0005000}  \
+    CONFIG.PCW_I2C1_HIGHADDR {0xE0005FFF}  \
+    CONFIG.PCW_SPI0_BASEADDR {0xE0006000}  \
+    CONFIG.PCW_SPI0_HIGHADDR {0xE0006FFF}  \
+    CONFIG.PCW_SPI1_BASEADDR {0xE0007000}  \
+    CONFIG.PCW_SPI1_HIGHADDR {0xE0007FFF}  \
+    CONFIG.PCW_CAN0_BASEADDR {0xE0008000}  \
+    CONFIG.PCW_CAN0_HIGHADDR {0xE0008FFF}  \
+    CONFIG.PCW_CAN1_BASEADDR {0xE0009000}  \
+    CONFIG.PCW_CAN1_HIGHADDR {0xE0009FFF}  \
+    CONFIG.PCW_GPIO_BASEADDR {0xE000A000}  \
+    CONFIG.PCW_GPIO_HIGHADDR {0xE000AFFF}  \
+    CONFIG.PCW_ENET0_BASEADDR {0xE000B000}  \
+    CONFIG.PCW_ENET0_HIGHADDR {0xE000BFFF}  \
+    CONFIG.PCW_ENET1_BASEADDR {0xE000C000}  \
+    CONFIG.PCW_ENET1_HIGHADDR {0xE000CFFF}  \
+    CONFIG.PCW_SDIO0_BASEADDR {0xE0100000}  \
+    CONFIG.PCW_SDIO0_HIGHADDR {0xE0100FFF}  \
+    CONFIG.PCW_SDIO1_BASEADDR {0xE0101000}  \
+    CONFIG.PCW_SDIO1_HIGHADDR {0xE0101FFF}  \
+    CONFIG.PCW_USB0_BASEADDR {0xE0102000}  \
+    CONFIG.PCW_USB0_HIGHADDR {0xE0102fff}  \
+    CONFIG.PCW_USB1_BASEADDR {0xE0103000}  \
+    CONFIG.PCW_USB1_HIGHADDR {0xE0103fff}  \
+    CONFIG.PCW_TTC0_BASEADDR {0xE0104000}  \
+    CONFIG.PCW_TTC0_HIGHADDR {0xE0104fff}  \
+    CONFIG.PCW_TTC1_BASEADDR {0xE0105000}  \
+    CONFIG.PCW_TTC1_HIGHADDR {0xE0105fff}  \
+    CONFIG.PCW_FCLK_CLK0_BUF {true}  \
+    CONFIG.PCW_FCLK_CLK1_BUF {false}  \
+    CONFIG.PCW_FCLK_CLK2_BUF {false}  \
+    CONFIG.PCW_FCLK_CLK3_BUF {false}  \
+    CONFIG.PCW_UIPARAM_DDR_FREQ_MHZ {525}  \
+    CONFIG.PCW_UIPARAM_DDR_BANK_ADDR_COUNT {3}  \
+    CONFIG.PCW_UIPARAM_DDR_ROW_ADDR_COUNT {15}  \
+    CONFIG.PCW_UIPARAM_DDR_COL_ADDR_COUNT {10}  \
+    CONFIG.PCW_UIPARAM_DDR_CL {7}  \
+    CONFIG.PCW_UIPARAM_DDR_CWL {6}  \
+    CONFIG.PCW_UIPARAM_DDR_T_RCD {7}  \
+    CONFIG.PCW_UIPARAM_DDR_T_RP {7}  \
+    CONFIG.PCW_UIPARAM_DDR_T_RC {48.91}  \
+    CONFIG.PCW_UIPARAM_DDR_T_RAS_MIN {35.0}  \
+    CONFIG.PCW_UIPARAM_DDR_T_FAW {40.0}  \
+    CONFIG.PCW_UIPARAM_DDR_AL {0}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_0 {0.040}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_1 {0.058}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 {-0.009}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 {-0.033}  \
+    CONFIG.PCW_UIPARAM_DDR_BOARD_DELAY0 {0.223}  \
+    CONFIG.PCW_UIPARAM_DDR_BOARD_DELAY1 {0.212}  \
+    CONFIG.PCW_UIPARAM_DDR_BOARD_DELAY2 {0.085}  \
+    CONFIG.PCW_UIPARAM_DDR_BOARD_DELAY3 {0.092}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_0_LENGTH_MM {15.6}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_1_LENGTH_MM {18.8}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_2_LENGTH_MM {0}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_3_LENGTH_MM {0}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_0_LENGTH_MM {16.5}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_1_LENGTH_MM {18}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_2_LENGTH_MM {0}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_3_LENGTH_MM {0}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_0_LENGTH_MM {25.8}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_1_LENGTH_MM {25.8}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_2_LENGTH_MM {0}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_3_LENGTH_MM {0}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_0_PACKAGE_LENGTH {105.056}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_1_PACKAGE_LENGTH {66.904}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_2_PACKAGE_LENGTH {89.1715}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_3_PACKAGE_LENGTH {113.63}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_0_PACKAGE_LENGTH {98.503}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_1_PACKAGE_LENGTH {68.5855}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_2_PACKAGE_LENGTH {90.295}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_3_PACKAGE_LENGTH {103.977}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_0_PACKAGE_LENGTH {80.4535}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_1_PACKAGE_LENGTH {80.4535}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_2_PACKAGE_LENGTH {80.4535}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_3_PACKAGE_LENGTH {80.4535}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_0_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_1_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_2_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_DQS_3_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_0_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_1_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_2_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_DQ_3_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_0_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_1_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_2_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_3_PROPOGATION_DELAY {160}  \
+    CONFIG.PCW_PACKAGE_DDR_DQS_TO_CLK_DELAY_0 {0.040}  \
+    CONFIG.PCW_PACKAGE_DDR_DQS_TO_CLK_DELAY_1 {0.058}  \
+    CONFIG.PCW_PACKAGE_DDR_DQS_TO_CLK_DELAY_2 {-0.009}  \
+    CONFIG.PCW_PACKAGE_DDR_DQS_TO_CLK_DELAY_3 {-0.033}  \
+    CONFIG.PCW_PACKAGE_DDR_BOARD_DELAY0 {0.223}  \
+    CONFIG.PCW_PACKAGE_DDR_BOARD_DELAY1 {0.212}  \
+    CONFIG.PCW_PACKAGE_DDR_BOARD_DELAY2 {0.085}  \
+    CONFIG.PCW_PACKAGE_DDR_BOARD_DELAY3 {0.092}  \
+    CONFIG.PCW_CPU_CPU_6X4X_MAX_RANGE {667}  \
+    CONFIG.PCW_CRYSTAL_PERIPHERAL_FREQMHZ {50}  \
+    CONFIG.PCW_APU_PERIPHERAL_FREQMHZ {650}  \
+    CONFIG.PCW_DCI_PERIPHERAL_FREQMHZ {10.159}  \
+    CONFIG.PCW_QSPI_PERIPHERAL_FREQMHZ {200}  \
+    CONFIG.PCW_SMC_PERIPHERAL_FREQMHZ {100}  \
+    CONFIG.PCW_USB0_PERIPHERAL_FREQMHZ {60}  \
+    CONFIG.PCW_USB1_PERIPHERAL_FREQMHZ {60}  \
+    CONFIG.PCW_SDIO_PERIPHERAL_FREQMHZ {50}  \
+    CONFIG.PCW_UART_PERIPHERAL_FREQMHZ {100}  \
+    CONFIG.PCW_SPI_PERIPHERAL_FREQMHZ {166.666666}  \
+    CONFIG.PCW_CAN_PERIPHERAL_FREQMHZ {100}  \
+    CONFIG.PCW_CAN0_PERIPHERAL_FREQMHZ {-1}  \
+    CONFIG.PCW_CAN1_PERIPHERAL_FREQMHZ {-1}  \
+    CONFIG.PCW_I2C_PERIPHERAL_FREQMHZ {25}  \
+    CONFIG.PCW_WDT_PERIPHERAL_FREQMHZ {133.333333}  \
+    CONFIG.PCW_TTC_PERIPHERAL_FREQMHZ {50}  \
+    CONFIG.PCW_TTC0_CLK0_PERIPHERAL_FREQMHZ {133.333333}  \
+    CONFIG.PCW_TTC0_CLK1_PERIPHERAL_FREQMHZ {133.333333}  \
+    CONFIG.PCW_TTC0_CLK2_PERIPHERAL_FREQMHZ {133.333333}  \
+    CONFIG.PCW_TTC1_CLK0_PERIPHERAL_FREQMHZ {133.333333}  \
+    CONFIG.PCW_TTC1_CLK1_PERIPHERAL_FREQMHZ {133.333333}  \
+    CONFIG.PCW_TTC1_CLK2_PERIPHERAL_FREQMHZ {133.333333}  \
+    CONFIG.PCW_PCAP_PERIPHERAL_FREQMHZ {200}  \
+    CONFIG.PCW_TPIU_PERIPHERAL_FREQMHZ {200}  \
+    CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {100}  \
+    CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ {50}  \
+    CONFIG.PCW_FPGA2_PERIPHERAL_FREQMHZ {50}  \
+    CONFIG.PCW_FPGA3_PERIPHERAL_FREQMHZ {50}  \
+    CONFIG.PCW_ACT_APU_PERIPHERAL_FREQMHZ {650.000000}  \
+    CONFIG.PCW_UIPARAM_ACT_DDR_FREQ_MHZ {525.000000}  \
+    CONFIG.PCW_ACT_DCI_PERIPHERAL_FREQMHZ {10.096154}  \
+    CONFIG.PCW_ACT_QSPI_PERIPHERAL_FREQMHZ {200.000000}  \
+    CONFIG.PCW_ACT_SMC_PERIPHERAL_FREQMHZ {10.000000}  \
+    CONFIG.PCW_ACT_ENET0_PERIPHERAL_FREQMHZ {125.000000}  \
+    CONFIG.PCW_ACT_ENET1_PERIPHERAL_FREQMHZ {10.000000}  \
+    CONFIG.PCW_ACT_USB0_PERIPHERAL_FREQMHZ {60}  \
+    CONFIG.PCW_ACT_USB1_PERIPHERAL_FREQMHZ {60}  \
+    CONFIG.PCW_ACT_SDIO_PERIPHERAL_FREQMHZ {50.000000}  \
+    CONFIG.PCW_ACT_UART_PERIPHERAL_FREQMHZ {100.000000}  \
+    CONFIG.PCW_ACT_SPI_PERIPHERAL_FREQMHZ {10.000000}  \
+    CONFIG.PCW_ACT_CAN_PERIPHERAL_FREQMHZ {10.000000}  \
+    CONFIG.PCW_ACT_CAN0_PERIPHERAL_FREQMHZ {23.8095}  \
+    CONFIG.PCW_ACT_CAN1_PERIPHERAL_FREQMHZ {23.8095}  \
+    CONFIG.PCW_ACT_I2C_PERIPHERAL_FREQMHZ {50}  \
+    CONFIG.PCW_ACT_WDT_PERIPHERAL_FREQMHZ {108.333336}  \
+    CONFIG.PCW_ACT_TTC_PERIPHERAL_FREQMHZ {50}  \
+    CONFIG.PCW_ACT_PCAP_PERIPHERAL_FREQMHZ {200.000000}  \
+    CONFIG.PCW_ACT_TPIU_PERIPHERAL_FREQMHZ {200.000000}  \
+    CONFIG.PCW_ACT_FPGA0_PERIPHERAL_FREQMHZ {100.000000}  \
+    CONFIG.PCW_ACT_FPGA1_PERIPHERAL_FREQMHZ {50.000000}  \
+    CONFIG.PCW_ACT_FPGA2_PERIPHERAL_FREQMHZ {50.000000}  \
+    CONFIG.PCW_ACT_FPGA3_PERIPHERAL_FREQMHZ {50.000000}  \
+    CONFIG.PCW_ACT_TTC0_CLK0_PERIPHERAL_FREQMHZ {108.333336}  \
+    CONFIG.PCW_ACT_TTC0_CLK1_PERIPHERAL_FREQMHZ {108.333336}  \
+    CONFIG.PCW_ACT_TTC0_CLK2_PERIPHERAL_FREQMHZ {108.333336}  \
+    CONFIG.PCW_ACT_TTC1_CLK0_PERIPHERAL_FREQMHZ {108.333336}  \
+    CONFIG.PCW_ACT_TTC1_CLK1_PERIPHERAL_FREQMHZ {108.333336}  \
+    CONFIG.PCW_ACT_TTC1_CLK2_PERIPHERAL_FREQMHZ {108.333336}  \
+    CONFIG.PCW_CLK0_FREQ {100000000}  \
+    CONFIG.PCW_CLK1_FREQ {50000000}  \
+    CONFIG.PCW_CLK2_FREQ {50000000}  \
+    CONFIG.PCW_CLK3_FREQ {50000000}  \
+    CONFIG.PCW_OVERRIDE_BASIC_CLOCK {0}  \
+    CONFIG.PCW_CPU_PERIPHERAL_DIVISOR0 {2}  \
+    CONFIG.PCW_DDR_PERIPHERAL_DIVISOR0 {2}  \
+    CONFIG.PCW_SMC_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_QSPI_PERIPHERAL_DIVISOR0 {5}  \
+    CONFIG.PCW_SDIO_PERIPHERAL_DIVISOR0 {20}  \
+    CONFIG.PCW_UART_PERIPHERAL_DIVISOR0 {10}  \
+    CONFIG.PCW_SPI_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_CAN_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_CAN_PERIPHERAL_DIVISOR1 {1}  \
+    CONFIG.PCW_FCLK0_PERIPHERAL_DIVISOR0 {10}  \
+    CONFIG.PCW_FCLK1_PERIPHERAL_DIVISOR0 {20}  \
+    CONFIG.PCW_FCLK2_PERIPHERAL_DIVISOR0 {20}  \
+    CONFIG.PCW_FCLK3_PERIPHERAL_DIVISOR0 {20}  \
+    CONFIG.PCW_FCLK0_PERIPHERAL_DIVISOR1 {1}  \
+    CONFIG.PCW_FCLK1_PERIPHERAL_DIVISOR1 {1}  \
+    CONFIG.PCW_FCLK2_PERIPHERAL_DIVISOR1 {1}  \
+    CONFIG.PCW_FCLK3_PERIPHERAL_DIVISOR1 {1}  \
+    CONFIG.PCW_ENET0_PERIPHERAL_DIVISOR0 {8}  \
+    CONFIG.PCW_ENET1_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_ENET0_PERIPHERAL_DIVISOR1 {1}  \
+    CONFIG.PCW_ENET1_PERIPHERAL_DIVISOR1 {1}  \
+    CONFIG.PCW_TPIU_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_DCI_PERIPHERAL_DIVISOR0 {52}  \
+    CONFIG.PCW_DCI_PERIPHERAL_DIVISOR1 {2}  \
+    CONFIG.PCW_PCAP_PERIPHERAL_DIVISOR0 {5}  \
+    CONFIG.PCW_TTC0_CLK0_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_TTC0_CLK1_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_TTC0_CLK2_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_TTC1_CLK0_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_TTC1_CLK1_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_TTC1_CLK2_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_WDT_PERIPHERAL_DIVISOR0 {1}  \
+    CONFIG.PCW_ARMPLL_CTRL_FBDIV {26}  \
+    CONFIG.PCW_IOPLL_CTRL_FBDIV {20}  \
+    CONFIG.PCW_DDRPLL_CTRL_FBDIV {21}  \
+    CONFIG.PCW_CPU_CPU_PLL_FREQMHZ {1300.000}  \
+    CONFIG.PCW_IO_IO_PLL_FREQMHZ {1000.000}  \
+    CONFIG.PCW_DDR_DDR_PLL_FREQMHZ {1050.000}  \
+    CONFIG.PCW_SMC_PERIPHERAL_VALID {0}  \
+    CONFIG.PCW_SDIO_PERIPHERAL_VALID {1}  \
+    CONFIG.PCW_SPI_PERIPHERAL_VALID {0}  \
+    CONFIG.PCW_CAN_PERIPHERAL_VALID {0}  \
+    CONFIG.PCW_UART_PERIPHERAL_VALID {1}  \
+    CONFIG.PCW_EN_EMIO_CAN0 {0}  \
+    CONFIG.PCW_EN_EMIO_CAN1 {0}  \
+    CONFIG.PCW_EN_EMIO_ENET0 {0}  \
+    CONFIG.PCW_EN_EMIO_ENET1 {0}  \
+    CONFIG.PCW_EN_PTP_ENET0 {0}  \
+    CONFIG.PCW_EN_PTP_ENET1 {0}  \
+    CONFIG.PCW_EN_EMIO_GPIO {0}  \
+    CONFIG.PCW_EN_EMIO_I2C0 {0}  \
+    CONFIG.PCW_EN_EMIO_I2C1 {0}  \
+    CONFIG.PCW_EN_EMIO_PJTAG {0}  \
+    CONFIG.PCW_EN_EMIO_SDIO0 {0}  \
+    CONFIG.PCW_EN_EMIO_CD_SDIO0 {0}  \
+    CONFIG.PCW_EN_EMIO_WP_SDIO0 {0}  \
+    CONFIG.PCW_EN_EMIO_SDIO1 {0}  \
+    CONFIG.PCW_EN_EMIO_CD_SDIO1 {0}  \
+    CONFIG.PCW_EN_EMIO_WP_SDIO1 {0}  \
+    CONFIG.PCW_EN_EMIO_SPI0 {0}  \
+    CONFIG.PCW_EN_EMIO_SPI1 {0}  \
+    CONFIG.PCW_EN_EMIO_UART0 {0}  \
+    CONFIG.PCW_EN_EMIO_UART1 {0}  \
+    CONFIG.PCW_EN_EMIO_MODEM_UART0 {0}  \
+    CONFIG.PCW_EN_EMIO_MODEM_UART1 {0}  \
+    CONFIG.PCW_EN_EMIO_TTC0 {0}  \
+    CONFIG.PCW_EN_EMIO_TTC1 {0}  \
+    CONFIG.PCW_EN_EMIO_WDT {0}  \
+    CONFIG.PCW_EN_EMIO_TRACE {0}  \
+    CONFIG.PCW_USE_AXI_NONSECURE {0}  \
+    CONFIG.PCW_USE_M_AXI_GP0 {0}  \
+    CONFIG.PCW_USE_M_AXI_GP1 {0}  \
+    CONFIG.PCW_USE_S_AXI_GP0 {0}  \
+    CONFIG.PCW_USE_S_AXI_GP1 {0}  \
+    CONFIG.PCW_USE_S_AXI_ACP {0}  \
+    CONFIG.PCW_USE_S_AXI_HP0 {0}  \
+    CONFIG.PCW_USE_S_AXI_HP1 {0}  \
+    CONFIG.PCW_USE_S_AXI_HP2 {0}  \
+    CONFIG.PCW_USE_S_AXI_HP3 {0}  \
+    CONFIG.PCW_M_AXI_GP0_FREQMHZ {10}  \
+    CONFIG.PCW_M_AXI_GP1_FREQMHZ {10}  \
+    CONFIG.PCW_S_AXI_GP0_FREQMHZ {10}  \
+    CONFIG.PCW_S_AXI_GP1_FREQMHZ {10}  \
+    CONFIG.PCW_S_AXI_ACP_FREQMHZ {10}  \
+    CONFIG.PCW_S_AXI_HP0_FREQMHZ {10}  \
+    CONFIG.PCW_S_AXI_HP1_FREQMHZ {10}  \
+    CONFIG.PCW_S_AXI_HP2_FREQMHZ {10}  \
+    CONFIG.PCW_S_AXI_HP3_FREQMHZ {10}  \
+    CONFIG.PCW_USE_DMA0 {0}  \
+    CONFIG.PCW_USE_DMA1 {0}  \
+    CONFIG.PCW_USE_DMA2 {0}  \
+    CONFIG.PCW_USE_DMA3 {0}  \
+    CONFIG.PCW_USE_TRACE {0}  \
+    CONFIG.PCW_TRACE_PIPELINE_WIDTH {8}  \
+    CONFIG.PCW_INCLUDE_TRACE_BUFFER {0}  \
+    CONFIG.PCW_TRACE_BUFFER_FIFO_SIZE {128}  \
+    CONFIG.PCW_USE_TRACE_DATA_EDGE_DETECTOR {0}  \
+    CONFIG.PCW_TRACE_BUFFER_CLOCK_DELAY {12}  \
+    CONFIG.PCW_USE_CROSS_TRIGGER {0}  \
+    CONFIG.PCW_FTM_CTI_IN0 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_FTM_CTI_IN1 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_FTM_CTI_IN2 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_FTM_CTI_IN3 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_FTM_CTI_OUT0 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_FTM_CTI_OUT1 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_FTM_CTI_OUT2 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_FTM_CTI_OUT3 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_USE_DEBUG {0}  \
+    CONFIG.PCW_USE_CR_FABRIC {1}  \
+    CONFIG.PCW_USE_AXI_FABRIC_IDLE {0}  \
+    CONFIG.PCW_USE_DDR_BYPASS {0}  \
+    CONFIG.PCW_USE_FABRIC_INTERRUPT {0}  \
+    CONFIG.PCW_USE_PROC_EVENT_BUS {0}  \
+    CONFIG.PCW_USE_EXPANDED_IOP {0}  \
+    CONFIG.PCW_USE_HIGH_OCM {0}  \
+    CONFIG.PCW_USE_PS_SLCR_REGISTERS {0}  \
+    CONFIG.PCW_USE_EXPANDED_PS_SLCR_REGISTERS {0}  \
+    CONFIG.PCW_USE_CORESIGHT {0}  \
+    CONFIG.PCW_EN_EMIO_SRAM_INT {0}  \
+    CONFIG.PCW_GPIO_EMIO_GPIO_WIDTH {64}  \
+    CONFIG.PCW_UART0_BAUD_RATE {115200}  \
+    CONFIG.PCW_UART1_BAUD_RATE {115200}  \
+    CONFIG.PCW_EN_4K_TIMER {0}  \
+    CONFIG.PCW_M_AXI_GP0_ID_WIDTH {12}  \
+    CONFIG.PCW_M_AXI_GP0_ENABLE_STATIC_REMAP {0}  \
+    CONFIG.PCW_M_AXI_GP0_SUPPORT_NARROW_BURST {0}  \
+    CONFIG.PCW_M_AXI_GP0_THREAD_ID_WIDTH {12}  \
+    CONFIG.PCW_M_AXI_GP1_ID_WIDTH {12}  \
+    CONFIG.PCW_M_AXI_GP1_ENABLE_STATIC_REMAP {0}  \
+    CONFIG.PCW_M_AXI_GP1_SUPPORT_NARROW_BURST {0}  \
+    CONFIG.PCW_M_AXI_GP1_THREAD_ID_WIDTH {12}  \
+    CONFIG.PCW_S_AXI_GP0_ID_WIDTH {6}  \
+    CONFIG.PCW_S_AXI_GP1_ID_WIDTH {6}  \
+    CONFIG.PCW_S_AXI_ACP_ID_WIDTH {3}  \
+    CONFIG.PCW_INCLUDE_ACP_TRANS_CHECK {0}  \
+    CONFIG.PCW_USE_DEFAULT_ACP_USER_VAL {0}  \
+    CONFIG.PCW_S_AXI_ACP_ARUSER_VAL {31}  \
+    CONFIG.PCW_S_AXI_ACP_AWUSER_VAL {31}  \
+    CONFIG.PCW_S_AXI_HP0_ID_WIDTH {6}  \
+    CONFIG.PCW_S_AXI_HP0_DATA_WIDTH {64}  \
+    CONFIG.PCW_S_AXI_HP1_ID_WIDTH {6}  \
+    CONFIG.PCW_S_AXI_HP1_DATA_WIDTH {64}  \
+    CONFIG.PCW_S_AXI_HP2_ID_WIDTH {6}  \
+    CONFIG.PCW_S_AXI_HP2_DATA_WIDTH {64}  \
+    CONFIG.PCW_S_AXI_HP3_ID_WIDTH {6}  \
+    CONFIG.PCW_S_AXI_HP3_DATA_WIDTH {64}  \
+    CONFIG.PCW_EN_DDR {1}  \
+    CONFIG.PCW_EN_SMC {0}  \
+    CONFIG.PCW_EN_QSPI {1}  \
+    CONFIG.PCW_EN_CAN0 {0}  \
+    CONFIG.PCW_EN_CAN1 {0}  \
+    CONFIG.PCW_EN_ENET0 {1}  \
+    CONFIG.PCW_EN_ENET1 {0}  \
+    CONFIG.PCW_EN_GPIO {1}  \
+    CONFIG.PCW_EN_I2C0 {0}  \
+    CONFIG.PCW_EN_I2C1 {0}  \
+    CONFIG.PCW_EN_PJTAG {0}  \
+    CONFIG.PCW_EN_SDIO0 {1}  \
+    CONFIG.PCW_EN_SDIO1 {0}  \
+    CONFIG.PCW_EN_SPI0 {0}  \
+    CONFIG.PCW_EN_SPI1 {0}  \
+    CONFIG.PCW_EN_UART0 {1}  \
+    CONFIG.PCW_EN_UART1 {0}  \
+    CONFIG.PCW_EN_MODEM_UART0 {0}  \
+    CONFIG.PCW_EN_MODEM_UART1 {0}  \
+    CONFIG.PCW_EN_TTC0 {0}  \
+    CONFIG.PCW_EN_TTC1 {0}  \
+    CONFIG.PCW_EN_WDT {0}  \
+    CONFIG.PCW_EN_TRACE {0}  \
+    CONFIG.PCW_EN_USB0 {1}  \
+    CONFIG.PCW_EN_USB1 {0}  \
+    CONFIG.PCW_DQ_WIDTH {32}  \
+    CONFIG.PCW_DQS_WIDTH {4}  \
+    CONFIG.PCW_DM_WIDTH {4}  \
+    CONFIG.PCW_MIO_PRIMITIVE {54}  \
+    CONFIG.PCW_EN_CLK0_PORT {1}  \
+    CONFIG.PCW_EN_CLK1_PORT {0}  \
+    CONFIG.PCW_EN_CLK2_PORT {0}  \
+    CONFIG.PCW_EN_CLK3_PORT {0}  \
+    CONFIG.PCW_EN_RST0_PORT {1}  \
+    CONFIG.PCW_EN_RST1_PORT {0}  \
+    CONFIG.PCW_EN_RST2_PORT {0}  \
+    CONFIG.PCW_EN_RST3_PORT {0}  \
+    CONFIG.PCW_EN_CLKTRIG0_PORT {0}  \
+    CONFIG.PCW_EN_CLKTRIG1_PORT {0}  \
+    CONFIG.PCW_EN_CLKTRIG2_PORT {0}  \
+    CONFIG.PCW_EN_CLKTRIG3_PORT {0}  \
+    CONFIG.PCW_P2F_DMAC_ABORT_INTR {0}  \
+    CONFIG.PCW_P2F_DMAC0_INTR {0}  \
+    CONFIG.PCW_P2F_DMAC1_INTR {0}  \
+    CONFIG.PCW_P2F_DMAC2_INTR {0}  \
+    CONFIG.PCW_P2F_DMAC3_INTR {0}  \
+    CONFIG.PCW_P2F_DMAC4_INTR {0}  \
+    CONFIG.PCW_P2F_DMAC5_INTR {0}  \
+    CONFIG.PCW_P2F_DMAC6_INTR {0}  \
+    CONFIG.PCW_P2F_DMAC7_INTR {0}  \
+    CONFIG.PCW_P2F_SMC_INTR {0}  \
+    CONFIG.PCW_P2F_QSPI_INTR {0}  \
+    CONFIG.PCW_P2F_CTI_INTR {0}  \
+    CONFIG.PCW_P2F_GPIO_INTR {0}  \
+    CONFIG.PCW_P2F_USB0_INTR {0}  \
+    CONFIG.PCW_P2F_ENET0_INTR {0}  \
+    CONFIG.PCW_P2F_SDIO0_INTR {0}  \
+    CONFIG.PCW_P2F_I2C0_INTR {0}  \
+    CONFIG.PCW_P2F_SPI0_INTR {0}  \
+    CONFIG.PCW_P2F_UART0_INTR {0}  \
+    CONFIG.PCW_P2F_CAN0_INTR {0}  \
+    CONFIG.PCW_P2F_USB1_INTR {0}  \
+    CONFIG.PCW_P2F_ENET1_INTR {0}  \
+    CONFIG.PCW_P2F_SDIO1_INTR {0}  \
+    CONFIG.PCW_P2F_I2C1_INTR {0}  \
+    CONFIG.PCW_P2F_SPI1_INTR {0}  \
+    CONFIG.PCW_P2F_UART1_INTR {0}  \
+    CONFIG.PCW_P2F_CAN1_INTR {0}  \
+    CONFIG.PCW_IRQ_F2P_INTR {0}  \
+    CONFIG.PCW_IRQ_F2P_MODE {DIRECT}  \
+    CONFIG.PCW_CORE0_FIQ_INTR {0}  \
+    CONFIG.PCW_CORE0_IRQ_INTR {0}  \
+    CONFIG.PCW_CORE1_FIQ_INTR {0}  \
+    CONFIG.PCW_CORE1_IRQ_INTR {0}  \
+    CONFIG.PCW_VALUE_SILVERSION {3}  \
+    CONFIG.PCW_IMPORT_BOARD_PRESET {None}  \
+    CONFIG.PCW_PERIPHERAL_BOARD_PRESET {None}  \
+    CONFIG.PCW_PRESET_BANK0_VOLTAGE {LVCMOS 3.3V}  \
+    CONFIG.PCW_PRESET_BANK1_VOLTAGE {LVCMOS 1.8V}  \
+    CONFIG.PCW_UIPARAM_DDR_ENABLE {1}  \
+    CONFIG.PCW_UIPARAM_DDR_ADV_ENABLE {0}  \
+    CONFIG.PCW_UIPARAM_DDR_MEMORY_TYPE {DDR 3}  \
+    CONFIG.PCW_UIPARAM_DDR_ECC {Disabled}  \
+    CONFIG.PCW_UIPARAM_DDR_BUS_WIDTH {16 Bit}  \
+    CONFIG.PCW_UIPARAM_DDR_BL {8}  \
+    CONFIG.PCW_UIPARAM_DDR_HIGH_TEMP {Normal (0-85)}  \
+    CONFIG.PCW_UIPARAM_DDR_PARTNO {MT41J256M16 RE-125}  \
+    CONFIG.PCW_UIPARAM_DDR_DRAM_WIDTH {16 Bits}  \
+    CONFIG.PCW_UIPARAM_DDR_DEVICE_CAPACITY {4096 MBits}  \
+    CONFIG.PCW_UIPARAM_DDR_SPEED_BIN {DDR3_1066F}  \
+    CONFIG.PCW_UIPARAM_DDR_TRAIN_WRITE_LEVEL {1}  \
+    CONFIG.PCW_UIPARAM_DDR_TRAIN_READ_GATE {1}  \
+    CONFIG.PCW_UIPARAM_DDR_TRAIN_DATA_EYE {1}  \
+    CONFIG.PCW_UIPARAM_DDR_CLOCK_STOP_EN {0}  \
+    CONFIG.PCW_UIPARAM_DDR_USE_INTERNAL_VREF {0}  \
+    CONFIG.PCW_DDR_PRIORITY_WRITEPORT_0 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_DDR_PRIORITY_WRITEPORT_1 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_DDR_PRIORITY_WRITEPORT_2 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_DDR_PRIORITY_WRITEPORT_3 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_DDR_PRIORITY_READPORT_0 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_DDR_PRIORITY_READPORT_1 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_DDR_PRIORITY_READPORT_2 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_DDR_PRIORITY_READPORT_3 {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_DDR_PORT0_HPR_ENABLE {0}  \
+    CONFIG.PCW_DDR_PORT1_HPR_ENABLE {0}  \
+    CONFIG.PCW_DDR_PORT2_HPR_ENABLE {0}  \
+    CONFIG.PCW_DDR_PORT3_HPR_ENABLE {0}  \
+    CONFIG.PCW_DDR_HPRLPR_QUEUE_PARTITION {HPR(0)/LPR(32)}  \
+    CONFIG.PCW_DDR_LPR_TO_CRITICAL_PRIORITY_LEVEL {2}  \
+    CONFIG.PCW_DDR_HPR_TO_CRITICAL_PRIORITY_LEVEL {15}  \
+    CONFIG.PCW_DDR_WRITE_TO_CRITICAL_PRIORITY_LEVEL {2}  \
+    CONFIG.PCW_NAND_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_NAND_NAND_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_NAND_GRP_D8_ENABLE {0}  \
+    CONFIG.PCW_NAND_GRP_D8_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_NOR_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_NOR_NOR_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_NOR_GRP_A25_ENABLE {0}  \
+    CONFIG.PCW_NOR_GRP_A25_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_NOR_GRP_CS0_ENABLE {0}  \
+    CONFIG.PCW_NOR_GRP_CS0_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_NOR_GRP_SRAM_CS0_ENABLE {0}  \
+    CONFIG.PCW_NOR_GRP_SRAM_CS0_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_NOR_GRP_CS1_ENABLE {0}  \
+    CONFIG.PCW_NOR_GRP_CS1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_NOR_GRP_SRAM_CS1_ENABLE {0}  \
+    CONFIG.PCW_NOR_GRP_SRAM_CS1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_NOR_GRP_SRAM_INT_ENABLE {0}  \
+    CONFIG.PCW_NOR_GRP_SRAM_INT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_QSPI_PERIPHERAL_ENABLE {1}  \
+    CONFIG.PCW_QSPI_QSPI_IO {MIO 1 .. 6}  \
+    CONFIG.PCW_QSPI_GRP_SINGLE_SS_ENABLE {1}  \
+    CONFIG.PCW_QSPI_GRP_SINGLE_SS_IO {MIO 1 .. 6}  \
+    CONFIG.PCW_QSPI_GRP_SS1_ENABLE {0}  \
+    CONFIG.PCW_QSPI_GRP_SS1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_QSPI_GRP_IO1_ENABLE {0}  \
+    CONFIG.PCW_QSPI_GRP_IO1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_QSPI_GRP_FBCLK_ENABLE {1}  \
+    CONFIG.PCW_QSPI_GRP_FBCLK_IO {MIO 8}  \
+    CONFIG.PCW_QSPI_INTERNAL_HIGHADDRESS {0xFCFFFFFF}  \
+    CONFIG.PCW_ENET0_PERIPHERAL_ENABLE {1}  \
+    CONFIG.PCW_ENET0_ENET0_IO {MIO 16 .. 27}  \
+    CONFIG.PCW_ENET0_GRP_MDIO_ENABLE {1}  \
+    CONFIG.PCW_ENET0_GRP_MDIO_IO {MIO 52 .. 53}  \
+    CONFIG.PCW_ENET_RESET_ENABLE {1}  \
+    CONFIG.PCW_ENET_RESET_SELECT {Share reset pin}  \
+    CONFIG.PCW_ENET0_RESET_ENABLE {1}  \
+    CONFIG.PCW_ENET0_RESET_IO {MIO 9}  \
+    CONFIG.PCW_ENET1_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_ENET1_ENET1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_ENET1_GRP_MDIO_ENABLE {0}  \
+    CONFIG.PCW_ENET1_GRP_MDIO_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_ENET1_RESET_ENABLE {0}  \
+    CONFIG.PCW_ENET1_RESET_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SD0_PERIPHERAL_ENABLE {1}  \
+    CONFIG.PCW_SD0_SD0_IO {MIO 40 .. 45}  \
+    CONFIG.PCW_SD0_GRP_CD_ENABLE {1}  \
+    CONFIG.PCW_SD0_GRP_CD_IO {MIO 47}  \
+    CONFIG.PCW_SD0_GRP_WP_ENABLE {0}  \
+    CONFIG.PCW_SD0_GRP_WP_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SD0_GRP_POW_ENABLE {0}  \
+    CONFIG.PCW_SD0_GRP_POW_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SD1_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_SD1_SD1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SD1_GRP_CD_ENABLE {0}  \
+    CONFIG.PCW_SD1_GRP_CD_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SD1_GRP_WP_ENABLE {0}  \
+    CONFIG.PCW_SD1_GRP_WP_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SD1_GRP_POW_ENABLE {0}  \
+    CONFIG.PCW_SD1_GRP_POW_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_UART0_PERIPHERAL_ENABLE {1}  \
+    CONFIG.PCW_UART0_UART0_IO {MIO 14 .. 15}  \
+    CONFIG.PCW_UART0_GRP_FULL_ENABLE {0}  \
+    CONFIG.PCW_UART0_GRP_FULL_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_UART1_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_UART1_UART1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_UART1_GRP_FULL_ENABLE {0}  \
+    CONFIG.PCW_UART1_GRP_FULL_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SPI0_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_SPI0_SPI0_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SPI0_GRP_SS0_ENABLE {0}  \
+    CONFIG.PCW_SPI0_GRP_SS0_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SPI0_GRP_SS1_ENABLE {0}  \
+    CONFIG.PCW_SPI0_GRP_SS1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SPI0_GRP_SS2_ENABLE {0}  \
+    CONFIG.PCW_SPI0_GRP_SS2_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SPI1_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_SPI1_SPI1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SPI1_GRP_SS0_ENABLE {0}  \
+    CONFIG.PCW_SPI1_GRP_SS0_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SPI1_GRP_SS1_ENABLE {0}  \
+    CONFIG.PCW_SPI1_GRP_SS1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_SPI1_GRP_SS2_ENABLE {0}  \
+    CONFIG.PCW_SPI1_GRP_SS2_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_CAN0_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_CAN0_CAN0_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_CAN0_GRP_CLK_ENABLE {0}  \
+    CONFIG.PCW_CAN0_GRP_CLK_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_CAN1_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_CAN1_CAN1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_CAN1_GRP_CLK_ENABLE {0}  \
+    CONFIG.PCW_CAN1_GRP_CLK_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TRACE_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_TRACE_TRACE_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TRACE_GRP_2BIT_ENABLE {0}  \
+    CONFIG.PCW_TRACE_GRP_2BIT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TRACE_GRP_4BIT_ENABLE {0}  \
+    CONFIG.PCW_TRACE_GRP_4BIT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TRACE_GRP_8BIT_ENABLE {0}  \
+    CONFIG.PCW_TRACE_GRP_8BIT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TRACE_GRP_16BIT_ENABLE {0}  \
+    CONFIG.PCW_TRACE_GRP_16BIT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TRACE_GRP_32BIT_ENABLE {0}  \
+    CONFIG.PCW_TRACE_GRP_32BIT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TRACE_INTERNAL_WIDTH {2}  \
+    CONFIG.PCW_WDT_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_WDT_WDT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TTC0_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_TTC0_TTC0_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_TTC1_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_TTC1_TTC1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_PJTAG_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_PJTAG_PJTAG_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_USB0_PERIPHERAL_ENABLE {1}  \
+    CONFIG.PCW_USB0_USB0_IO {MIO 28 .. 39}  \
+    CONFIG.PCW_USB_RESET_ENABLE {1}  \
+    CONFIG.PCW_USB_RESET_SELECT {Share reset pin}  \
+    CONFIG.PCW_USB0_RESET_ENABLE {1}  \
+    CONFIG.PCW_USB0_RESET_IO {MIO 46}  \
+    CONFIG.PCW_USB1_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_USB1_USB1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_USB1_RESET_ENABLE {0}  \
+    CONFIG.PCW_USB1_RESET_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_I2C0_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_I2C0_I2C0_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_I2C0_GRP_INT_ENABLE {0}  \
+    CONFIG.PCW_I2C0_GRP_INT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_I2C0_RESET_ENABLE {0}  \
+    CONFIG.PCW_I2C0_RESET_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_I2C1_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_I2C1_I2C1_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_I2C1_GRP_INT_ENABLE {0}  \
+    CONFIG.PCW_I2C1_GRP_INT_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_I2C_RESET_ENABLE {1}  \
+    CONFIG.PCW_I2C_RESET_SELECT {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_I2C1_RESET_ENABLE {0}  \
+    CONFIG.PCW_I2C1_RESET_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_GPIO_PERIPHERAL_ENABLE {0}  \
+    CONFIG.PCW_GPIO_MIO_GPIO_ENABLE {1}  \
+    CONFIG.PCW_GPIO_MIO_GPIO_IO {MIO}  \
+    CONFIG.PCW_GPIO_EMIO_GPIO_ENABLE {0}  \
+    CONFIG.PCW_GPIO_EMIO_GPIO_IO {&amp;lt;Select&amp;gt;}  \
+    CONFIG.PCW_APU_CLK_RATIO_ENABLE {6:2:1}  \
+    CONFIG.PCW_ENET0_PERIPHERAL_FREQMHZ {1000 Mbps}  \
+    CONFIG.PCW_ENET1_PERIPHERAL_FREQMHZ {1000 Mbps}  \
+    CONFIG.PCW_CPU_PERIPHERAL_CLKSRC {ARM PLL}  \
+    CONFIG.PCW_DDR_PERIPHERAL_CLKSRC {DDR PLL}  \
+    CONFIG.PCW_SMC_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_QSPI_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_SDIO_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_UART_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_SPI_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_CAN_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_FCLK0_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_FCLK1_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_FCLK2_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_FCLK3_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_ENET0_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_ENET1_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_CAN0_PERIPHERAL_CLKSRC {External}  \
+    CONFIG.PCW_CAN1_PERIPHERAL_CLKSRC {External}  \
+    CONFIG.PCW_TPIU_PERIPHERAL_CLKSRC {External}  \
+    CONFIG.PCW_TTC0_CLK0_PERIPHERAL_CLKSRC {CPU_1X}  \
+    CONFIG.PCW_TTC0_CLK1_PERIPHERAL_CLKSRC {CPU_1X}  \
+    CONFIG.PCW_TTC0_CLK2_PERIPHERAL_CLKSRC {CPU_1X}  \
+    CONFIG.PCW_TTC1_CLK0_PERIPHERAL_CLKSRC {CPU_1X}  \
+    CONFIG.PCW_TTC1_CLK1_PERIPHERAL_CLKSRC {CPU_1X}  \
+    CONFIG.PCW_TTC1_CLK2_PERIPHERAL_CLKSRC {CPU_1X}  \
+    CONFIG.PCW_WDT_PERIPHERAL_CLKSRC {CPU_1X}  \
+    CONFIG.PCW_DCI_PERIPHERAL_CLKSRC {DDR PLL}  \
+    CONFIG.PCW_PCAP_PERIPHERAL_CLKSRC {IO PLL}  \
+    CONFIG.PCW_USB_RESET_POLARITY {Active Low}  \
+    CONFIG.PCW_ENET_RESET_POLARITY {Active Low}  \
+    CONFIG.PCW_I2C_RESET_POLARITY {Active Low}  \
+    CONFIG.PCW_MIO_0_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_0_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_0_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_0_SLEW {slow}  \
+    CONFIG.PCW_MIO_1_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_1_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_1_DIRECTION {out}  \
+    CONFIG.PCW_MIO_1_SLEW {slow}  \
+    CONFIG.PCW_MIO_2_PULLUP {disabled}  \
+    CONFIG.PCW_MIO_2_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_2_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_2_SLEW {slow}  \
+    CONFIG.PCW_MIO_3_PULLUP {disabled}  \
+    CONFIG.PCW_MIO_3_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_3_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_3_SLEW {slow}  \
+    CONFIG.PCW_MIO_4_PULLUP {disabled}  \
+    CONFIG.PCW_MIO_4_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_4_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_4_SLEW {slow}  \
+    CONFIG.PCW_MIO_5_PULLUP {disabled}  \
+    CONFIG.PCW_MIO_5_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_5_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_5_SLEW {slow}  \
+    CONFIG.PCW_MIO_6_PULLUP {disabled}  \
+    CONFIG.PCW_MIO_6_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_6_DIRECTION {out}  \
+    CONFIG.PCW_MIO_6_SLEW {slow}  \
+    CONFIG.PCW_MIO_7_PULLUP {disabled}  \
+    CONFIG.PCW_MIO_7_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_7_DIRECTION {out}  \
+    CONFIG.PCW_MIO_7_SLEW {slow}  \
+    CONFIG.PCW_MIO_8_PULLUP {disabled}  \
+    CONFIG.PCW_MIO_8_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_8_DIRECTION {out}  \
+    CONFIG.PCW_MIO_8_SLEW {slow}  \
+    CONFIG.PCW_MIO_9_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_9_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_9_DIRECTION {out}  \
+    CONFIG.PCW_MIO_9_SLEW {slow}  \
+    CONFIG.PCW_MIO_10_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_10_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_10_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_10_SLEW {slow}  \
+    CONFIG.PCW_MIO_11_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_11_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_11_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_11_SLEW {slow}  \
+    CONFIG.PCW_MIO_12_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_12_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_12_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_12_SLEW {slow}  \
+    CONFIG.PCW_MIO_13_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_13_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_13_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_13_SLEW {slow}  \
+    CONFIG.PCW_MIO_14_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_14_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_14_DIRECTION {in}  \
+    CONFIG.PCW_MIO_14_SLEW {slow}  \
+    CONFIG.PCW_MIO_15_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_15_IOTYPE {LVCMOS 3.3V}  \
+    CONFIG.PCW_MIO_15_DIRECTION {out}  \
+    CONFIG.PCW_MIO_15_SLEW {slow}  \
+    CONFIG.PCW_MIO_16_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_16_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_16_DIRECTION {out}  \
+    CONFIG.PCW_MIO_16_SLEW {slow}  \
+    CONFIG.PCW_MIO_17_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_17_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_17_DIRECTION {out}  \
+    CONFIG.PCW_MIO_17_SLEW {slow}  \
+    CONFIG.PCW_MIO_18_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_18_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_18_DIRECTION {out}  \
+    CONFIG.PCW_MIO_18_SLEW {slow}  \
+    CONFIG.PCW_MIO_19_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_19_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_19_DIRECTION {out}  \
+    CONFIG.PCW_MIO_19_SLEW {slow}  \
+    CONFIG.PCW_MIO_20_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_20_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_20_DIRECTION {out}  \
+    CONFIG.PCW_MIO_20_SLEW {slow}  \
+    CONFIG.PCW_MIO_21_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_21_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_21_DIRECTION {out}  \
+    CONFIG.PCW_MIO_21_SLEW {slow}  \
+    CONFIG.PCW_MIO_22_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_22_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_22_DIRECTION {in}  \
+    CONFIG.PCW_MIO_22_SLEW {slow}  \
+    CONFIG.PCW_MIO_23_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_23_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_23_DIRECTION {in}  \
+    CONFIG.PCW_MIO_23_SLEW {slow}  \
+    CONFIG.PCW_MIO_24_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_24_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_24_DIRECTION {in}  \
+    CONFIG.PCW_MIO_24_SLEW {slow}  \
+    CONFIG.PCW_MIO_25_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_25_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_25_DIRECTION {in}  \
+    CONFIG.PCW_MIO_25_SLEW {slow}  \
+    CONFIG.PCW_MIO_26_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_26_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_26_DIRECTION {in}  \
+    CONFIG.PCW_MIO_26_SLEW {slow}  \
+    CONFIG.PCW_MIO_27_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_27_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_27_DIRECTION {in}  \
+    CONFIG.PCW_MIO_27_SLEW {slow}  \
+    CONFIG.PCW_MIO_28_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_28_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_28_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_28_SLEW {slow}  \
+    CONFIG.PCW_MIO_29_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_29_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_29_DIRECTION {in}  \
+    CONFIG.PCW_MIO_29_SLEW {slow}  \
+    CONFIG.PCW_MIO_30_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_30_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_30_DIRECTION {out}  \
+    CONFIG.PCW_MIO_30_SLEW {slow}  \
+    CONFIG.PCW_MIO_31_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_31_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_31_DIRECTION {in}  \
+    CONFIG.PCW_MIO_31_SLEW {slow}  \
+    CONFIG.PCW_MIO_32_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_32_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_32_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_32_SLEW {slow}  \
+    CONFIG.PCW_MIO_33_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_33_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_33_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_33_SLEW {slow}  \
+    CONFIG.PCW_MIO_34_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_34_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_34_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_34_SLEW {slow}  \
+    CONFIG.PCW_MIO_35_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_35_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_35_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_35_SLEW {slow}  \
+    CONFIG.PCW_MIO_36_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_36_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_36_DIRECTION {in}  \
+    CONFIG.PCW_MIO_36_SLEW {slow}  \
+    CONFIG.PCW_MIO_37_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_37_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_37_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_37_SLEW {slow}  \
+    CONFIG.PCW_MIO_38_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_38_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_38_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_38_SLEW {slow}  \
+    CONFIG.PCW_MIO_39_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_39_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_39_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_39_SLEW {slow}  \
+    CONFIG.PCW_MIO_40_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_40_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_40_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_40_SLEW {slow}  \
+    CONFIG.PCW_MIO_41_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_41_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_41_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_41_SLEW {slow}  \
+    CONFIG.PCW_MIO_42_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_42_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_42_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_42_SLEW {slow}  \
+    CONFIG.PCW_MIO_43_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_43_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_43_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_43_SLEW {slow}  \
+    CONFIG.PCW_MIO_44_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_44_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_44_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_44_SLEW {slow}  \
+    CONFIG.PCW_MIO_45_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_45_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_45_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_45_SLEW {slow}  \
+    CONFIG.PCW_MIO_46_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_46_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_46_DIRECTION {out}  \
+    CONFIG.PCW_MIO_46_SLEW {slow}  \
+    CONFIG.PCW_MIO_47_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_47_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_47_DIRECTION {in}  \
+    CONFIG.PCW_MIO_47_SLEW {slow}  \
+    CONFIG.PCW_MIO_48_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_48_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_48_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_48_SLEW {slow}  \
+    CONFIG.PCW_MIO_49_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_49_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_49_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_49_SLEW {slow}  \
+    CONFIG.PCW_MIO_50_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_50_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_50_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_50_SLEW {slow}  \
+    CONFIG.PCW_MIO_51_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_51_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_51_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_51_SLEW {slow}  \
+    CONFIG.PCW_MIO_52_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_52_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_52_DIRECTION {out}  \
+    CONFIG.PCW_MIO_52_SLEW {slow}  \
+    CONFIG.PCW_MIO_53_PULLUP {enabled}  \
+    CONFIG.PCW_MIO_53_IOTYPE {LVCMOS 1.8V}  \
+    CONFIG.PCW_MIO_53_DIRECTION {inout}  \
+    CONFIG.PCW_MIO_53_SLEW {slow}  \
+    CONFIG.PCW_UIPARAM_GENERATE_SUMMARY {NA}  \
+    CONFIG.PCW_MIO_TREE_PERIPHERALS {GPIO#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#GPIO#Quad SPI Flash#ENET Reset#GPIO#GPIO#GPIO#GPIO#UART 0#UART 0#Enet 0#Enet 0#Enet 0#Enet 0#Enet 0#Enet 0#Enet 0#Enet 0#Enet 0#Enet 0#Enet 0#Enet 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#USB Reset#SD 0#GPIO#GPIO#GPIO#GPIO#Enet 0#Enet 0}  \
+    CONFIG.PCW_MIO_TREE_SIGNALS {gpio[0]#qspi0_ss_b#qspi0_io[0]#qspi0_io[1]#qspi0_io[2]#qspi0_io[3]#qspi0_sclk#gpio[7]#qspi_fbclk#reset#gpio[10]#gpio[11]#gpio[12]#gpio[13]#rx#tx#tx_clk#txd[0]#txd[1]#txd[2]#txd[3]#tx_ctl#rx_clk#rxd[0]#rxd[1]#rxd[2]#rxd[3]#rx_ctl#data[4]#dir#stp#nxt#data[0]#data[1]#data[2]#data[3]#clk#data[5]#data[6]#data[7]#clk#cmd#data[0]#data[1]#data[2]#data[3]#reset#cd#gpio[48]#gpio[49]#gpio[50]#gpio[51]#mdc#mdio}  \
+    CONFIG.PCW_PS7_SI_REV {PRODUCTION}  \
+    CONFIG.PCW_FPGA_FCLK0_ENABLE {1}  \
+    CONFIG.PCW_FPGA_FCLK1_ENABLE {0}  \
+    CONFIG.PCW_FPGA_FCLK2_ENABLE {0}  \
+    CONFIG.PCW_FPGA_FCLK3_ENABLE {0}  \
+    CONFIG.PCW_NOR_SRAM_CS0_T_TR {1}  \
+    CONFIG.PCW_NOR_SRAM_CS0_T_PC {1}  \
+    CONFIG.PCW_NOR_SRAM_CS0_T_WP {1}  \
+    CONFIG.PCW_NOR_SRAM_CS0_T_CEOE {1}  \
+    CONFIG.PCW_NOR_SRAM_CS0_T_WC {11}  \
+    CONFIG.PCW_NOR_SRAM_CS0_T_RC {11}  \
+    CONFIG.PCW_NOR_SRAM_CS0_WE_TIME {0}  \
+    CONFIG.PCW_NOR_SRAM_CS1_T_TR {1}  \
+    CONFIG.PCW_NOR_SRAM_CS1_T_PC {1}  \
+    CONFIG.PCW_NOR_SRAM_CS1_T_WP {1}  \
+    CONFIG.PCW_NOR_SRAM_CS1_T_CEOE {1}  \
+    CONFIG.PCW_NOR_SRAM_CS1_T_WC {11}  \
+    CONFIG.PCW_NOR_SRAM_CS1_T_RC {11}  \
+    CONFIG.PCW_NOR_SRAM_CS1_WE_TIME {0}  \
+    CONFIG.PCW_NOR_CS0_T_TR {1}  \
+    CONFIG.PCW_NOR_CS0_T_PC {1}  \
+    CONFIG.PCW_NOR_CS0_T_WP {1}  \
+    CONFIG.PCW_NOR_CS0_T_CEOE {1}  \
+    CONFIG.PCW_NOR_CS0_T_WC {11}  \
+    CONFIG.PCW_NOR_CS0_T_RC {11}  \
+    CONFIG.PCW_NOR_CS0_WE_TIME {0}  \
+    CONFIG.PCW_NOR_CS1_T_TR {1}  \
+    CONFIG.PCW_NOR_CS1_T_PC {1}  \
+    CONFIG.PCW_NOR_CS1_T_WP {1}  \
+    CONFIG.PCW_NOR_CS1_T_CEOE {1}  \
+    CONFIG.PCW_NOR_CS1_T_WC {11}  \
+    CONFIG.PCW_NOR_CS1_T_RC {11}  \
+    CONFIG.PCW_NOR_CS1_WE_TIME {0}  \
+    CONFIG.PCW_NAND_CYCLES_T_RR {1}  \
+    CONFIG.PCW_NAND_CYCLES_T_AR {1}  \
+    CONFIG.PCW_NAND_CYCLES_T_CLR {1}  \
+    CONFIG.PCW_NAND_CYCLES_T_WP {1}  \
+    CONFIG.PCW_NAND_CYCLES_T_REA {1}  \
+    CONFIG.PCW_NAND_CYCLES_T_WC {11}  \
+    CONFIG.PCW_NAND_CYCLES_T_RC {11}  \
+    CONFIG.PCW_SMC_CYCLE_T0 {NA}  \
+    CONFIG.PCW_SMC_CYCLE_T1 {NA}  \
+    CONFIG.PCW_SMC_CYCLE_T2 {NA}  \
+    CONFIG.PCW_SMC_CYCLE_T3 {NA}  \
+    CONFIG.PCW_SMC_CYCLE_T4 {NA}  \
+    CONFIG.PCW_SMC_CYCLE_T5 {NA}  \
+    CONFIG.PCW_SMC_CYCLE_T6 {NA}  \
+    CONFIG.PCW_PACKAGE_NAME {clg400}  \
+    CONFIG.PCW_PLL_BYPASSMODE_ENABLE {0}  \
+] [get_bd_cells processing_system7_0]
+&lt;/pre&gt;
+
+&lt;p&gt;If you’ve changed the name of the PS block you might want to change the last line as,&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;get_bd_cells &amp;lt;ps_block_name&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt; &lt;/p&gt;</content><author><name>parth parikh</name></author><category term="FPGA" /><category term="PYNQ" /><category term="PYNQ-Z1" /><category term="Vivado" /><category term="Xilinx" /><category term="Zynq" /><summary type="html">Hi,</summary></entry></feed>

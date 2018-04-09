@@ -1,0 +1,72 @@
+<p>The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.<!--more--></p>
+
+<p>Now I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck.</p>
+
+<p>This is not step by step guide but it provides an insight on how various tools commands can be used. So here’s what I did to investigate what was going on:</p>
+
+<h4 id="find-the-stuck-process">Find The Stuck Process:</h4>
+
+<p>You can use the following to get the process ID</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>[shell padlinenumbers=”false”]$ ps auxww</td>
+      <td>grep[/shell]</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Okay so we have PID now. Let’s look into what the stuck process is doing right now. `strace` comes to rescue here and it showed something like</p>
+
+<p>[shell padlinenumbers=”false”]</p>
+
+<p>$ strace -p recvfrom(11, )</p>
+
+<p>[/shell]</p>
+
+<p><img class="wp-image-136 size-full aligncenter" src="https://superuser.blog/wp-content/uploads/2017/02/strace.jpg" alt="strace" width="794" height="298" srcset="https://superuser.blog/wp-content/uploads/2017/02/strace.jpg 794w, https://superuser.blog/wp-content/uploads/2017/02/strace-300x113.jpg 300w, https://superuser.blog/wp-content/uploads/2017/02/strace-768x288.jpg 768w" sizes="(max-width: 794px) 100vw, 794px" /></p>
+
+<p>If you google around for system call called `recvfrom` you will get something like:</p>
+
+<blockquote>
+  <p>The recvfrom() and recvmsg() calls are used to receive messages from a socket, and may be used to receive data on a socket whether or not it is connection-oriented.</p>
+</blockquote>
+
+<p>So we now know process is trying to receive data and stuck there itself, reading further into that man entry it says the first argument is socketfd (which was 11 in my case) That can help us know more on that socket which is stuck.</p>
+
+<p>So to dig more in that socketfd we use /proc filesystem.</p>
+
+<p>[shell padlinenumbers=”false”]$ ls -l /proc//fd</p>
+
+<p>lrwx—— 1 sanket sanket 64 Feb 5 23:00 0 -&gt;; /dev/pts/19</p>
+
+<p>lrwx—— 1 sanket sanket 64 Feb 5 23:00 1 -&gt;; /dev/pts/19</p>
+
+<p>lrwx—— 1 sanket sanket 64 Feb 5 22:59 2 -&gt;; /dev/pts/19</p>
+
+<p>…</p>
+
+<p>lrwx—— 1 sanket sanket 64 Feb 5 23:00 11 -&gt; socket:[102286][/shell]</p>
+
+<p>Note how FD 11 is a socket fd. Note the number (102286). Now let’s dig more into that socket. `lsof` can help us here.</p>
+
+<p>[shell padlinenumbers=”false”]$ lsof -i -a -p <pid> | grep 102286</pid></p>
+
+<p>COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME</p>
+
+<p>telnet 14480 sanket 3u IPv4 102286 0t0 TCP 192.168.1.2:59254 -&gt;; maa03s21-in-f78.1e100.net:http (ESTABLISHED)[/shell]</p>
+
+<p>This will finally tell us where the socket is connected to. It can be your database server. So there. You know you have to fix your database.</p>
+
+<h4 id="doing-something-with-stuck-process">Doing something with stuck process:</h4>
+
+<p>I went a step ahead to unfreeze the process. Getting it back on without restarting it. So here comes a debugger in picture. Fire up gdb and force process to give up on that FD. ie call the close method on the stuck fd.</p>
+
+<p>[shell padlinenumbers=”false”]$ gdb -p</p>
+
+<p>call close(11)[/shell]</p>
+
+<p>This should close the FD and process should move on.</p>
+
+<p>Happy Debugging ?</p>

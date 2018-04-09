@@ -1,0 +1,53 @@
+<p>So the other day I had to create a CentOS 6 AMI for <a href="//hortonworks.com/products/data-center/hdp/">HDP</a> installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.</p>
+
+<p>These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete. Later only <a href="//ambari.apache.org">Ambari Server</a>  started throwing warnings about disk space. Despite attaching a 100 GB EBS.<!--more--></p>
+
+<p>Upon checking it came to my notice that the EBS attached is indeed 100 GB but the root partition was only 8 GB. So I can make an fs out of remaining space and mount it somewhere but that’s not what I wanted.</p>
+
+<p>[shell padlinenumbers=”false”]</p>
+
+<p>[sanketp@hdpm01 ~]$ lsblk</p>
+
+<p>NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT</p>
+
+<p>xvda 202:0 0 100G 0 disk</p>
+
+<p>└─xvda1 202:1 0 8G 0 part /</p>
+
+<p>[/shell]</p>
+
+<p>So I started searching on how to extend root partition. Found may solutions. Including one on <a href="//docs.aws.amazon.com/AWSEC2/latest/UserGuide/storage_expand_partition.html">AWS Docs</a>.  Most solutions were requiring</p>
+
+<ul>
+  <li>To unmount and attach it somewhere else and then perform extend operation</li>
+  <li>Take a snapshot and then extend and then launch new instance</li>
+</ul>
+
+<p>Taking 12 instances offline and mounting their EBS on some other instance and extending was not feasible for me. Neither was taking snapshot of every instance and launch new one with extended partition. I wanted to do it online. Tried various tools like parted, resize2fs etc. None of them worked, until I finally found one that did the job while partition being online and mounted.</p>
+
+<h2 id="growpart">growpart:</h2>
+
+<p>So this was the savior. And following were the steps I took to get it resized:</p>
+
+<ul>
+  <li>Get the repo in place.</li>
+  <li>Install the package</li>
+  <li>Run the utility (last number is for partition, here it was first partition)</li>
+  <li>
+    <p>Reboot!</p>
+
+    <p>[shell]sudo yum install //download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm -y</p>
+
+    <p>sudo yum install cloud-utils-growpart -y</p>
+
+    <p>sudo growpart /dev/xvda 1</p>
+
+    <p>sudo reboot</p>
+
+    <p>[/shell]</p>
+  </li>
+</ul>
+
+<p>So this little tool came to rescue and saved many hours. This problem tends to happen with older linux versions like CentOS 6, Debian-jessie, SELS11.X. This guy has <a href="//www.elastic.co/blog/autoresize-ebs-root-volume-on-aws-amis">solution for Debian</a> with same problem.</p>
+
+<p>Cheers!</p>
