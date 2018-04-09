@@ -3,7 +3,7 @@ id: 33
 title: About
 date: 2017-01-02T22:24:22+00:00
 author: sanket
-layout: page
+layout: single
 guid: http://superuser.blog/?page_id=33
 ---
 Two Highschool friends started hacking around computers in the mid-&#8217;10s, the era of Yahoo Messenger, Windows Vista, 512MB RAM and Java-Enabled phones. Started from [TipToGeek.com](http://tiptogeek.com) and now we are here for a fresh start.
