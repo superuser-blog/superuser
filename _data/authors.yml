@@ -12,3 +12,8 @@ sanket:
     bio: "I am Groot!"
     avatar: "/assets/images/sanket.png"
     twitter: "sankeyplus"
+    location: "Bangalore, India."
+    uri: "https://sanketplus.github.io"
+    #github: "https://github.com/sanketplus/"
+    #linkedin: "sanketplus"
+    #facebook: "sankeyplus"
