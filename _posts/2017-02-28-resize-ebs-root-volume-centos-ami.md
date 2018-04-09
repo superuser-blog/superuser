@@ -3,7 +3,7 @@ id: 72
 title: Resize EBS Root Volume of CentOS 6 AMI
 date: 2017-02-28T00:03:41+00:00
 author: sanket
-layout: post
+layout: single
 guid: http://superuser.blog/?p=72
 permalink: /resize-ebs-root-volume-centos-ami/
 medium_post:

@@ -3,7 +3,7 @@ id: 37
 title: 'Simple Distributed File System in Python : PyDFS'
 date: 2017-01-02T23:55:01+00:00
 author: sanket
-layout: post
+layout: single
 guid: http://superuser.blog/?p=37
 permalink: /distributed-file-system-python/
 medium_post:

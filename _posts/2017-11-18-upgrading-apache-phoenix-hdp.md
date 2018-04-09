@@ -3,7 +3,7 @@ id: 100
 title: Upgrading Apache Phoenix in HDP Cluster
 date: 2017-11-18T11:26:20+00:00
 author: sanket
-layout: post
+layout: single
 guid: http://superuser.blog/?p=100
 permalink: /upgrading-apache-phoenix-hdp/
 categories:

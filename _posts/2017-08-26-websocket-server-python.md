@@ -3,7 +3,7 @@ id: 187
 title: 'Writing Simple WebSocket Server in Python: PyWSocket'
 date: 2017-08-26T14:40:53+00:00
 author: sanket
-layout: post
+layout: single
 guid: https://superuser.blog/?p=187
 permalink: /websocket-server-python/
 image: /wp-content/uploads/2017/08/pywsocket-825x463.jpg

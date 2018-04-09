@@ -3,7 +3,7 @@ id: 175
 title: 'HBase YouAreDeadException: Dead RegionServer due to GC Pause'
 date: 2017-05-26T17:24:15+00:00
 author: sanket
-layout: post
+layout: single
 guid: https://superuser.blog/?p=175
 permalink: /hbase-dead-regionserver/
 image: /wp-content/uploads/2017/05/hbase_rs_status-811x510.png

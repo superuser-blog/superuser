@@ -3,7 +3,7 @@ id: 95
 title: Stuff You Can Do While Tuning HBase
 date: 2017-04-09T23:42:31+00:00
 author: sanket
-layout: post
+layout: single
 guid: http://superuser.blog/?p=95
 permalink: /tuning-hbase/
 medium_post:

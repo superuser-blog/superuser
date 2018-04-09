@@ -3,7 +3,7 @@ id: 240
 title: Setting up Inter Region AWS VPC Peering and Latency Tests
 date: 2017-12-14T16:31:21+00:00
 author: sanket
-layout: post
+layout: single
 guid: https://superuser.blog/?p=240
 permalink: /aws-vpc-peering-latency-test/
 categories:

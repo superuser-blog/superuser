@@ -3,7 +3,7 @@ id: 114
 title: PYNQ Linux on ZedBoard
 date: 2017-05-07T19:09:58+00:00
 author: parth parikh
-layout: post
+layout: single
 guid: https://superuser.blog/?p=114
 permalink: /pynq-linux-on-zedboard/
 categories:

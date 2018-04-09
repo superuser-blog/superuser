@@ -3,7 +3,7 @@ id: 215
 title: 'TCP Fast Open: In Action with Python'
 date: 2017-11-08T20:14:58+00:00
 author: sanket
-layout: post
+layout: single
 guid: https://superuser.blog/?p=215
 permalink: /tcp-fast-open-python/
 categories:

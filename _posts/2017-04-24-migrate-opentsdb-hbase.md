@@ -3,7 +3,7 @@ id: 97
 title: Migrating OpenTSDB to Another HBase Cluster
 date: 2017-04-24T22:52:16+00:00
 author: sanket
-layout: post
+layout: single
 guid: http://superuser.blog/?p=97
 permalink: /migrate-opentsdb-hbase/
 medium_post:

@@ -3,7 +3,7 @@ id: 87
 title: HBase Benchmarking
 date: 2017-03-05T22:28:23+00:00
 author: sanket
-layout: post
+layout: single
 guid: http://superuser.blog/?p=87
 permalink: /hbase-benchmarking/
 medium_post:
