@@ -6,14 +6,17 @@ author: sanket
 layout: single
 guid: https://superuser.blog/?p=187
 permalink: /websocket-server-python/
-image: /wp-content/uploads/2017/08/pywsocket-825x463.jpg
+header:
+  overlay_image: /wp-content/uploads/2017/08/pywsocket-825x463.jpg
+  overlay_filter: rgba(10, 10, 10, 0.75)
+  #overlay_color: "#333"
 categories:
   - python
 tags:
   - python
   - websocket
 ---
-Journey to websocket was pretty long. I started with an idea to make an app which can play music in sync across the devices during college period. No wonder I couldn&#8217;t get thru it. Later this year I stumbled upon this new thing called WebSockets and they were intriguing. I thought I could finish that app with websockets (and I did, with partial success). Spinned of another app out of it. And websockets were on a roll. It was time I digged further in and ended up writing a websocket server. (GitHub link at the bottom)<!--more-->
+Journey to websocket was pretty long. I started with an idea to make an app which can play music in sync across the devices during college period. No wonder I couldn&#8217;t get thru it. Later this year I stumbled upon this new thing called WebSockets and they were intriguing. I thought I could finish that app with websockets (and I did, with partial success). Spinned of another app out of it. And websockets were on a roll. It was time I digged further in and ended up writing a websocket server. (GitHub link at the bottom)
 
 ### So what is a websocket server?
 
