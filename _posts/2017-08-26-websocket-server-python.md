@@ -12,10 +12,10 @@ header:
   cta_label: "GitHub Repo"
   cta_url: "https://github.com/sanketplus/PyWSocket"
   #overlay_color: "#333"
-categories:
+categories: 
   - python
-tags:
-  - python
+tags: 
+  - python 
   - websocket
 ---
 Echo websocket server implemented by hand on raw TCP Sockets.
