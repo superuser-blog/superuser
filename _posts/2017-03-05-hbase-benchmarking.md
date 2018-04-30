@@ -6,31 +6,34 @@ author: sanket
 layout: single
 guid: http://superuser.blog/?p=87
 permalink: /hbase-benchmarking/
-medium_post:
-  - 'O:11:"Medium_Post":11:{s:16:"author_image_url";s:65:"https://cdn-images-1.medium.com/fit/c/200/200/0*c0aBOUXEnVa4XfJd.";s:10:"author_url";s:30:"https://medium.com/@sanketplus";s:11:"byline_name";N;s:12:"byline_email";N;s:10:"cross_link";s:2:"no";s:2:"id";s:12:"fdd49c45828a";s:21:"follower_notification";s:3:"yes";s:7:"license";s:19:"all-rights-reserved";s:14:"publication_id";s:2:"-1";s:6:"status";s:6:"public";s:3:"url";s:62:"https://medium.com/@sanketplus/hbase-benchmarking-fdd49c45828a";}'
-image: /wp-content/uploads/2017/03/hbase-benchmarking-825x397.jpg
+header:
+  overlay_image: /wp-content/uploads/2017/03/hbase-benchmarking-825x397.jpg
+  overlay_filter: rgba(10, 10, 10, 0.70)
+  show_overlay_excerpt: false
 categories:
   - HBase
 tags:
   - Hbase
 ---
-Currently I am working with new setup of Apache HBase cluster to query data using <a href="//phoenix.apache.org/" target="_blank" rel="noopener noreferrer">Phoenix</a>  on top of <a href="//hortonworks.com/products/data-center/hdp/" target="_blank" rel="noopener noreferrer">HDP</a> Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved.<!--more-->
-
+Currently I am working with new setup of Apache HBase cluster to query data using <a href="//phoenix.apache.org/" target="_blank" rel="noopener noreferrer">Phoenix</a>  on top of <a href="//hortonworks.com/products/data-center/hdp/" target="_blank" rel="noopener noreferrer">HDP</a> Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved.
 Now for the improvement part, understanding of  HBase internals is needed. How does a write work in HBase. What is the read path. What is the data access and data writing patterns. By analyzing these aspects, you vary parameters. But after varying, one needs to see the effect of variance right? And thus you need something to measure performance and benchmark the cluster.
 
 I found two tools for this purpose:
 
-### PerformanceEvaluation
+## PerformanceEvaluation
 
 This comes built-in with the HBase. It has various parameters to run different kinds of workloads. So first we write data. I am using \`&#8211;nomapred\` option because I have not installed YARN. To get list of supported options and parameters just run the command without any options.
 
 So here we first load the data. I am using randonWrite here. With 1 thread.
 
-<span class="lang:default decode:true crayon-inline">$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation &#8211;nomapred randomWrite 1</span>
+```shell
+$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation -nomapred randomWrite 1
+```
 
 The result may show something like:
 
-<pre class="lang:default decode:true ">2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Min      = 2.0
+```
+2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Min      = 2.0
 2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Avg      = 28.936847686767578
 2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest StdDev   = 3293.3700704030302
 2017-02-24 08:22:41,491 INFO  [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 50th     = 3.0
@@ -67,20 +70,24 @@ The result may show something like:
 real	0m38.204s
 user	0m44.662s
 sys	0m2.264s
-</pre>
+```
 
 To write in parallel:
 
-<span class="lang:sh decode:true crayon-inline ">$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation &#8211;nomapred randomWrite 3</span>
+```shell
+$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation -nomapred randomWrite 3
+```
 
 And to read:
 
-<pre class="lang:sh decode:true">$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation --nomapred randomRead 1 
-$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation --nomapred --rows=100000 sequentialRead 1</pre>
+```shell
+$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation --nomapred randomRead 1 
+$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation --nomapred --rows=100000 sequentialRead 1
+```
 
 Again, there are so many options to this utility, try them as needed.
 
-### YCSB
+## YCSB
 
 <a href="//github.com/brianfrankcooper/YCSB" target="_blank" rel="noopener noreferrer">Yahoo! Cloud Serving Benchmark</a> is tool for benchmarking various kind of databases like Cassandra, MongoGB, Voldemort, HBase etc. The steps for setup are explained <a href="//github.com/brianfrankcooper/YCSB/wiki/Getting-Started" target="_blank" rel="noopener noreferrer">here</a>. These will the steps to follow while using this tool:
 
@@ -90,15 +97,18 @@ Again, there are so many options to this utility, try them as needed.
 
 Now after creating table, we first need to load the data into this table. There are various kinds of <a href="//github.com/brianfrankcooper/YCSB/wiki/Core-Workloads" target="_blank" rel="noopener noreferrer">workloads</a> for different purpose. We will use workload A to load the data in table we created.
 
-#### Loading the data:
+### Loading the data:
 
 first parameter \`load\` which tells to write data to table. Second parameter is type of database. \`-P\` tells type of workload. Next three parameters are self explanatory. \``` -s` `` prints  progress as loading happens.
 
-<pre class="lang:default decode:true">$ ./bin/ycsb load hbase10 -P workloads/workloada -p columnfamily=f1 -p recordcount=1000000 -threads 10 -s &gt; new-A-load-1M.dat</pre>
+```shell
+$ ./bin/ycsb load hbase10 -P workloads/workloada -p columnfamily=f1 -p recordcount=1000000 -threads 10 -s > new-A-load-1M.dat
+```
 
 The output looks something like:
 
-<pre class="lang:default decode:true ">[OVERALL], RunTime(ms), 396804.0
+```
+[OVERALL], RunTime(ms), 396804.0
 [OVERALL], Throughput(ops/sec), 2520.1358857269583
 [TOTAL_GCS_PS_Scavenge], Count, 566.0
 ...
@@ -115,19 +125,23 @@ The output looks something like:
 [INSERT], MaxLatency(us), 664575.0
 [INSERT], 95thPercentileLatency(us), 6155.0
 [INSERT], 99thPercentileLatency(us), 8391.0
-[INSERT], Return=OK, 1000000</pre>
+[INSERT], Return=OK, 1000000
+```
 
 So here I was getting around 2500 operations/sec
 
-#### Reading the data
+### Reading the data
 
 I will use workload C which is read only. You can read more on types of workloads on link given above. Here first parameter is \`run\` as we are running the tests, as opposed to loading the data. All other parameters are familiar looking.
 
-<pre class="lang:default decode:true ">$ ./bin/ycsb run hbase10 -P workloads/workloadc -p columnfamily=f1 -p recordcount=100000 -p operationcount=100000 -threads 10 -s &gt; new-C-run-100k.dat</pre>
+```shell
+$ ./bin/ycsb run hbase10 -P workloads/workloadc -p columnfamily=f1 -p recordcount=100000 -p operationcount=100000 -threads 10 -s > new-C-run-100k.dat
+```
 
 The output for above test should look like
 
-<pre class="lang:default decode:true ">[OVERALL], RunTime(ms), 12776.0
+```
+[OVERALL], RunTime(ms), 12776.0
 [OVERALL], Throughput(ops/sec), 7827.175954915467
 [TOTAL_GCS_PS_Scavenge], Count, 17.0
 ...
@@ -139,8 +153,9 @@ The output for above test should look like
 [READ], 95thPercentileLatency(us), 1972.0
 [READ], 99thPercentileLatency(us), 5703.0
 [READ], Return=OK, 100000
-...</pre>
+...
+```
 
 So for reads I was getting around 7800 operations/second.
 
-Find a workload suitable for your usecase. Or create one. Run tests on them. And let me know how is your cluster doing 🙂 I am also planning to write some of my thoughts and findings on tuning the cluster. Until then, happy hadooping&#8230;
+Find a workload suitable for your usecase. Or create one. Run tests on them. And let me know how is your cluster doing 🙂 I am also planning to write some of my thoughts and findings on tuning the cluster. Until then, happy hadooping...
