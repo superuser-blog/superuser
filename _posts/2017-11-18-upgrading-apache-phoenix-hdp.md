@@ -6,6 +6,9 @@ author: sanket
 layout: single
 guid: http://superuser.blog/?p=100
 permalink: /upgrading-apache-phoenix-hdp/
+header:
+  overlay_color: "#333"
+  show_overlay_excerpt: false
 categories:
   - HBase
   - HDP
@@ -14,9 +17,9 @@ tags:
   - hdp
   - phoenix
 ---
-About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.<!--more-->
+About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.
 
-So that&#8217;s what I tried. And it kind of worked. (It still is working)
+So that's what I tried. And it kind of worked. (It still is working)
 
 ### These are the steps:
 
@@ -29,7 +32,8 @@ Here a very lame/lousy bash script I used:
 
 **Disclaimer: It is not meant to use as a copy-paste script. Use it only for reference. Also we did it when cluster was not having production workloads. You might want to be extra cautious and read more around this if your cluster is having production workloads.**
 
-<pre class="lang:sh decode:true">cp -R /usr/hdp/2.5.3.0-37/phoenix /usr/hdp/2.5.3.0-37/phoenix-bk
+```bash
+cp -R /usr/hdp/2.5.3.0-37/phoenix /usr/hdp/2.5.3.0-37/phoenix-bk
 
 cd $NEW_PHOENIX
 
@@ -67,7 +71,7 @@ rm -f end2endTest.py performance.py pherf-cluster.py pherf-standalone.py pherf-s
 cd $NEW_PHOENIX/bin
 
 cp end2endTest.py performance.py pherf-cluster.py pherf-standalone.py queryserver.py sqlline.py sqlline-thin.py traceserver.py /usr/hdp/2.5.3.0-37/phoenix/bin
-</pre>
+```
 
 You can see:
 
@@ -77,7 +81,7 @@ You can see:
   * Copied new jars to lib folder and removed older ones.
   * Removed old binaries and copied new ones.
 
-_That&#8217;s it!_
+_That's it!_
 
 Also you would want to add your zookeeper address in sqline.py which was there in the previous binary installed by HDP. Else you can pass it as cmdline.
 
