@@ -13,7 +13,8 @@ tags:
   - HDFS
   - python
 ---
-I was reading on HDFS (Hadoop&#8217;s distributed file system) and it&#8217;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand  it better my mentor suggested me to implement the same. And so I made [PyDFS](//github.com/sanketplus/PyDFS). (Screenshots at bottom of the post)<!--more-->
+
+I was reading on HDFS (Hadoop's distributed file system) and it's internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand  it better my mentor suggested me to implement the same. And so I made [PyDFS](//github.com/sanketplus/PyDFS). (Screenshots at bottom of the post)
 
 So the choice of my language was python of course as it has vast number of modules available and you can code faster. I tried to implement very basic distributed file system and the code is ~200 lines. Before I started coding, some decisions needed to be taken.
 
@@ -39,10 +40,10 @@ Because I was trying to clone HDFS, I tried to follow similar read and write pat
 
 I have uploaded the code on GitHub under [sanketplus/PyDFS](//github.com/sanketplus/PyDFS). I made this during a weekend and I have not added comments but I think code is fairly understandable. Feel free to Star it or make a PR 🙂
 
-Here&#8217;s couple of screenshots of PyDFS in action:
+Here's couple of screenshots of PyDFS in action:
 
 In first image we are putting a file into DFS (my public key) and the lines you see are the blocks of the file (I have set smaller block size here). In second image we are trying to get the image from DFS and it will print it on stdout.
 
-<img class="wp-image-130 size-full alignright" src="https://superuser.blog/wp-content/uploads/2017/01/pydfs_put.png" alt="pydfs put operation" width="944" height="284" srcset="https://superuser.blog/wp-content/uploads/2017/01/pydfs_put.png 944w, https://superuser.blog/wp-content/uploads/2017/01/pydfs_put-300x90.png 300w, https://superuser.blog/wp-content/uploads/2017/01/pydfs_put-768x231.png 768w" sizes="(max-width: 944px) 100vw, 944px" />
+![pydfs_put]({{"/wp-content/uploads/2017/01/pydfs_put-768x231.png"}})
 
-<img class="wp-image-131 size-full alignright" src="https://superuser.blog/wp-content/uploads/2017/01/pydfs_get.png" alt="pydfs get operation" width="866" height="169" srcset="https://superuser.blog/wp-content/uploads/2017/01/pydfs_get.png 866w, https://superuser.blog/wp-content/uploads/2017/01/pydfs_get-300x59.png 300w, https://superuser.blog/wp-content/uploads/2017/01/pydfs_get-768x150.png 768w" sizes="(max-width: 866px) 100vw, 866px" />
+![pydfs_get]({{"/wp-content/uploads/2017/01/pydfs_get-768x150.png"}})
