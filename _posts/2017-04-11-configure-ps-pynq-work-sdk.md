@@ -6,6 +6,9 @@ author: parth parikh
 layout: single
 guid: https://superuser.blog/?p=109
 permalink: /configure-ps-pynq-work-sdk/
+header:
+  overlay_color: "#333"
+  show_overlay_excerpt: false
 categories:
   - FPGA
 tags:
@@ -18,17 +21,16 @@ tags:
 ---
 Hi,
 
-If you&#8217;re an FPGA fan or someone who&#8217;s got PYNQ board for fun, you might be having a hard time making it run Vivado SDK projects. That&#8217;s because, the PYNQ-Z1, the cheap Zynq-7020 board doesn&#8217;t have any popular DDR ram on board. You need to configure it by hand, however, tcl is at your rescue.
+If you're an FPGA fan or someone who's got PYNQ board for fun, you might be having a hard time making it run Vivado SDK projects. That's because, the PYNQ-Z1, the cheap Zynq-7020 board doesn't have any popular DDR ram on board. You need to configure it by hand, however, tcl is at your rescue.
 
-<!--more-->
-
-When you create a project and include Zynq-PS system to the block diagram, most of the time you don&#8217;t need to change the DDR timing properties because of most of the popular boards ie. Zedboard and Zybo use standard memory parts which are pre-configured in the Vivado. However, if you&#8217;ve created an Overlay and used it with the Pynq Linux, it doesn&#8217;t make any difference because overlays are PL configurations only, they don&#8217;t mess with PS part or DDR interface of PS part.
+When you create a project and include Zynq-PS system to the block diagram, most of the time you don't need to change the DDR timing properties because of most of the popular boards ie. Zedboard and Zybo use standard memory parts which are pre-configured in the Vivado. However, if you've created an Overlay and used it with the Pynq Linux, it doesn't make any difference because overlays are PL configurations only, they don't mess with PS part or DDR interface of PS part.
 
 ### **TL;DR**
 
-To configure the memory on the PYNQ just do this copy paste in tcl console and you&#8217;re all set for SDK.
+To configure the memory on the PYNQ just do this copy paste in tcl console and you're all set for SDK.
 
-<pre class="scroll:true lang:default decode:true" title="Pynq_Configure TCL">set_property -dict [ list \
+```
+set_property -dict [ list \
 CONFIG.PCW_USE_M_AXI_GP0 {1}\
 CONFIG.PCW_DDR_RAM_BASEADDR {0x00100000}  \
     CONFIG.PCW_DDR_RAM_HIGHADDR {0x1FFFFFFF}  \
@@ -897,10 +899,10 @@ CONFIG.PCW_DDR_RAM_BASEADDR {0x00100000}  \
     CONFIG.PCW_PACKAGE_NAME {clg400}  \
     CONFIG.PCW_PLL_BYPASSMODE_ENABLE {0}  \
 ] [get_bd_cells processing_system7_0]
-</pre>
+```
 
-If you&#8217;ve changed the name of the PS block you might want to change the last line as,
+If you've changed the name of the PS block you might want to change the last line as,
 
+```
 > get\_bd\_cells <ps\_block\_name>
-
-&nbsp;
+```
