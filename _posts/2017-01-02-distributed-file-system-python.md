@@ -5,6 +5,12 @@ date: 2017-01-02 23:55:01 +00:00
 author: sanket
 layout: single
 guid: http://superuser.blog/?p=37
+header:
+  overlay_image: /wp-content/uploads/2017/01/PyDFS-825x416.png
+  overlay_filter: rgba(10, 10, 10, 0.75)
+  cta_label: "GitHub Repo"
+  cta_url: "https://github.com/sanketplus/pydfs"
+  #overlay_color: "#333"
 categories: 
   - python
 tags:
@@ -13,6 +19,7 @@ tags:
   - HDFS
   - python
 ---
+Simple distributed file system like HDFS (and of-course GFS)
 
 I was reading on HDFS (Hadoop's distributed file system) and it's internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand  it better my mentor suggested me to implement the same. And so I made [PyDFS](//github.com/sanketplus/PyDFS). (Screenshots at bottom of the post)
 
