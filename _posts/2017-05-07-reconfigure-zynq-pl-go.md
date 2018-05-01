@@ -2,7 +2,7 @@
 id: 152
 title: How to reconfigure Zynq-PL on-the-go?
 date: 2017-05-07T19:27:39+00:00
-author: parth parikh
+author: parth
 layout: single
 guid: https://superuser.blog/?p=152
 permalink: /reconfigure-zynq-pl-go/
@@ -18,6 +18,7 @@ tags:
   - linux
   - Vivado
   - Zynq
+comments: true
 ---
 You would have wondered if i's possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i's possible and as simple as,
 
