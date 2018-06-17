@@ -34,7 +34,7 @@ What we need to worry about? everything but the rootfs.
 ## **TL;DR**
 
 > Write the image file on SD card same as in the pynq tutorial, and replace the files in BOOT partition with these&#8230;
-	<a class="download-link" title="Version 1.0" href="https://superuser.blog/download/160/" rel="nofollow"> ZedBoard BOOT files</a>
+	<a class="download-link" title="Version 1.0" href="https://drive.google.com/file/d/0B9OutAup6VgTNktMLTRpajBSTk0/view?usp=drivesdk" rel="nofollow"> ZedBoard BOOT files</a>
 > 
 > **Update:**
 > 
