@@ -5,6 +5,7 @@ date: 2017-01-02 23:55:01 +00:00
 author: sanket
 layout: single
 guid: http://superuser.blog/?p=37
+permalink: /distributed-file-system-python/
 header:
   overlay_image: /wp-content/uploads/2017/01/PyDFS-825x416.png
   overlay_filter: rgba(10, 10, 10, 0.75)
