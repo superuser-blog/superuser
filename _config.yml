@@ -90,7 +90,7 @@ social:
 
 # Analytics
 analytics:
-  provider               : google #false # false (default), "google", "google-universal", "custom"
+  provider               : "google-universal" #false # false (default), "google", "google-universal", "custom"
   google:
     tracking_id          : UA-89168528-1
 
@@ -265,3 +265,6 @@ defaults:
       comments: # true
       share: true
       related: true
+
+# to publish posts with future dates
+_future: true
