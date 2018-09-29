@@ -35,7 +35,8 @@ $ ps auxww | grep
 Okay so we have PID now. Let’s look into what the stuck process is doing right now. \`strace\` comes to rescue here and it showed something like
 
 ```shell  
-$ strace -p recvfrom(11, )
+$ strace -p <pid> 
+recvfrom(11, )
 ```
 
 ![strace_output]({{"/wp-content/uploads/2017/02/strace-768x288.jpg"}})
@@ -55,7 +56,7 @@ lrwx-- 1 sanket sanket 64 Feb 5 23:00 0 ->; /dev/pts/19
 lrwx-- 1 sanket sanket 64 Feb 5 23:00 1 ->; /dev/pts/19
 lrwx-- 1 sanket sanket 64 Feb 5 22:59 2 ->; /dev/pts/19
 ...
-lrwx-- 1 sanket sanket 64 Feb 5 23:00 11 -> socket:\[102286\]\
+lrwx-- 1 sanket sanket 64 Feb 5 23:00 11 -> socket:[102286]
 ```
 
 Note how FD 11 is a socket fd. Note the number (102286). Now let’s dig more into that socket. \`lsof\` can help us here.
@@ -75,7 +76,7 @@ This will finally tell us where the socket is connected to. It can be your datab
 I went a step ahead to unfreeze the process. Getting it back on without restarting it. So here comes a debugger in picture. Fire up gdb and force process to give up on that FD. ie call the close method on the stuck fd.
 
 ```
-$ gdb -p
+$ gdb -p <pid>
 call close(11)
 ```
 This should close the FD and process should move on.
