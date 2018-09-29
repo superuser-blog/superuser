@@ -3,7 +3,7 @@ id: 18930
 title: 'Encrypt Existing AWS RDS : The GDPR Series'
 author: sanket
 layout: single
-guid: https://superuser.blog/?p=18923
+guid: https://superuser.blog/?p=18930
 permalink: /encrypt-existing-aws-rds/
 header:
   overlay_color: "#333"
