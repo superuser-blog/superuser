@@ -187,7 +187,7 @@ The root file system we want to use if the one provided by the PYNQ. Download th
 > 
 > The latest PYNQ distribution has kernel v4.6. You can use older image from,
 > 
-> <a href="https://files.digilent.com/Products/PYNQ/pynq_z1_image_2016_09_14.zip" target="_blank" rel="noopener">https://files.digilent.com/Products/PYNQ/pynq_z1_image_2016_09_14.zip</a>
+> <a href="https://files.digilent.com/Products/PYNQ/pynq_z1_image_2016_09_14.zip" target="_blank" rel="noopener">pynq_z1_image_2016_09_14.zip</a>
 
 Mount the SD card, look into the BOOT partition, replace all the files, BOOT.bin, uImage, devicetree.dtb with the ones we've created, and you're done. Seriously, you're done!
 
@@ -197,14 +197,15 @@ Happy Hacking!
 
 Some Really Good References,
 
-<a href="//www.instructables.com/id/Embedded-Linux-Tutorial-Zybo/" target="_blank" rel="noopener noreferrer">www.instructables.com/id/Embedded-Linux-Tutorial-Zybo/ </a>
+<a href="//www.instructables.com/id/Embedded-Linux-Tutorial-Zybo/" target="_blank" rel="noopener noreferrer">Embedded-Linux-Tutorial-Zybo</a>
 
-<a href="//forums.xilinx.com/xlnx/attachments/xlnx/ELINUX/12801/1/Ubuntu_on_Zynq_Tutorial_03.pdf" target="_blank" rel="noopener noreferrer">forums.xilinx.com/xlnx/attachments/xlnx/ELINUX/12801/1/Ubuntu_on_Zynq_Tutorial_03.pdf </a>
+<a href="//forums.xilinx.com/xlnx/attachments/xlnx/ELINUX/12801/1/Ubuntu_on_Zynq_Tutorial_03.pdf" target="_blank" rel="noopener noreferrer">Ubuntu_on_Zynq_Tutorial_03.pdf </a>
 
-<a href="//fpga.org/2013/05/24/yet-another-guide-to-running-linaro-ubuntu-desktop-on-xilinx-zynq-on-the-zedboard/" target="_blank" rel="noopener noreferrer">fpga.org/2013/05/24/yet-another-guide-to-running-linaro-ubuntu-desktop-on-xilinx-zynq-on-the-zedboard/</a>
+<a href="//fpga.org/2013/05/24/yet-another-guide-to-running-linaro-ubuntu-desktop-on-xilinx-zynq-on-the-zedboard/" target="_blank" rel="noopener noreferrer">Yet Another Guide to Running Linaro Ubuntu Linux Desktop on Xilinx Zynq on the ZedBoard
+</a>
 
 <a href="//www.wiki.xilinx.com/" target="_blank" rel="noopener noreferrer">www.wiki.xilinx.com/</a>
 
 # **Update**
 
-  1. PYNQ has recently updated their repository and included instructions to make sd card image section. <a href="https://pynq.readthedocs.io/en/latest/pynq_sd_card.html" target="_blank" rel="noopener">https://pynq.readthedocs.io/en/latest/pynq_sd_card.html</a>  Thanks to <b class="fn">Cathal McCabe </b>for this update.
+  1. PYNQ has recently updated their repository and included instructions to make sd card image section. <a href="https://pynq.readthedocs.io/en/latest/pynq_sd_card.html" target="_blank" rel="noopener">pynq_sd_card</a>  Thanks to <b class="fn">Cathal McCabe </b>for this update.
