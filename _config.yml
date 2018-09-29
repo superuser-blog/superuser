@@ -267,4 +267,4 @@ defaults:
       related: true
 
 # to publish posts with future dates
-_future: true
+future: true
