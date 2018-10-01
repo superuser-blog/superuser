@@ -22,6 +22,8 @@ Echo websocket server implemented by hand on raw TCP Sockets.
 
 Journey to websocket was pretty long. I started with an idea to make an app which can play music in sync across the devices during college period. No wonder I couldn't get through it. Later this year I stumbled upon this new thing called WebSockets and they were intriguing. I thought I could finish that app with websockets (and I did, with partial success). Spinned of another app out of it. And websockets were on a roll. It was time I digged further in and ended up writing a websocket server. (GitHub link at the bottom)
 
+> **Update:** Links to production grade websocket implementations at bottom.
+
 ### So what is a websocket server?
 
 > A WebSocket server is a TCP application listening on any port of a server that follows a specific protocol, simple as that.
@@ -205,3 +207,7 @@ Some interesting links which helped me get here:
 
   1. [https://www.fullstackpython.com/websockets.html](https://www.fullstackpython.com/websockets.html) 
   2. [https://blog.pusher.com/websockets-from-scratch](https://blog.pusher.com/websockets-from-scratch/)
+
+If you want production grade websocket implementations:
+  1. [Autobahn-Python](https://github.com/crossbario/autobahn-python)
+  2. [aiohttp](https://aiohttp.readthedocs.io/en/stable/) (I have used this personally)
