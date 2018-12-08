@@ -11,6 +11,7 @@ header:
 categories:
   - python
   - aws
+  - public speaking
 ---
 
 I have been attending [LSPE [Large Scale Production Engineering] Meetup](https://www.meetup.com/lspe-in/events/qvgqgdyxqblb/) for last two years. And for the last one, I decided to give it back to the community. I conducted a hands-on session titled:
