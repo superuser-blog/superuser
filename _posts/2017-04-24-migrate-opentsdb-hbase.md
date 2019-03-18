@@ -79,3 +79,5 @@ hbase> restore_snapshot 'tsdb-<date>'
 If you have already created tables in destination cluster then you may want to disable table first and then restore snapshot and then enable it. Repeat the second line for all four tsdb tables.
 
 Once all tables are restored and you have verified it, you can change HBase address in TSDs and start them.
+
+**Update:** It is also recommended to run major compaction on tables to reattain data locality.
