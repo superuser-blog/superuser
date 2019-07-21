@@ -6,7 +6,8 @@ layout: single
 guid: https://superuser.blog/?p=181210
 permalink: /serverless-meets-ci-cd/
 header:
-  overlay_color: "#333"
+  overlay_image: /assets/images/lspe_1.jpeg
+  overlay_filter: rgba(10, 10, 10, 0.55)
   show_overlay_excerpt: false
 categories:
   - python
