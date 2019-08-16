@@ -10,11 +10,11 @@ parth:
 sanket:
     name: "Sanket"
     email: "sanketplus@gmail.com"
-    bio: "I am Groot!"
+    bio: "DevOps for Fun and Profit!™"
     avatar: "/assets/images/sanket.png"
     twitter: "sankeyplus"
     location: "Bangalore, India."
-    uri: "https://sanketplus.github.io"
+    uri: "https://sanket.plus"
     #github: "https://github.com/sanketplus/"
     #linkedin: "sanketplus"
     #facebook: "sankeyplus"
