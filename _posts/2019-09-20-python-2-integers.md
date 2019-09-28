@@ -88,7 +88,7 @@ PyInt_FromLong(long ival)
 }
 ```
 
-The code above is responsible for creating an integer object from given long value. The trimmed code in the snipped above handles small intergers separatly. Leaving some links in the bottom if you're interested in the specifics.
+The code above is responsible for creating an integer object from given long value. The trimmed code in the snipped above handles small integers separately. Leaving some links in the bottom if you're interested in the specifics.
 
 So the first thing that happens here is filling some sort of free list. Let's take a look at what it is.
 
@@ -144,7 +144,7 @@ fill_free_list(void)
     return p + N_INTOBJECTS - 1;
 }
 ```
-There are some spoilers in the comment in the code above. There are two new variables introduced above. The `block_list` and the `free_list`. `block_list` is a singly linked list of bunch of `PytIntObjects`. `free_list` is the pointer to next free object in this said bunch of Int objects in a block. So here is what happens in plain english:
+There are some spoilers in the comment in the code above. There are two new variables introduced above. The `block_list` and the `free_list`. `block_list` is a singly linked list of bunch of `PytIntObjects`. `free_list` is the pointer to next free object in this said bunch of Int objects in a block. So here is what happens in plain English:
 
 1. Allocate a new `PyIntBlock`
 2. Add the block at the beginning of the `block_list` linked list.
@@ -155,7 +155,7 @@ Here `block_list` is connected using `*next` and `free_list` is linked using `*o
 
 Now if we went back to the function `PyInt_FromLong` above, what we're doing is attaching our new long variable to the next free slot in `free_list` and return it.
 
-**Why? Why do all these convoluted things? As the comment said, int objects are frequently allocated in python. So this approach allocates *a bunch of int objects* in one go (`N_INTOBJECTS` many, 24 in othere words). So in one single alloc call, we reserve space for 24 objects. So that next 23 int allocations can go relatively faster!!**
+**Why? Why do all these convoluted things? As the comment said, int objects are frequently allocated in python. So this approach allocates *a bunch of int objects* in one go (`N_INTOBJECTS` many, 24 in other words). So in one single alloc call, we reserve space for 24 objects. So that next 23 int allocations can go relatively faster!!**
 
 ```
                    PyIntBlock                   PyIntBlock
