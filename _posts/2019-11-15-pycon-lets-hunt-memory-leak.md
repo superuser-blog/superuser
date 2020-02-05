@@ -32,7 +32,7 @@ Further, we will look at a simulated memory leak scenario which we faced in prod
  - [Slides](https://docs.google.com/presentation/d/1_c4_khxTBC0mtifWp1CwJl3_5Gp6ZTFbVzoafEirOig/edit?usp=sharing) 
  - [YouTube](https://youtu.be/u0qVRm8Hjb4) 
 
- <iframe width="560" height="315" src="https://www.youtube.com/embed/u0qVRm8Hjb4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/s9kAghWpzoE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <br/>
 
