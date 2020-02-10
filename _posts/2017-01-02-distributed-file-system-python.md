@@ -26,6 +26,9 @@ I was reading on HDFS (Hadoop's distributed file system) and it's internals. How
 
 So the choice of my language was python of course as it has vast number of modules available and you can code faster. I tried to implement very basic distributed file system and the code is ~200 lines. Before I started coding, some decisions needed to be taken.
 
+### Update:
+I gave a talk at SRECon 2019 on the same subject, if you prefer detailed explanation in video format, checkout [SRECon19 Asia: Let's Build a Distributed File System](/lets-build-distributed-filesystem/) or just scroll down to the bottom of the page.
+
 ## Architecture:
 
 Because it is a HDFS clone. It also has similar architecture. The naming for components are inspired from SaltStack. It has a _Master(NameNode)_ and a _Minion(DataNode)_. And a client to communicate with file system.
@@ -55,3 +58,7 @@ In first image we are putting a file into DFS (my public key) and the lines you 
 ![pydfs_put]({{"/wp-content/uploads/2017/01/pydfs_put-768x231.png"}})
 
 ![pydfs_get]({{"/wp-content/uploads/2017/01/pydfs_get-768x150.png"}})
+
+## Recording of the talk:
+
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/-xYwXUGM7nY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
