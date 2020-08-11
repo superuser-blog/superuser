@@ -11,7 +11,7 @@ header:
 categories:
   - python
 ---
-Everything in Python is an object. And that includes functions. Let's see what did I learn while I was trying to work with Google cloud functions with python runtime.
+Everything in Python is an object. And that includes functions. Let's see what I learned while I was trying to work with Google cloud functions with python runtime.
 
 ## Python Functions
 Since functions too are objects, we can see what all attributes a function contains as following
@@ -97,7 +97,7 @@ def hello_world(request):
     else:
         return 'Hello World!'
 ```
-GCF a function which should be expecting a Flask's `request` object as a parameter. This function will be accessible under `https://<some-domain>.com/hello_world`. The endpoint name is the same as the function name
+A cloud function should be expecting a Flask's `request` object as a parameter. This function will be accessible under `https://<some-domain>.com/hello_world`. The endpoint name is the same as the function name
 
 Now, of course, you won't have just one function and you would want to test/run these functions locally. **Since the injected `request` parameter is of flask, there needs to be a way to run this function with flask locally**
 
@@ -117,7 +117,7 @@ Sweet! This works as expected. But there is one issue though. **If there are a l
 # Enters the Metaprogrammer
 Python is a dynamic language, so let's make use of it. Here's the plan
  1. Discover the google functions dynamically
- 2. Create wrapper function which generates flask compatible functions out of 1 above
+ 2. Create wrapper function which generates flask compatible functions out of step 1 above
  3. Register them to our test flask app dynamically
 
 ### Let's Discover
@@ -127,7 +127,7 @@ If all the functions are in one file, discovering them would look like this. We 
 local_vars = importlib.import_module("main").__dict__
 for name, value in local_vars.items():
     if callable(value):
-        print("name")
+        print(name)
 ```
 
 ### Wrapper function
