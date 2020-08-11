@@ -205,4 +205,4 @@ for name, value in local_vars.items():
 app.run()
 ```
 
-Oh and later one day I realized [functools.wraps](https://docs.python.org/3/library/functools.html#functools.wraps) does the rename of function along with couple other things.
+Oh and later one day I realized [functools.wraps](https://docs.python.org/3/library/functools.html#functools.wraps) also renames the function along with couple other things.
