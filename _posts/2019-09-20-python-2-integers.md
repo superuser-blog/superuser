@@ -15,6 +15,9 @@ categories:
 
 In [Detecting Memory Leak in Python](/detect-memory-leak-python/), scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let's take a deeper look at what exactly happens!
 
+### Update:
+I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout [PyCon19 India: Let's Hunt a Memory Leak](/pycon-lets-hunt-memory-leak/) or just scroll down to the bottom of the page.
+
 
 ```python
 Python 2.7.15 (default, Jan 12 2019, 21:07:57)
@@ -253,3 +256,7 @@ Also, floats work the same way.
 ### Other good reads on python2 and integers:
 1. [Python Internals – Integer object pool](https://davejingtian.org/2014/12/11/python-internals-integer-object-pool-pyintobject/)
 2. [Int Object in Python](http://jasonleaster.github.io/2016/02/03/memory-model-of-int-object-in-python/)
+
+## Recording of the talk:
+
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/s9kAghWpzoE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

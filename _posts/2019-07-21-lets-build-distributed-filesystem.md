@@ -27,9 +27,9 @@ We also will then implement a tiny distributed file system in Python to see all 
 
  - [Slides](https://www.usenix.org/sites/default/files/conference/protected-files/srecon19apac_slides_patel.pdf) 
  - [GitHub](https://github.com/sanketplus/pydfs/tree/srecon)
- - [YouTube](https://www.youtube.com/watch?v=AwOHa2GKd5w) 
+ - [YouTube](https://www.youtube.com/watch?v=-xYwXUGM7nY) 
 
- <iframe width="560" height="315" src="https://www.youtube.com/embed/AwOHa2GKd5w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/-xYwXUGM7nY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <br/>
 
