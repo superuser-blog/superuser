@@ -1,0 +1,14 @@
+baseURL: 'https://example.org/'
+languageCode: en-us
+title: Superuser
+theme: 
+  - "PaperMod"
+
+
+params:
+  ShowReadingTime: true
+  ShowBreadCrumbs: true
+  homeInfoParams:
+    Title: Hi there 👋
+    Content: Welcome to superuser! Expect to find linux, python, SRE and related contents.
+  

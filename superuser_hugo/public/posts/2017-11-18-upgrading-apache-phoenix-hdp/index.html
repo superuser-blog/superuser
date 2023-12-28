@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Upgrading Apache Phoenix in HDP Cluster | Superuser</title>
+<meta name="keywords" content="Hbase, hdp, phoenix">
+<meta name="description" content="About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.
+So that&rsquo;s what I tried.">
+<meta name="author" content="sanket">
+<link rel="canonical" href="https://example.org/posts/2017-11-18-upgrading-apache-phoenix-hdp/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e087fd1dc76e73a35ae6d7028ddc1ba41e0131e7f9b3a6e2d019a208e6d6c4b5.css" integrity="sha256-4If9Hcduc6Na5tcCjdwbpB4BMef5s6bi0BmiCObWxLU=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://example.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Upgrading Apache Phoenix in HDP Cluster" />
+<meta property="og:description" content="About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.
+So that&rsquo;s what I tried." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.org/posts/2017-11-18-upgrading-apache-phoenix-hdp/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-11-18T11:26:20+00:00" />
+<meta property="article:modified_time" content="2017-11-18T11:26:20+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Upgrading Apache Phoenix in HDP Cluster"/>
+<meta name="twitter:description" content="About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.
+So that&rsquo;s what I tried."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://example.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Upgrading Apache Phoenix in HDP Cluster",
+      "item": "https://example.org/posts/2017-11-18-upgrading-apache-phoenix-hdp/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Upgrading Apache Phoenix in HDP Cluster",
+  "name": "Upgrading Apache Phoenix in HDP Cluster",
+  "description": "About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.\nSo that\u0026rsquo;s what I tried.",
+  "keywords": [
+    "Hbase", "hdp", "phoenix"
+  ],
+  "articleBody": "About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.\nSo that’s what I tried. And it kind of worked. (It still is working)\nThese are the steps: download latest phoenix binaries (4.10 at that time) Find installed files (under /usr/hdp/current/phoenix) Correlate installed ones with the ones in new binary package/tar Replace older files with new ones and also rename them or make appropriate links. Here a very lame/lousy bash script I used:\nDisclaimer: It is not meant to use as a copy-paste script. Use it only for reference. Also we did it when cluster was not having production workloads. You might want to be extra cautious and read more around this if your cluster is having production workloads.\ncp -R /usr/hdp/2.5.3.0-37/phoenix /usr/hdp/2.5.3.0-37/phoenix-bk cd $NEW_PHOENIX cp phoenix-4.10.0-HBase-1.1-client.jar phoenix-4.10.0-HBase-1.1-hive.jar phoenix-4.10.0-HBase-1.1-queryserver.jar phoenix-4.10.0-HBase-1.1-server.jar phoenix-4.10.0-HBase-1.1-thin-client.jar /usr/hdp/2.5.3.0-37/phoenix/ rm -f /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-client.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-hive.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-queryserver.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-server.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-thin-client.jar cd /usr/hdp/2.5.3.0-37/phoenix/ rm -f phoenix-client.jar phoenix-hive.jar phoenix-server.jar phoenix-thin-client.jar ln -s phoenix-4.10.0-HBase-1.1-client.jar phoenix-client.jar ln -s phoenix-4.10.0-HBase-1.1-hive.jar phoenix-hive.jar ln -s phoenix-4.10.0-HBase-1.1-server.jar phoenix-server.jar ln -s phoenix-4.10.0-HBase-1.1-thin-client.jar phoenix-thin-client.jar cd $NEW_PHOENIX cp phoenix-core-4.10.0-HBase-1.1.jar phoenix-core-4.10.0-HBase-1.1-sources.jar phoenix-flume-4.10.0-HBase-1.1.jar phoenix-hive-4.10.0-HBase-1.1.jar phoenix-hive-4.10.0-HBase-1.1-sources.jar phoenix-pherf-4.10.0-HBase-1.1.jar phoenix-pherf-4.10.0-HBase-1.1-minimal.jar phoenix-pherf-4.10.0-HBase-1.1-sources.jar phoenix-pig-4.10.0-HBase-1.1.jar phoenix-queryserver-4.10.0-HBase-1.1.jar phoenix-queryserver-4.10.0-HBase-1.1-sources.jar phoenix-queryserver-client-4.10.0-HBase-1.1.jar phoenix-spark-4.10.0-HBase-1.1.jar phoenix-spark-4.10.0-HBase-1.1-sources.jar /usr/hdp/2.5.3.0-37/phoenix/lib cd /usr/hdp/2.5.3.0-37/phoenix/lib rm -f phoenix-core-4.7.0.2.5.3.0-37.jar phoenix-core-4.7.0.2.5.3.0-37-sources.jar phoenix-flume-4.7.0.2.5.3.0-37.jar phoenix-hive-4.7.0.2.5.3.0-37.jar phoenix-hive-4.7.0.2.5.3.0-37-sources.jar phoenix-pherf-4.7.0.2.5.3.0-37.jar phoenix-pherf-4.7.0.2.5.3.0-37-minimal.jar phoenix-pherf-4.7.0.2.5.3.0-37-sources.jar phoenix-pig-4.7.0.2.5.3.0-37.jar phoenix-queryserver-4.7.0.2.5.3.0-37.jar phoenix-queryserver-4.7.0.2.5.3.0-37-sources.jar phoenix-queryserver-client-4.7.0.2.5.3.0-37.jar phoenix-spark-4.7.0.2.5.3.0-37.jar phoenix-spark-4.7.0.2.5.3.0-37-sources.jar cd /usr/hdp/2.5.3.0-37/phoenix/bin rm -f end2endTest.py performance.py pherf-cluster.py pherf-standalone.py pherf-standalone.py phoenix_utils.pyc queryserver.py sqlline.py sqlline-thin.py traceserver.py cd $NEW_PHOENIX/bin cp end2endTest.py performance.py pherf-cluster.py pherf-standalone.py queryserver.py sqlline.py sqlline-thin.py traceserver.py /usr/hdp/2.5.3.0-37/phoenix/bin You can see:\nI first copied new jars Deleted old ones Make links with the new jars Copied new jars to lib folder and removed older ones. Removed old binaries and copied new ones. That’s it!\nAlso you would want to add your zookeeper address in sqline.py which was there in the previous binary installed by HDP. Else you can pass it as cmdline.\nAnd restart the cluster [server and then clients] 🙂\nDo read: https://phoenix.apache.org/upgrading.html You might also want to look at Tuning HBase and Benchmarking the same.\n",
+  "wordCount" : "373",
+  "inLanguage": "en",
+  "datePublished": "2017-11-18T11:26:20Z",
+  "dateModified": "2017-11-18T11:26:20Z",
+  "author":{
+    "@type": "Person",
+    "name": "sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.org/posts/2017-11-18-upgrading-apache-phoenix-hdp/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://example.org/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://example.org/">Home</a>&nbsp;»&nbsp;<a href="https://example.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Upgrading Apache Phoenix in HDP Cluster
+    </h1>
+    <div class="post-meta"><span title='2017-11-18 11:26:20 +0000 UTC'>November 18, 2017</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;sanket
+
+</div>
+  </header> 
+  <div class="post-content"><p>About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.</p>
+<p>So that&rsquo;s what I tried. And it kind of worked. (It still is working)</p>
+<h3 id="these-are-the-steps">These are the steps:<a hidden class="anchor" aria-hidden="true" href="#these-are-the-steps">#</a></h3>
+<ul>
+<li>download latest phoenix binaries (4.10 at that time)</li>
+<li>Find installed files (under /usr/hdp/current/phoenix)</li>
+<li>Correlate installed ones with the ones in new binary package/tar</li>
+<li>Replace older files with new ones and also rename them or make appropriate links.</li>
+</ul>
+<p>Here a very lame/lousy bash script I used:</p>
+<p><strong>Disclaimer: It is not meant to use as a copy-paste script. Use it only for reference. Also we did it when cluster was not having production workloads. You might want to be extra cautious and read more around this if your cluster is having production workloads.</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp -R /usr/hdp/2.5.3.0-37/phoenix /usr/hdp/2.5.3.0-37/phoenix-bk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cd $NEW_PHOENIX
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cp phoenix-4.10.0-HBase-1.1-client.jar phoenix-4.10.0-HBase-1.1-hive.jar  phoenix-4.10.0-HBase-1.1-queryserver.jar phoenix-4.10.0-HBase-1.1-server.jar phoenix-4.10.0-HBase-1.1-thin-client.jar /usr/hdp/2.5.3.0-37/phoenix/
+</span></span><span style="display:flex;"><span>rm -f /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-client.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-hive.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-queryserver.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-server.jar /usr/hdp/2.5.3.0-37/phoenix/phoenix-4.7.0.2.5.3.0-37-thin-client.jar
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cd /usr/hdp/2.5.3.0-37/phoenix/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rm -f phoenix-client.jar phoenix-hive.jar phoenix-server.jar phoenix-thin-client.jar
+</span></span><span style="display:flex;"><span>ln -s phoenix-4.10.0-HBase-1.1-client.jar phoenix-client.jar
+</span></span><span style="display:flex;"><span>ln -s phoenix-4.10.0-HBase-1.1-hive.jar phoenix-hive.jar
+</span></span><span style="display:flex;"><span>ln -s phoenix-4.10.0-HBase-1.1-server.jar phoenix-server.jar
+</span></span><span style="display:flex;"><span>ln -s phoenix-4.10.0-HBase-1.1-thin-client.jar phoenix-thin-client.jar
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cd $NEW_PHOENIX
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cp phoenix-core-4.10.0-HBase-1.1.jar phoenix-core-4.10.0-HBase-1.1-sources.jar phoenix-flume-4.10.0-HBase-1.1.jar phoenix-hive-4.10.0-HBase-1.1.jar phoenix-hive-4.10.0-HBase-1.1-sources.jar phoenix-pherf-4.10.0-HBase-1.1.jar phoenix-pherf-4.10.0-HBase-1.1-minimal.jar phoenix-pherf-4.10.0-HBase-1.1-sources.jar phoenix-pig-4.10.0-HBase-1.1.jar phoenix-queryserver-4.10.0-HBase-1.1.jar phoenix-queryserver-4.10.0-HBase-1.1-sources.jar phoenix-queryserver-client-4.10.0-HBase-1.1.jar phoenix-spark-4.10.0-HBase-1.1.jar phoenix-spark-4.10.0-HBase-1.1-sources.jar /usr/hdp/2.5.3.0-37/phoenix/lib
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cd /usr/hdp/2.5.3.0-37/phoenix/lib
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rm -f phoenix-core-4.7.0.2.5.3.0-37.jar phoenix-core-4.7.0.2.5.3.0-37-sources.jar phoenix-flume-4.7.0.2.5.3.0-37.jar phoenix-hive-4.7.0.2.5.3.0-37.jar phoenix-hive-4.7.0.2.5.3.0-37-sources.jar phoenix-pherf-4.7.0.2.5.3.0-37.jar phoenix-pherf-4.7.0.2.5.3.0-37-minimal.jar phoenix-pherf-4.7.0.2.5.3.0-37-sources.jar phoenix-pig-4.7.0.2.5.3.0-37.jar phoenix-queryserver-4.7.0.2.5.3.0-37.jar phoenix-queryserver-4.7.0.2.5.3.0-37-sources.jar phoenix-queryserver-client-4.7.0.2.5.3.0-37.jar phoenix-spark-4.7.0.2.5.3.0-37.jar phoenix-spark-4.7.0.2.5.3.0-37-sources.jar
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cd /usr/hdp/2.5.3.0-37/phoenix/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rm -f end2endTest.py performance.py pherf-cluster.py pherf-standalone.py pherf-standalone.py phoenix_utils.pyc queryserver.py sqlline.py sqlline-thin.py traceserver.py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cd $NEW_PHOENIX/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cp end2endTest.py performance.py pherf-cluster.py pherf-standalone.py queryserver.py sqlline.py sqlline-thin.py traceserver.py /usr/hdp/2.5.3.0-37/phoenix/bin
+</span></span></code></pre></div><p>You can see:</p>
+<ul>
+<li>I first copied new jars</li>
+<li>Deleted old ones</li>
+<li>Make links with the new jars</li>
+<li>Copied new jars to lib folder and removed older ones.</li>
+<li>Removed old binaries and copied new ones.</li>
+</ul>
+<p><em>That&rsquo;s it!</em></p>
+<p>Also you would want to add your zookeeper address in sqline.py which was there in the previous binary installed by HDP. Else you can pass it as cmdline.</p>
+<p>And restart the cluster [server and then clients] 🙂</p>
+<p>Do read: <!-- raw HTML omitted --><a href="https://phoenix.apache.org/upgrading.html">https://phoenix.apache.org/upgrading.html</a> <!-- raw HTML omitted --></p>
+<p>You might also want to look at <!-- raw HTML omitted -->Tuning HBase<!-- raw HTML omitted --> and <!-- raw HTML omitted -->Benchmarking<!-- raw HTML omitted --> the same.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://example.org/tags/hbase/">Hbase</a></li>
+      <li><a href="https://example.org/tags/hdp/">hdp</a></li>
+      <li><a href="https://example.org/tags/phoenix/">phoenix</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://example.org/">Superuser</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Simple Distributed File System in Python : PyDFS | Superuser</title>
+<meta name="keywords" content="distributed file system, hadoop, HDFS, python">
+<meta name="description" content="I was reading on HDFS (Hadoop&rsquo;s distributed file system) and it&rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
+So the choice of my language was python of course as it has vast number of modules available and you can code faster.">
+<meta name="author" content="sanket">
+<link rel="canonical" href="https://example.org/posts/2017-01-02-distributed-file-system-python/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e087fd1dc76e73a35ae6d7028ddc1ba41e0131e7f9b3a6e2d019a208e6d6c4b5.css" integrity="sha256-4If9Hcduc6Na5tcCjdwbpB4BMef5s6bi0BmiCObWxLU=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://example.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Simple Distributed File System in Python : PyDFS" />
+<meta property="og:description" content="I was reading on HDFS (Hadoop&rsquo;s distributed file system) and it&rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
+So the choice of my language was python of course as it has vast number of modules available and you can code faster." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.org/posts/2017-01-02-distributed-file-system-python/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-01-02T23:55:01+00:00" />
+<meta property="article:modified_time" content="2017-01-02T23:55:01+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Simple Distributed File System in Python : PyDFS"/>
+<meta name="twitter:description" content="I was reading on HDFS (Hadoop&rsquo;s distributed file system) and it&rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
+So the choice of my language was python of course as it has vast number of modules available and you can code faster."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://example.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Simple Distributed File System in Python : PyDFS",
+      "item": "https://example.org/posts/2017-01-02-distributed-file-system-python/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Simple Distributed File System in Python : PyDFS",
+  "name": "Simple Distributed File System in Python : PyDFS",
+  "description": "I was reading on HDFS (Hadoop\u0026rsquo;s distributed file system) and it\u0026rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)\nSo the choice of my language was python of course as it has vast number of modules available and you can code faster.",
+  "keywords": [
+    "distributed file system", "hadoop", "HDFS", "python"
+  ],
+  "articleBody": "I was reading on HDFS (Hadoop’s distributed file system) and it’s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)\nSo the choice of my language was python of course as it has vast number of modules available and you can code faster. I tried to implement very basic distributed file system and the code is ~200 lines. Before I started coding, some decisions needed to be taken.\nUpdate: I gave a talk at SRECon 2019 on the same subject, if you prefer detailed explanation in video format, checkout SRECon19 Asia: Let’s Build a Distributed File System or just scroll down to the bottom of the page.\nArchitecture: Because it is a HDFS clone. It also has similar architecture. The naming for components are inspired from SaltStack. It has a Master(NameNode) and a Minion(DataNode). And a client to communicate with file system.\nMaster will store file system namespace: Files,blocks,file to block mapping,block to minion mapping.\nMinion will just store the blocks. And upon request read or write operations on blocks.\nFor communication between components, I first thought of exposing HTTP API. So that every component will listen on a port and calls can be made on HTTP as implementing the same would have been fairly easy using Flask. But as mentioned in HDFS architecture, it uses custom RPC protocol for communication over TCP, I searched for something similar for Python and found RPyC. RPyC is very simple and easy to use.\nHow does this distributed file system work? Because I was trying to clone HDFS, I tried to follow similar read and write patterns.\nTo write a file, master will allocate blocks and a minion on which it will be stored. Client will write it to one minion and that minion will pass data to next one. For reading master will provide list of blocks and its location and client will read sequentially. If reading fails from one minion, it will try next minion. File system persistence is implemented via pickling the object. When you give Ctrl+C to master, it will dump the matadata to a file and it will load the same when you fire master up. Implementation: I have uploaded the code on GitHub under sanketplus/PyDFS. I made this during a weekend and I have not added comments but I think code is fairly understandable. Feel free to Star it or make a PR 🙂\nHere’s couple of screenshots of PyDFS in action:\nIn first image we are putting a file into DFS (my public key) and the lines you see are the blocks of the file (I have set smaller block size here). In second image we are trying to get the image from DFS and it will print it on stdout.\nRecording of the talk: ",
+  "wordCount" : "492",
+  "inLanguage": "en",
+  "datePublished": "2017-01-02T23:55:01Z",
+  "dateModified": "2017-01-02T23:55:01Z",
+  "author":{
+    "@type": "Person",
+    "name": "sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.org/posts/2017-01-02-distributed-file-system-python/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://example.org/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://example.org/">Home</a>&nbsp;»&nbsp;<a href="https://example.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Simple Distributed File System in Python : PyDFS
+    </h1>
+    <div class="post-meta"><span title='2017-01-02 23:55:01 +0000 UTC'>January 2, 2017</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;sanket
+
+</div>
+  </header> 
+  <div class="post-content"><p>I was reading on HDFS (Hadoop&rsquo;s distributed file system) and it&rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand  it better my mentor suggested me to implement the same. And so I made <a href="//github.com/sanketplus/PyDFS">PyDFS</a>. (Screenshots at bottom of the post)</p>
+<p>So the choice of my language was python of course as it has vast number of modules available and you can code faster. I tried to implement very basic distributed file system and the code is ~200 lines. Before I started coding, some decisions needed to be taken.</p>
+<h3 id="update">Update:<a hidden class="anchor" aria-hidden="true" href="#update">#</a></h3>
+<p>I gave a talk at SRECon 2019 on the same subject, if you prefer detailed explanation in video format, checkout <a href="/lets-build-distributed-filesystem/">SRECon19 Asia: Let&rsquo;s Build a Distributed File System</a> or just scroll down to the bottom of the page.</p>
+<h2 id="architecture">Architecture:<a hidden class="anchor" aria-hidden="true" href="#architecture">#</a></h2>
+<p>Because it is a HDFS clone. It also has similar architecture. The naming for components are inspired from SaltStack. It has a <em>Master(NameNode)</em> and a <em>Minion(DataNode)</em>. And a client to communicate with file system.</p>
+<p>Master will store file system namespace: Files,blocks,file to block mapping,block to minion mapping.</p>
+<p>Minion will just store the blocks. And upon request read or write operations on blocks.</p>
+<p>For communication between components, I first thought of exposing HTTP API. So that every component will listen on a port and calls can be made on HTTP as implementing the same would have been fairly easy using <a href="//flask.pocoo.org">Flask</a>. But as mentioned in <a href="//hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html">HDFS architecture</a>, it uses custom RPC protocol for communication over TCP, I searched for something similar for Python and found <a href="//rpyc.readthedocs.io/en/latest/">RPyC</a>. RPyC is very simple and easy to use.</p>
+<h2 id="how-does-this-distributed-file-systemwork">How does this distributed file system work?<a hidden class="anchor" aria-hidden="true" href="#how-does-this-distributed-file-systemwork">#</a></h2>
+<p>Because I was trying to clone HDFS, I tried to follow similar read and write patterns.</p>
+<ul>
+<li>To write a file, master will allocate blocks and a minion on which it will be stored. Client will write it to one minion and that minion will pass data to next one.</li>
+<li>For reading master will provide list of blocks and its location and client will read sequentially. If reading fails from one minion, it will try next minion.</li>
+<li>File system persistence is implemented via pickling the object. When you give Ctrl+C to master, it will dump the matadata to a file and it will load the same when you fire master up.</li>
+</ul>
+<h2 id="implementation">Implementation:<a hidden class="anchor" aria-hidden="true" href="#implementation">#</a></h2>
+<p>I have uploaded the code on GitHub under <a href="//github.com/sanketplus/PyDFS">sanketplus/PyDFS</a>. I made this during a weekend and I have not added comments but I think code is fairly understandable. Feel free to Star it or make a PR 🙂</p>
+<p>Here&rsquo;s couple of screenshots of PyDFS in action:</p>
+<p>In first image we are putting a file into DFS (my public key) and the lines you see are the blocks of the file (I have set smaller block size here). In second image we are trying to get the image from DFS and it will print it on stdout.</p>
+<p><img loading="lazy" src="%7b%7b%22/wp-content/uploads/2017/01/pydfs_put-768x231.png%22%7d%7d" alt="pydfs_put"  />
+</p>
+<p><img loading="lazy" src="%7b%7b%22/wp-content/uploads/2017/01/pydfs_get-768x150.png%22%7d%7d" alt="pydfs_get"  />
+</p>
+<h2 id="recording-of-the-talk">Recording of the talk:<a hidden class="anchor" aria-hidden="true" href="#recording-of-the-talk">#</a></h2>
+<!-- raw HTML omitted -->
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://example.org/tags/distributed-file-system/">distributed file system</a></li>
+      <li><a href="https://example.org/tags/hadoop/">hadoop</a></li>
+      <li><a href="https://example.org/tags/hdfs/">HDFS</a></li>
+      <li><a href="https://example.org/tags/python/">python</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://example.org/">Superuser</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
