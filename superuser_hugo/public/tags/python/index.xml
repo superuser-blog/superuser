@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Superuser</title>
+    <link>https://example.org/tags/python/</link>
+    <description>Recent content in python on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 26 Aug 2017 14:40:53 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writing Simple WebSocket Server in Python: PyWSocket</title>
+      <link>https://example.org/posts/2017-08-26-websocket-server-python/</link>
+      <pubDate>Sat, 26 Aug 2017 14:40:53 +0000</pubDate>
+      <guid>https://example.org/posts/2017-08-26-websocket-server-python/</guid>
+      <description>Echo websocket server implemented by hand on raw TCP Sockets.
+Journey to websocket was pretty long. I started with an idea to make an app which can play music in sync across the devices during college period. No wonder I couldn&amp;rsquo;t get through it. Later this year I stumbled upon this new thing called WebSockets and they were intriguing. I thought I could finish that app with websockets (and I did, with partial success).</description>
+    </item>
+    <item>
+      <title>Simple Distributed File System in Python : PyDFS</title>
+      <link>https://example.org/posts/2017-01-02-distributed-file-system-python/</link>
+      <pubDate>Mon, 02 Jan 2017 23:55:01 +0000</pubDate>
+      <guid>https://example.org/posts/2017-01-02-distributed-file-system-python/</guid>
+      <description>I was reading on HDFS (Hadoop&amp;rsquo;s distributed file system) and it&amp;rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
+So the choice of my language was python of course as it has vast number of modules available and you can code faster.</description>
+    </item>
+  </channel>
+</rss>

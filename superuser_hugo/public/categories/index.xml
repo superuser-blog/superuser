@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Superuser</title>
+    <link>https://example.org/categories/</link>
+    <description>Recent content in Categories on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 13 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>public speaking</title>
+      <link>https://example.org/categories/public-speaking/</link>
+      <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
+      <guid>https://example.org/categories/public-speaking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>python</title>
+      <link>https://example.org/categories/python/</link>
+      <pubDate>Tue, 11 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>https://example.org/categories/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>golang</title>
+      <link>https://example.org/categories/golang/</link>
+      <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://example.org/categories/golang/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://example.org/categories/linux/</link>
+      <pubDate>Wed, 18 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://example.org/categories/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AWS</title>
+      <link>https://example.org/categories/aws/</link>
+      <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://example.org/categories/aws/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Networking</title>
+      <link>https://example.org/categories/networking/</link>
+      <pubDate>Thu, 14 Dec 2017 00:00:00 +0000</pubDate>
+      <guid>https://example.org/categories/networking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HBase</title>
+      <link>https://example.org/categories/hbase/</link>
+      <pubDate>Sat, 18 Nov 2017 11:26:20 +0000</pubDate>
+      <guid>https://example.org/categories/hbase/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HDP</title>
+      <link>https://example.org/categories/hdp/</link>
+      <pubDate>Sat, 18 Nov 2017 11:26:20 +0000</pubDate>
+      <guid>https://example.org/categories/hdp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>FPGA</title>
+      <link>https://example.org/categories/fpga/</link>
+      <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
+      <guid>https://example.org/categories/fpga/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zynq</title>
+      <link>https://example.org/categories/zynq/</link>
+      <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
+      <guid>https://example.org/categories/zynq/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

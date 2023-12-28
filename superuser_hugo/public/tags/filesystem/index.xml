@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>filesystem on Superuser</title>
+    <link>https://example.org/tags/filesystem/</link>
+    <description>Recent content in filesystem on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 28 Feb 2017 00:03:41 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/filesystem/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Resize EBS Root Volume of CentOS 6 AMI</title>
+      <link>https://example.org/posts/2017-02-28-resize-ebs-root-volume-centos-ami/</link>
+      <pubDate>Tue, 28 Feb 2017 00:03:41 +0000</pubDate>
+      <guid>https://example.org/posts/2017-02-28-resize-ebs-root-volume-centos-ami/</guid>
+      <description>So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
+These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete.</description>
+    </item>
+  </channel>
+</rss>

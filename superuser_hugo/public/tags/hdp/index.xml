@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hdp on Superuser</title>
+    <link>https://example.org/tags/hdp/</link>
+    <description>Recent content in hdp on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Nov 2017 11:26:20 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/hdp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Upgrading Apache Phoenix in HDP Cluster</title>
+      <link>https://example.org/posts/2017-11-18-upgrading-apache-phoenix-hdp/</link>
+      <pubDate>Sat, 18 Nov 2017 11:26:20 +0000</pubDate>
+      <guid>https://example.org/posts/2017-11-18-upgrading-apache-phoenix-hdp/</guid>
+      <description>About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.
+So that&amp;rsquo;s what I tried.</description>
+    </item>
+    <item>
+      <title>HBase YouAreDeadException: Dead RegionServer due to GC Pause</title>
+      <link>https://example.org/posts/2017-05-26-hbase-dead-regionserver/</link>
+      <pubDate>Fri, 26 May 2017 17:24:15 +0000</pubDate>
+      <guid>https://example.org/posts/2017-05-26-hbase-dead-regionserver/</guid>
+      <description>So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.
+The following was the logline:
+2017-05-23 06:59:22,173 FATAL [regionserver/&amp;lt;hostname&amp;gt;/10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server &amp;lt;hostname&amp;gt;,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing&amp;lt;hostname&amp;gt;,16020,1493962926376 as dead server This alone did not tell much.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PYNQ on Superuser</title>
+    <link>https://example.org/tags/pynq/</link>
+    <description>Recent content in PYNQ on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Apr 2017 04:05:30 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/pynq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Configure PS of PYNQ to work with SDK</title>
+      <link>https://example.org/posts/2017-04-11-configure-ps-pynq-work-sdk/</link>
+      <pubDate>Tue, 11 Apr 2017 04:05:30 +0000</pubDate>
+      <guid>https://example.org/posts/2017-04-11-configure-ps-pynq-work-sdk/</guid>
+      <description>Hi,
+If you&amp;rsquo;re an FPGA fan or someone who&amp;rsquo;s got PYNQ board for fun, you might be having a hard time making it run Vivado SDK projects. That&amp;rsquo;s because, the PYNQ-Z1, the cheap Zynq-7020 board doesn&amp;rsquo;t have any popular DDR ram on board. You need to configure it by hand, however, tcl is at your rescue.
+When you create a project and include Zynq-PS system to the block diagram, most of the time you don&amp;rsquo;t need to change the DDR timing properties because of most of the popular boards ie.</description>
+    </item>
+  </channel>
+</rss>

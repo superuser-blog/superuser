@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zynq on Superuser</title>
+    <link>https://example.org/tags/zynq/</link>
+    <description>Recent content in Zynq on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 07 May 2017 19:27:39 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/zynq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to reconfigure Zynq-PL on-the-go?</title>
+      <link>https://example.org/posts/2017-05-07-reconfigure-zynq-pl-go/</link>
+      <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
+      <guid>https://example.org/posts/2017-05-07-reconfigure-zynq-pl-go/</guid>
+      <description>You would have wondered if i&amp;rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&amp;rsquo;s possible and as simple as,
+echo &amp;#39;0&amp;#39; &amp;gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo &amp;#39;1&amp;#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit &amp;amp;gt; /dev/xdevcfg Yeah, tha&amp;rsquo;s it! Make sure you&amp;rsquo;re running it as root.
+Don&amp;rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard</description>
+    </item>
+    <item>
+      <title>PYNQ Linux on ZedBoard</title>
+      <link>https://example.org/posts/2017-05-07-pynq-linux-on-zedboard/</link>
+      <pubDate>Sun, 07 May 2017 19:09:58 +0000</pubDate>
+      <guid>https://example.org/posts/2017-05-07-pynq-linux-on-zedboard/</guid>
+      <description>Hi There!
+The PYNQ Linux is a fun, easy and maker-friendly Ubuntu 15.04 rootfs. It comes bundled with the PYNQ-Z1 board, and the official documentations doesn&amp;rsquo;t even utter a word on how to build or port this image on any other Zynq. Maybe because it&amp;rsquo;s too obvious how to do so.
+What you need to run Linux on any ARM board?
+BOOT image (BOOT.bin) kernel image (uImage) devicetree blob (devicetree.dtb) rootfs What we need to worry about?</description>
+    </item>
+    <item>
+      <title>Configure PS of PYNQ to work with SDK</title>
+      <link>https://example.org/posts/2017-04-11-configure-ps-pynq-work-sdk/</link>
+      <pubDate>Tue, 11 Apr 2017 04:05:30 +0000</pubDate>
+      <guid>https://example.org/posts/2017-04-11-configure-ps-pynq-work-sdk/</guid>
+      <description>Hi,
+If you&amp;rsquo;re an FPGA fan or someone who&amp;rsquo;s got PYNQ board for fun, you might be having a hard time making it run Vivado SDK projects. That&amp;rsquo;s because, the PYNQ-Z1, the cheap Zynq-7020 board doesn&amp;rsquo;t have any popular DDR ram on board. You need to configure it by hand, however, tcl is at your rescue.
+When you create a project and include Zynq-PS system to the block diagram, most of the time you don&amp;rsquo;t need to change the DDR timing properties because of most of the popular boards ie.</description>
+    </item>
+  </channel>
+</rss>

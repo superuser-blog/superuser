@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HDFS on Superuser</title>
+    <link>https://example.org/tags/hdfs/</link>
+    <description>Recent content in HDFS on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 02 Jan 2017 23:55:01 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/hdfs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Simple Distributed File System in Python : PyDFS</title>
+      <link>https://example.org/posts/2017-01-02-distributed-file-system-python/</link>
+      <pubDate>Mon, 02 Jan 2017 23:55:01 +0000</pubDate>
+      <guid>https://example.org/posts/2017-01-02-distributed-file-system-python/</guid>
+      <description>I was reading on HDFS (Hadoop&amp;rsquo;s distributed file system) and it&amp;rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
+So the choice of my language was python of course as it has vast number of modules available and you can code faster.</description>
+    </item>
+  </channel>
+</rss>

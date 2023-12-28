@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>process on Superuser</title>
+    <link>https://example.org/tags/process/</link>
+    <description>Recent content in process on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Feb 2017 00:22:05 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/process/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Debugging Stuck Process in Linux</title>
+      <link>https://example.org/posts/2017-02-06-debugging-stuck-process-linux/</link>
+      <pubDate>Mon, 06 Feb 2017 00:22:05 +0000</pubDate>
+      <guid>https://example.org/posts/2017-02-06-debugging-stuck-process-linux/</guid>
+      <description>The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.
+Now I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Superuser</title>
+    <link>https://example.org/posts/</link>
+    <description>Recent content in Posts on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 13 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SRECon&#39;21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]</title>
+      <link>https://example.org/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</link>
+      <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</guid>
+      <description>Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was supposed to happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.
+The talk describes the approach to detect application hotspots our team developed in collaboration with the ML team.</description>
+    </item>
+    <item>
+      <title>Python Metaprogramming: Functions, Flask and Google Cloud Functions</title>
+      <link>https://example.org/posts/2020-08-11-python-metaprogramming-flask-google-cloud-functions/</link>
+      <pubDate>Tue, 11 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2020-08-11-python-metaprogramming-flask-google-cloud-functions/</guid>
+      <description>Everything in Python is an object. And that includes functions. Let&amp;rsquo;s see what I learned while I was trying to work with Google cloud functions with python runtime.
+Python Functions Since functions too are objects, we can see what all attributes a function contains as following
+&amp;gt;&amp;gt;&amp;gt; def hello(name): ... print(f&amp;#34;Hello, {name}!&amp;#34;) ... &amp;gt;&amp;gt;&amp;gt; dir(hello) [&amp;#39;__annotations__&amp;#39;, &amp;#39;__call__&amp;#39;, &amp;#39;__class__&amp;#39;, &amp;#39;__closure__&amp;#39;, &amp;#39;__code__&amp;#39;, &amp;#39;__defaults__&amp;#39;, &amp;#39;__delattr__&amp;#39;, &amp;#39;__dict__&amp;#39;, &amp;#39;__dir__&amp;#39;, &amp;#39;__doc__&amp;#39;, &amp;#39;__eq__&amp;#39;, &amp;#39;__format__&amp;#39;, &amp;#39;__ge__&amp;#39;, &amp;#39;__get__&amp;#39;, &amp;#39;__getattribute__&amp;#39;, &amp;#39;__globals__&amp;#39;, &amp;#39;__gt__&amp;#39;, &amp;#39;__hash__&amp;#39;, &amp;#39;__init__&amp;#39;, &amp;#39;__init_subclass__&amp;#39;, &amp;#39;__kwdefaults__&amp;#39;, &amp;#39;__le__&amp;#39;, &amp;#39;__lt__&amp;#39;, &amp;#39;__module__&amp;#39;, &amp;#39;__name__&amp;#39;, &amp;#39;__ne__&amp;#39;, &amp;#39;__new__&amp;#39;, &amp;#39;__qualname__&amp;#39;, &amp;#39;__reduce__&amp;#39;, &amp;#39;__reduce_ex__&amp;#39;, &amp;#39;__repr__&amp;#39;, &amp;#39;__setattr__&amp;#39;, &amp;#39;__sizeof__&amp;#39;, &amp;#39;__str__&amp;#39;, &amp;#39;__subclasshook__&amp;#39;] While there are a lot of them, let&amp;rsquo;s look at some interesting ones</description>
+    </item>
+    <item>
+      <title>Golang Http Client and Compression</title>
+      <link>https://example.org/posts/2020-03-31-golang-http-gzip-compression/</link>
+      <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2020-03-31-golang-http-gzip-compression/</guid>
+      <description>I had a very (seemingly) simple task. Verify my golang http client, talking with an ElasticSearch cluster, is compressing data on wire. Because in trials, there was around 8x data compression and 100ms latency improvement. Sounds simple? Apparently not!
+ElasticSearch Side of Things Http compression is enabled by default and it&amp;rsquo;s an easy configuration. Despite it being enabled by default, still added following in config
+http.compression: true And verified it works by</description>
+    </item>
+    <item>
+      <title>Debugging a Running Python Process</title>
+      <link>https://example.org/posts/2019-12-18-gdb-python/</link>
+      <pubDate>Wed, 18 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2019-12-18-gdb-python/</guid>
+      <description>Only if it were as easy as installing debug symbols, attach the process with gdb and py-bt! So we have a python agent, which distributes files, running across the fleet. And on some random hosts, it went haywire! On those set of hosts, the process was using 100% of CPU and not doing anything meaningful work. Restarting the process fixes the problem. I had worked on debugging a stuck process, but this was the opposite.</description>
+    </item>
+    <item>
+      <title>PyCon19 India: Let&#39;s Hunt a Memory Leak</title>
+      <link>https://example.org/posts/2019-11-15-pycon-lets-hunt-memory-leak/</link>
+      <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2019-11-15-pycon-lets-hunt-memory-leak/</guid>
+      <description>We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let&#39;s Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers.</description>
+    </item>
+    <item>
+      <title>Curious Case of Python 2 and Integers</title>
+      <link>https://example.org/posts/2019-09-20-python-2-integers/</link>
+      <pubDate>Fri, 20 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2019-09-20-python-2-integers/</guid>
+      <description>In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let&amp;rsquo;s take a deeper look at what exactly happens!
+Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let&amp;rsquo;s Hunt a Memory Leak or just scroll down to the bottom of the page.</description>
+    </item>
+    <item>
+      <title>Site Wide Memory Leak: An On-Call Story</title>
+      <link>https://example.org/posts/2019-08-14-site-wide-memory-leak-on-call-story/</link>
+      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2019-08-14-site-wide-memory-leak-on-call-story/</guid>
+      <description>This happened a while back, sometime in the year of 2017. I was on-call for the week and it was the weekend. Usually, things are quiet over the weekends but not that weekend. Pages started coming frequently affecting different hosts. The alert was titled
+WARNING: Memory usage is more than 80% And that was just not one or set of hosts. This started coming from random hosts from across the infrastructure.</description>
+    </item>
+    <item>
+      <title>SRECon19 Asia: Let&#39;s Build a Distributed File System</title>
+      <link>https://example.org/posts/2019-07-21-lets-build-distributed-filesystem/</link>
+      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2019-07-21-lets-build-distributed-filesystem/</guid>
+      <description>In the first post on this blog, I wrote about a tiny distributed filesystem I made in python for educational purpose. This year, I had a chance to use it in a talk delivered at SRECon 19 Asia. The title was
+Let&amp;rsquo;s Build a Distributed File System The talk was listed under something called Core Principles track and Talks in this track will focus on providing a deep understanding of how technologies we use everyday function and why it&#39;s important to know these details when supporting and scaling your infrastructure.</description>
+    </item>
+    <item>
+      <title>Serverless Meets CI/CD</title>
+      <link>https://example.org/posts/2018-12-10-serverless-meets-ci-cd/</link>
+      <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2018-12-10-serverless-meets-ci-cd/</guid>
+      <description>I have been attending LSPE [Large Scale Production Engineering] Meetup for last two years. And for the last one, I decided to give it back to the community. I conducted a hands-on session titled:
+Serverless meets CI/CD The session briefly introduced what is Serverless and CD/CD and why should you be concerned about it. We then went hands-on with AWS Lambda as serverless platform and Bitbucket Pipelines for CI/CD. Started from making a Hello World!</description>
+    </item>
+    <item>
+      <title>Detecting Memory Leak in Python</title>
+      <link>https://example.org/posts/2018-10-15-detect-memory-leak-python/</link>
+      <pubDate>Mon, 15 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2018-10-15-detect-memory-leak-python/</guid>
+      <description>In production, a memory leak will not always bubble up. And there could be multiple reasons behind it. You may not be getting enough traffic. Frequent deployments. No hard memory usage limit set. Or mix of them.
+The flask app we had to debug had same characteristics. It never had huge surge of traffic and there would be multiple deployments over week. Although it had cgroup memory usage limit, it had some room to grow and the leak never appeared.</description>
+    </item>
+    <item>
+      <title>Encrypt Existing AWS RDS : The GDPR Series</title>
+      <link>https://example.org/posts/2018-09-30-encrypt-exisitng-aws-rds/</link>
+      <pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2018-09-30-encrypt-exisitng-aws-rds/</guid>
+      <description>Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.
+The task was dreaded because there is no way to enable encryption once RDS has been created and most ways, which we will discuss, incurred downtime.
+The Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.
+The RDS instance we had was a MySQL one which is also multi AZ.</description>
+    </item>
+    <item>
+      <title>Encrypt Existing S3 Bucket : The GDPR Series</title>
+      <link>https://example.org/posts/2018-09-23-encrypt-s3-bucket/</link>
+      <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2018-09-23-encrypt-s3-bucket/</guid>
+      <description>So next in line was S3 bucket. This too did not have encryption enabled, ie: data encryption at rest.
+The Task Encrypt existing S3 bucket which contains user data with zero downtime.
+A word on encrypted S3 objects/buckets: By default there is no encryption involved when you create or put objects in an S3 bucket. However, you can enable default encryption on a bucket and any object put in the bucket will be encrypted by default.</description>
+    </item>
+    <item>
+      <title>Encrypting Existing AWS EBS : The GDPR Series</title>
+      <link>https://example.org/posts/2018-08-28-encrypt-aws-ebs/</link>
+      <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2018-08-28-encrypt-aws-ebs/</guid>
+      <description>It&amp;rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were
+Encrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I will be sharing my experiences and how did we went on with it.
+The Task Encrypt EBS that is currently in use by a MongoDB cluster.</description>
+    </item>
+    <item>
+      <title>Setting up Inter Region AWS VPC Peering and Latency Tests</title>
+      <link>https://example.org/posts/2017-12-14-aws-vpc-peering-latency-test/</link>
+      <pubDate>Thu, 14 Dec 2017 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/2017-12-14-aws-vpc-peering-latency-test/</guid>
+      <description>Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India. Of course there was a significant latency involved when users connect to US from other part of the world. And we wanted to test that, if a user from India connects to Mumbai region(faster handshake) and then that region uses VPC peering to us-east-1 to talk to other services.</description>
+    </item>
+    <item>
+      <title>Upgrading Apache Phoenix in HDP Cluster</title>
+      <link>https://example.org/posts/2017-11-18-upgrading-apache-phoenix-hdp/</link>
+      <pubDate>Sat, 18 Nov 2017 11:26:20 +0000</pubDate>
+      <guid>https://example.org/posts/2017-11-18-upgrading-apache-phoenix-hdp/</guid>
+      <description>About new Hadoop cluster we set up, the phoenix version bundled with HDP distribution(4.7) had some bugs which would make it impossible to use to run BI queries. There was no way provided by HDP to upgrade phoenix as we were using the latest version. Looking around on the internet, I found that manually we can replace the related jars and bins to have a new version in place.
+So that&amp;rsquo;s what I tried.</description>
+    </item>
+    <item>
+      <title>TCP Fast Open: In Action with Python</title>
+      <link>https://example.org/posts/2017-11-08-tcp-fast-open-python/</link>
+      <pubDate>Wed, 08 Nov 2017 20:14:58 +0000</pubDate>
+      <guid>https://example.org/posts/2017-11-08-tcp-fast-open-python/</guid>
+      <description>Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.
+What is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminates the need to wait for 3 way handshake before application can send data over it.</description>
+    </item>
+    <item>
+      <title>Writing Simple WebSocket Server in Python: PyWSocket</title>
+      <link>https://example.org/posts/2017-08-26-websocket-server-python/</link>
+      <pubDate>Sat, 26 Aug 2017 14:40:53 +0000</pubDate>
+      <guid>https://example.org/posts/2017-08-26-websocket-server-python/</guid>
+      <description>Echo websocket server implemented by hand on raw TCP Sockets.
+Journey to websocket was pretty long. I started with an idea to make an app which can play music in sync across the devices during college period. No wonder I couldn&amp;rsquo;t get through it. Later this year I stumbled upon this new thing called WebSockets and they were intriguing. I thought I could finish that app with websockets (and I did, with partial success).</description>
+    </item>
+    <item>
+      <title>HBase YouAreDeadException: Dead RegionServer due to GC Pause</title>
+      <link>https://example.org/posts/2017-05-26-hbase-dead-regionserver/</link>
+      <pubDate>Fri, 26 May 2017 17:24:15 +0000</pubDate>
+      <guid>https://example.org/posts/2017-05-26-hbase-dead-regionserver/</guid>
+      <description>So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.
+The following was the logline:
+2017-05-23 06:59:22,173 FATAL [regionserver/&amp;lt;hostname&amp;gt;/10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server &amp;lt;hostname&amp;gt;,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing&amp;lt;hostname&amp;gt;,16020,1493962926376 as dead server This alone did not tell much.</description>
+    </item>
+    <item>
+      <title>How to reconfigure Zynq-PL on-the-go?</title>
+      <link>https://example.org/posts/2017-05-07-reconfigure-zynq-pl-go/</link>
+      <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
+      <guid>https://example.org/posts/2017-05-07-reconfigure-zynq-pl-go/</guid>
+      <description>You would have wondered if i&amp;rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&amp;rsquo;s possible and as simple as,
+echo &amp;#39;0&amp;#39; &amp;gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo &amp;#39;1&amp;#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit &amp;amp;gt; /dev/xdevcfg Yeah, tha&amp;rsquo;s it! Make sure you&amp;rsquo;re running it as root.
+Don&amp;rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard</description>
+    </item>
+    <item>
+      <title>PYNQ Linux on ZedBoard</title>
+      <link>https://example.org/posts/2017-05-07-pynq-linux-on-zedboard/</link>
+      <pubDate>Sun, 07 May 2017 19:09:58 +0000</pubDate>
+      <guid>https://example.org/posts/2017-05-07-pynq-linux-on-zedboard/</guid>
+      <description>Hi There!
+The PYNQ Linux is a fun, easy and maker-friendly Ubuntu 15.04 rootfs. It comes bundled with the PYNQ-Z1 board, and the official documentations doesn&amp;rsquo;t even utter a word on how to build or port this image on any other Zynq. Maybe because it&amp;rsquo;s too obvious how to do so.
+What you need to run Linux on any ARM board?
+BOOT image (BOOT.bin) kernel image (uImage) devicetree blob (devicetree.dtb) rootfs What we need to worry about?</description>
+    </item>
+    <item>
+      <title>Migrating OpenTSDB to Another HBase Cluster</title>
+      <link>https://example.org/posts/2017-04-24-migrate-opentsdb-hbase/</link>
+      <pubDate>Mon, 24 Apr 2017 22:52:16 +0000</pubDate>
+      <guid>https://example.org/posts/2017-04-24-migrate-opentsdb-hbase/</guid>
+      <description>As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was ExportSnapshot.
+So these are the steps roughly:
+Stop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start TSDs Steps 1 and 5 are self understood. We will look at how to take,transfer and restore snapshots.</description>
+    </item>
+    <item>
+      <title>Configure PS of PYNQ to work with SDK</title>
+      <link>https://example.org/posts/2017-04-11-configure-ps-pynq-work-sdk/</link>
+      <pubDate>Tue, 11 Apr 2017 04:05:30 +0000</pubDate>
+      <guid>https://example.org/posts/2017-04-11-configure-ps-pynq-work-sdk/</guid>
+      <description>Hi,
+If you&amp;rsquo;re an FPGA fan or someone who&amp;rsquo;s got PYNQ board for fun, you might be having a hard time making it run Vivado SDK projects. That&amp;rsquo;s because, the PYNQ-Z1, the cheap Zynq-7020 board doesn&amp;rsquo;t have any popular DDR ram on board. You need to configure it by hand, however, tcl is at your rescue.
+When you create a project and include Zynq-PS system to the block diagram, most of the time you don&amp;rsquo;t need to change the DDR timing properties because of most of the popular boards ie.</description>
+    </item>
+    <item>
+      <title>Stuff You Can Do While Tuning HBase</title>
+      <link>https://example.org/posts/2017-04-09-tuning-hbase/</link>
+      <pubDate>Sun, 09 Apr 2017 23:42:31 +0000</pubDate>
+      <guid>https://example.org/posts/2017-04-09-tuning-hbase/</guid>
+      <description>So you are setting up HBase! Congratulations!
+When it comes to tuning HBase there are so many things you can do. And most of the things will be dependent upon type of data you will be storing and it&amp;rsquo;s access patterns. So I will be saying this a lot: &amp;lsquo;value of this parameter depends upon your workload&amp;rsquo;. Here I will try to enlist some of the variables that you can tweak while tuning hbase.</description>
+    </item>
+    <item>
+      <title>HBase Benchmarking</title>
+      <link>https://example.org/posts/2017-03-05-hbase-benchmarking/</link>
+      <pubDate>Sun, 05 Mar 2017 22:28:23 +0000</pubDate>
+      <guid>https://example.org/posts/2017-03-05-hbase-benchmarking/</guid>
+      <description>Currently I am working with new setup of Apache HBase cluster to query data using Phoenix on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved. Now for the improvement part, understanding of HBase internals is needed. How does a write work in HBase.</description>
+    </item>
+    <item>
+      <title>Resize EBS Root Volume of CentOS 6 AMI</title>
+      <link>https://example.org/posts/2017-02-28-resize-ebs-root-volume-centos-ami/</link>
+      <pubDate>Tue, 28 Feb 2017 00:03:41 +0000</pubDate>
+      <guid>https://example.org/posts/2017-02-28-resize-ebs-root-volume-centos-ami/</guid>
+      <description>So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
+These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete.</description>
+    </item>
+    <item>
+      <title>Debugging Stuck Process in Linux</title>
+      <link>https://example.org/posts/2017-02-06-debugging-stuck-process-linux/</link>
+      <pubDate>Mon, 06 Feb 2017 00:22:05 +0000</pubDate>
+      <guid>https://example.org/posts/2017-02-06-debugging-stuck-process-linux/</guid>
+      <description>The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.
+Now I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck.</description>
+    </item>
+    <item>
+      <title>Simple Distributed File System in Python : PyDFS</title>
+      <link>https://example.org/posts/2017-01-02-distributed-file-system-python/</link>
+      <pubDate>Mon, 02 Jan 2017 23:55:01 +0000</pubDate>
+      <guid>https://example.org/posts/2017-01-02-distributed-file-system-python/</guid>
+      <description>I was reading on HDFS (Hadoop&amp;rsquo;s distributed file system) and it&amp;rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
+So the choice of my language was python of course as it has vast number of modules available and you can code faster.</description>
+    </item>
+  </channel>
+</rss>

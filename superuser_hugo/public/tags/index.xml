@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Superuser</title>
+    <link>https://example.org/tags/</link>
+    <description>Recent content in Tags on Superuser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Nov 2017 11:26:20 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hbase</title>
+      <link>https://example.org/tags/hbase/</link>
+      <pubDate>Sat, 18 Nov 2017 11:26:20 +0000</pubDate>
+      <guid>https://example.org/tags/hbase/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>hdp</title>
+      <link>https://example.org/tags/hdp/</link>
+      <pubDate>Sat, 18 Nov 2017 11:26:20 +0000</pubDate>
+      <guid>https://example.org/tags/hdp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>phoenix</title>
+      <link>https://example.org/tags/phoenix/</link>
+      <pubDate>Sat, 18 Nov 2017 11:26:20 +0000</pubDate>
+      <guid>https://example.org/tags/phoenix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>python</title>
+      <link>https://example.org/tags/python/</link>
+      <pubDate>Sat, 26 Aug 2017 14:40:53 +0000</pubDate>
+      <guid>https://example.org/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>websocket</title>
+      <link>https://example.org/tags/websocket/</link>
+      <pubDate>Sat, 26 Aug 2017 14:40:53 +0000</pubDate>
+      <guid>https://example.org/tags/websocket/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>FPGA</title>
+      <link>https://example.org/tags/fpga/</link>
+      <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
+      <guid>https://example.org/tags/fpga/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>linux</title>
+      <link>https://example.org/tags/linux/</link>
+      <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
+      <guid>https://example.org/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vivado</title>
+      <link>https://example.org/tags/vivado/</link>
+      <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
+      <guid>https://example.org/tags/vivado/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zynq</title>
+      <link>https://example.org/tags/zynq/</link>
+      <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
+      <guid>https://example.org/tags/zynq/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>metrics</title>
+      <link>https://example.org/tags/metrics/</link>
+      <pubDate>Mon, 24 Apr 2017 22:52:16 +0000</pubDate>
+      <guid>https://example.org/tags/metrics/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>opentsdb</title>
+      <link>https://example.org/tags/opentsdb/</link>
+      <pubDate>Mon, 24 Apr 2017 22:52:16 +0000</pubDate>
+      <guid>https://example.org/tags/opentsdb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>PYNQ</title>
+      <link>https://example.org/tags/pynq/</link>
+      <pubDate>Tue, 11 Apr 2017 04:05:30 +0000</pubDate>
+      <guid>https://example.org/tags/pynq/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>PYNQ-Z1</title>
+      <link>https://example.org/tags/pynq-z1/</link>
+      <pubDate>Tue, 11 Apr 2017 04:05:30 +0000</pubDate>
+      <guid>https://example.org/tags/pynq-z1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Xilinx</title>
+      <link>https://example.org/tags/xilinx/</link>
+      <pubDate>Tue, 11 Apr 2017 04:05:30 +0000</pubDate>
+      <guid>https://example.org/tags/xilinx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ami</title>
+      <link>https://example.org/tags/ami/</link>
+      <pubDate>Tue, 28 Feb 2017 00:03:41 +0000</pubDate>
+      <guid>https://example.org/tags/ami/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>aws</title>
+      <link>https://example.org/tags/aws/</link>
+      <pubDate>Tue, 28 Feb 2017 00:03:41 +0000</pubDate>
+      <guid>https://example.org/tags/aws/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>EBS</title>
+      <link>https://example.org/tags/ebs/</link>
+      <pubDate>Tue, 28 Feb 2017 00:03:41 +0000</pubDate>
+      <guid>https://example.org/tags/ebs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>filesystem</title>
+      <link>https://example.org/tags/filesystem/</link>
+      <pubDate>Tue, 28 Feb 2017 00:03:41 +0000</pubDate>
+      <guid>https://example.org/tags/filesystem/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>debugging</title>
+      <link>https://example.org/tags/debugging/</link>
+      <pubDate>Mon, 06 Feb 2017 00:22:05 +0000</pubDate>
+      <guid>https://example.org/tags/debugging/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>process</title>
+      <link>https://example.org/tags/process/</link>
+      <pubDate>Mon, 06 Feb 2017 00:22:05 +0000</pubDate>
+      <guid>https://example.org/tags/process/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>distributed file system</title>
+      <link>https://example.org/tags/distributed-file-system/</link>
+      <pubDate>Mon, 02 Jan 2017 23:55:01 +0000</pubDate>
+      <guid>https://example.org/tags/distributed-file-system/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>hadoop</title>
+      <link>https://example.org/tags/hadoop/</link>
+      <pubDate>Mon, 02 Jan 2017 23:55:01 +0000</pubDate>
+      <guid>https://example.org/tags/hadoop/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HDFS</title>
+      <link>https://example.org/tags/hdfs/</link>
+      <pubDate>Mon, 02 Jan 2017 23:55:01 +0000</pubDate>
+      <guid>https://example.org/tags/hdfs/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Debugging Stuck Process in Linux | Superuser</title>
+<meta name="keywords" content="debugging, linux, process">
+<meta name="description" content="The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.
+Now I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck.">
+<meta name="author" content="sanket">
+<link rel="canonical" href="https://example.org/posts/2017-02-06-debugging-stuck-process-linux/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e087fd1dc76e73a35ae6d7028ddc1ba41e0131e7f9b3a6e2d019a208e6d6c4b5.css" integrity="sha256-4If9Hcduc6Na5tcCjdwbpB4BMef5s6bi0BmiCObWxLU=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://example.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Debugging Stuck Process in Linux" />
+<meta property="og:description" content="The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.
+Now I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.org/posts/2017-02-06-debugging-stuck-process-linux/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-02-06T00:22:05+00:00" />
+<meta property="article:modified_time" content="2017-02-06T00:22:05+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Debugging Stuck Process in Linux"/>
+<meta name="twitter:description" content="The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.
+Now I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://example.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Debugging Stuck Process in Linux",
+      "item": "https://example.org/posts/2017-02-06-debugging-stuck-process-linux/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Debugging Stuck Process in Linux",
+  "name": "Debugging Stuck Process in Linux",
+  "description": "The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.\nNow I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck.",
+  "keywords": [
+    "debugging", "linux", "process"
+  ],
+  "articleBody": "The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.\nNow I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck.\nThis is not step by step guide but it provides an insight on how various tools commands can be used. So here’s what I did to investigate what was going on:\nFind The Stuck Process: You can use the following to get the process ID\n$ ps auxww | grep Okay so we have PID now. Let’s look into what the stuck process is doing right now. `strace` comes to rescue here and it showed something like\n$ strace -p recvfrom(11, ) If you google around for system call called `recvfrom` you will get something like:\nThe recvfrom() and recvmsg() calls are used to receive messages from a socket, and may be used to receive data on a socket whether or not it is connection-oriented.\nSo we now know process is trying to receive data and stuck there itself, reading further into that man entry it says the first argument is socketfd (which was 11 in my case) That can help us know more on that socket which is stuck.\nSo to dig more in that socketfd we use /proc filesystem.\nls -l /proc//fd lrwx-- 1 sanket sanket 64 Feb 5 23:00 0 -\u003e; /dev/pts/19 lrwx-- 1 sanket sanket 64 Feb 5 23:00 1 -\u003e; /dev/pts/19 lrwx-- 1 sanket sanket 64 Feb 5 22:59 2 -\u003e; /dev/pts/19 ... lrwx-- 1 sanket sanket 64 Feb 5 23:00 11 -\u003e socket:[102286] Note how FD 11 is a socket fd. Note the number (102286). Now let’s dig more into that socket. `lsof` can help us here.\n$ lsof -i -a -p | grep 102286 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME telnet 14480 sanket 3u IPv4 102286 0t0 TCP 192.168.1.2:59254 -\u003e; maa03s21-in-f78.1e100.net:http (ESTABLISHED) This will finally tell us where the socket is connected to. It can be your database server. So there. You know you have to fix your database.\nDoing something with stuck process: I went a step ahead to unfreeze the process. Getting it back on without restarting it. So here comes a debugger in picture. Fire up gdb and force process to give up on that FD. ie call the close method on the stuck fd.\n$ gdb -p call close(11) This should close the FD and process should move on.\nHappy Debugging ?\n",
+  "wordCount" : "470",
+  "inLanguage": "en",
+  "datePublished": "2017-02-06T00:22:05Z",
+  "dateModified": "2017-02-06T00:22:05Z",
+  "author":{
+    "@type": "Person",
+    "name": "sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.org/posts/2017-02-06-debugging-stuck-process-linux/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://example.org/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://example.org/">Home</a>&nbsp;»&nbsp;<a href="https://example.org/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Debugging Stuck Process in Linux
+    </h1>
+    <div class="post-meta"><span title='2017-02-06 00:22:05 +0000 UTC'>February 6, 2017</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;sanket
+
+</div>
+  </header> 
+  <div class="post-content"><p>The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.</p>
+<p>Now I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck.</p>
+<p>This is not step by step guide but it provides an insight on how various tools commands can be used. So here’s what I did to investigate what was going on:</p>
+<h3 id="find-the-stuck-process">Find The Stuck Process:<a hidden class="anchor" aria-hidden="true" href="#find-the-stuck-process">#</a></h3>
+<p>You can use the following to get the process ID</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ps auxww | grep
+</span></span></code></pre></div><p>Okay so we have PID now. Let’s look into what the stuck process is doing right now. `strace` comes to rescue here and it showed something like</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ strace -p &lt;pid&gt; 
+</span></span><span style="display:flex;"><span>recvfrom<span style="color:#f92672">(</span>11, <span style="color:#f92672">)</span>
+</span></span></code></pre></div><p><img loading="lazy" src="%7b%7b%22/wp-content/uploads/2017/02/strace-768x288.jpg%22%7d%7d" alt="strace_output"  />
+</p>
+<p>If you google around for system call called `recvfrom` you will get something like:</p>
+<blockquote>
+<p>The recvfrom() and recvmsg() calls are used to receive messages from a socket, and may be used to receive data on a socket whether or not it is connection-oriented.</p>
+</blockquote>
+<p>So we now know process is trying to receive data and stuck there itself, reading further into that man entry it says the first argument is socketfd (which was 11 in my case) That can help us know more on that socket which is stuck.</p>
+<p>So to dig more in that socketfd we use /proc filesystem.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ls -l /proc//fd
+</span></span><span style="display:flex;"><span>lrwx-- <span style="color:#ae81ff">1</span> sanket sanket <span style="color:#ae81ff">64</span> Feb <span style="color:#ae81ff">5</span> 23:00 <span style="color:#ae81ff">0</span> -&gt;; /dev/pts/19
+</span></span><span style="display:flex;"><span>lrwx-- <span style="color:#ae81ff">1</span> sanket sanket <span style="color:#ae81ff">64</span> Feb <span style="color:#ae81ff">5</span> 23:00 <span style="color:#ae81ff">1</span> -&gt;; /dev/pts/19
+</span></span><span style="display:flex;"><span>lrwx-- <span style="color:#ae81ff">1</span> sanket sanket <span style="color:#ae81ff">64</span> Feb <span style="color:#ae81ff">5</span> 22:59 <span style="color:#ae81ff">2</span> -&gt;; /dev/pts/19
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>lrwx-- <span style="color:#ae81ff">1</span> sanket sanket <span style="color:#ae81ff">64</span> Feb <span style="color:#ae81ff">5</span> 23:00 <span style="color:#ae81ff">11</span> -&gt; socket:<span style="color:#f92672">[</span>102286<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Note how FD 11 is a socket fd. Note the number (102286). Now let’s dig more into that socket. `lsof` can help us here.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ lsof -i -a -p &lt;pid&gt; | grep <span style="color:#ae81ff">102286</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>telnet <span style="color:#ae81ff">14480</span> sanket 3u IPv4 <span style="color:#ae81ff">102286</span> 0t0 TCP 192.168.1.2:59254 -&gt;; maa03s21-in-f78.1e100.net:http <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>This will finally tell us where the socket is connected to. It can be your database server. So there. You know you have to fix your database.</p>
+<h3 id="doing-something-with-stuck-process">Doing something with stuck process:<a hidden class="anchor" aria-hidden="true" href="#doing-something-with-stuck-process">#</a></h3>
+<p>I went a step ahead to unfreeze the process. Getting it back on without restarting it. So here comes a debugger in picture. Fire up gdb and force process to give up on that FD. ie call the close method on the stuck fd.</p>
+<pre tabindex="0"><code>$ gdb -p &lt;pid&gt;
+call close(11)
+</code></pre><p>This should close the FD and process should move on.</p>
+<p>Happy Debugging ?</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://example.org/tags/debugging/">debugging</a></li>
+      <li><a href="https://example.org/tags/linux/">linux</a></li>
+      <li><a href="https://example.org/tags/process/">process</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://example.org/">Superuser</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
