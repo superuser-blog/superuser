@@ -52,11 +52,11 @@ Max timeout = 20 * tickTime
 
 So here it must be 120 sec as a zookeeper timeout. But still timeouts were occurring about 40s after.I pulled up GC longs, there was no such long GC. So I went in and checked zookeeper config. Zookeeper also had tickTime value. Confusing it was and now I was not sure which tickTime was be applicable to the dead regionserver. There were two different values of ticktime. One in ZK and one in HBase.
 
-![zookeeper_config]({{"/wp-content/uploads/2017/05/zookeeper_config.png"}})
+![zookeeper_config](/wp-content/uploads/2017/05/zookeeper_config.png)
 
 As confusing as it was, I went to check zookeeper logs. There I found the cause; the sessions negotiated with zookeeper from dead regionserver were of 40s (20*2s of original ticktime) So clearly the timeout and ticktime we set in regionserver on hbase side were not taking effect. Strange! Roaming around in HDP Server's UI, I found this glorious piece of help-text. (Could not take a screenshot as that pop-up appeared only when I hover 😛 )
 
-![zookeeper-time-hint]({{"/wp-content/uploads/2017/05/IMG_20170524_150126-225x300.jpeg"}})
+![zookeeper-time-hint](/wp-content/uploads/2017/05/IMG_20170524_150126-225x300.jpeg)
 
 Now it was evident that if you are using different set of zookeeper quorum, the value set in hbase wont affect! **What? Why do you not print this in bold on some heading?? **So this was the cause and the ticktime was needed to set in zookeeper (as done already: see the screenshot ^^). Many times GC cause long delays. Apart from increasing timeout, you may also want to <a href="//www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html" target="_blank" rel="noopener noreferrer">tune your GC</a>. Also you may want to look into <a href="//superuser.blog/tuning-hbase/" target="_blank" rel="noopener noreferrer">Tuning Your HBase</a> or maybe <a href="//superuser.blog/hbase-benchmarking/" target="_blank" rel="noopener noreferrer">benchmark</a> it.
 

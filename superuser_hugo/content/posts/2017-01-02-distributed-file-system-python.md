@@ -55,9 +55,9 @@ Here's couple of screenshots of PyDFS in action:
 
 In first image we are putting a file into DFS (my public key) and the lines you see are the blocks of the file (I have set smaller block size here). In second image we are trying to get the image from DFS and it will print it on stdout.
 
-![pydfs_put]({{"/wp-content/uploads/2017/01/pydfs_put-768x231.png"}})
+![pydfs_put](/wp-content/uploads/2017/01/pydfs_put-768x231.png)
 
-![pydfs_get]({{"/wp-content/uploads/2017/01/pydfs_get-768x150.png"}})
+![pydfs_get](/wp-content/uploads/2017/01/pydfs_get-768x150.png)
 
 ## Recording of the talk:
 

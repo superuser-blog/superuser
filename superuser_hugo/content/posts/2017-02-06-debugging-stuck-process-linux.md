@@ -39,7 +39,7 @@ $ strace -p <pid>
 recvfrom(11, )
 ```
 
-![strace_output]({{"/wp-content/uploads/2017/02/strace-768x288.jpg"}})
+![strace_output](/wp-content/uploads/2017/02/strace-768x288.jpg)
 
 
 If you google around for system call called \`recvfrom\` you will get something like:

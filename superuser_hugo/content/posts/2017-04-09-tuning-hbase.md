@@ -52,7 +52,7 @@ The values for these defaults are set very low and you want to set this values i
 
 For some kinds of requests (queries) which takes more time to get processed, you may face Scanner Timeouts or Scanner not Found Errors. And to avert this you should increase this value.
 
-![hbase_conf]({{"/wp-content/uploads/2017/04/hbase-tune-768x295.png"}})
+![hbase_conf](/wp-content/uploads/2017/04/hbase-tune-768x295.png)
 
 ### 9. Setting Off-Peak Hours (base.offpeak.[end|start].hour)
 

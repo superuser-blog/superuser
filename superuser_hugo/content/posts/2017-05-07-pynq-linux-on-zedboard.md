@@ -137,7 +137,7 @@ export PATH='uboot-xlnx/tools:'$PATH
 
 Get the &#8220;u-boot&#8221; file from the root of the u-boot source directory, rename it to u-boot.elf. Now just make the **BOOT.bin**, open &#8220;Create Boot Image&#8221; in SDK use the FSBL.elf, bit file and the u-boot.elf. Mind the order of the files because that's how the Zynq will be booted. FSBL configures the PL with the bit file then loads the second stage bootloader; u-boot.
 
-![boot]({{"/wp-content/uploads/2017/05/BOOT.png"}})
+![boot](/wp-content/uploads/2017/05/BOOT.png)
 
 ### 2. Make Linux Kernel Image
 
