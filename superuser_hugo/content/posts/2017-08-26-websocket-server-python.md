@@ -30,7 +30,7 @@ Journey to websocket was pretty long. I started with an idea to make an app whic
 
 How does it work? : It uses HTTP protocol for handshake and after handshake is complete, it works over TCP protocol and exchanges data in its agreed-upon format called frames. Connections are bi-directional and any party can send message anytime. Unlike HTTP where new TCP connection is made every time you want to communicate, WebSockets maintains a connection using which any side can send message anytime, reducing the message delivery time by using the existing connection.
 
-![Websocket interaction]({{"https://www.fullstackpython.com/img/visuals/websockets-flow-with-client-push.png"}})
+![Websocket interaction](https://www.fullstackpython.com/img/visuals/websockets-flow-with-client-push.png)
 
 ## The WebSocket Server:
 
@@ -199,7 +199,7 @@ def send_frame(self, payload):
 
 Yep, that easy. So that wraps up our server. Now let's have a look at how can we make it on roll. Fire up a web browser console and try these out:
 
-![websocket_js]({{"/wp-content/uploads/2017/08/websocket_js.png"}})
+![websocket_js](/wp-content/uploads/2017/08/websocket_js.png)
 
 We asked our browser side websocket to print whatever it receives in console. And our server is sending back whatever the client sends. So there you are. The mighty WebSockets with <80 lines of python code 😀 Check it out on <a href="//github.com/sanketplus/PyWSocket" target="_blank" rel="noopener">GitHub</a>.
 
