@@ -60,10 +60,9 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
-        working-directory: ./superuser_hugo
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./superuser_hugo/public
 
   # Deployment job
   deploy:
