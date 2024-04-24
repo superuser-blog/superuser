@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Linux on Superuser</title>
-    <link>https://exampleeeee.org/tags/linux/</link>
+    <link>http://localhost:1313/tags/linux/</link>
     <description>Recent content in Linux on Superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 07 May 2017 19:27:39 +0000</lastBuildDate>
-    <atom:link href="https://exampleeeee.org/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to reconfigure Zynq-PL on-the-go?</title>
-      <link>https://exampleeeee.org/posts/reconfigure-zynq-pl-go/</link>
+      <link>http://localhost:1313/posts/reconfigure-zynq-pl-go/</link>
       <pubDate>Sun, 07 May 2017 19:27:39 +0000</pubDate>
-      <guid>https://exampleeeee.org/posts/reconfigure-zynq-pl-go/</guid>
+      <guid>http://localhost:1313/posts/reconfigure-zynq-pl-go/</guid>
       <description>You would have wondered if i&amp;rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&amp;rsquo;s possible and as simple as,
 echo &amp;#39;0&amp;#39; &amp;gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo &amp;#39;1&amp;#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit &amp;amp;gt; /dev/xdevcfg Yeah, tha&amp;rsquo;s it! Make sure you&amp;rsquo;re running it as root.
 Don&amp;rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard</description>
     </item>
     <item>
       <title>PYNQ Linux on ZedBoard</title>
-      <link>https://exampleeeee.org/posts/pynq-linux-on-zedboard/</link>
+      <link>http://localhost:1313/posts/pynq-linux-on-zedboard/</link>
       <pubDate>Sun, 07 May 2017 19:09:58 +0000</pubDate>
-      <guid>https://exampleeeee.org/posts/pynq-linux-on-zedboard/</guid>
+      <guid>http://localhost:1313/posts/pynq-linux-on-zedboard/</guid>
       <description>Hi There!
 The PYNQ Linux is a fun, easy and maker-friendly Ubuntu 15.04 rootfs. It comes bundled with the PYNQ-Z1 board, and the official documentations doesn&amp;rsquo;t even utter a word on how to build or port this image on any other Zynq. Maybe because it&amp;rsquo;s too obvious how to do so.
 What you need to run Linux on any ARM board?
@@ -29,17 +29,17 @@ BOOT image (BOOT.bin) kernel image (uImage) devicetree blob (devicetree.dtb) ro
     </item>
     <item>
       <title>Resize EBS Root Volume of CentOS 6 AMI</title>
-      <link>https://exampleeeee.org/posts/resize-ebs-root-volume-centos-ami/</link>
+      <link>http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/</link>
       <pubDate>Tue, 28 Feb 2017 00:03:41 +0000</pubDate>
-      <guid>https://exampleeeee.org/posts/resize-ebs-root-volume-centos-ami/</guid>
+      <guid>http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/</guid>
       <description>So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
 These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete.</description>
     </item>
     <item>
       <title>Debugging Stuck Process in Linux</title>
-      <link>https://exampleeeee.org/posts/debugging-stuck-process-linux/</link>
+      <link>http://localhost:1313/posts/debugging-stuck-process-linux/</link>
       <pubDate>Mon, 06 Feb 2017 00:22:05 +0000</pubDate>
-      <guid>https://exampleeeee.org/posts/debugging-stuck-process-linux/</guid>
+      <guid>http://localhost:1313/posts/debugging-stuck-process-linux/</guid>
       <description>The other day I faced a problem with monitoring setup and I found that the WebUI is not responding. I SSHed into server and checked if process is running. It was. Checked if port was open. It was. So as it happened, the process was running and listening on port but it was stuck somewhere and it was not accepting connection. So there it was, a running stuck process.
 Now I could simply have restarted the stuck process but that wouldn’t tell me what actually happened and where it was stuck.</description>
     </item>
