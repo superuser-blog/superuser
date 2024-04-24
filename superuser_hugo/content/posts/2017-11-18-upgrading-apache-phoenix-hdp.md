@@ -89,4 +89,4 @@ And restart the cluster [server and then clients] 🙂
 
 Do read: <a href="https://phoenix.apache.org/upgrading.html" target="_blank" rel="noopener">https://phoenix.apache.org/upgrading.html </a>
 
-You might also want to look at [Tuning Your HBase]({{<relref "posts/2017-04-09-tuning-hbase.md">}}) or maybe [benchmark]({{<relref "posts/2017-03-05-hbase-benchmarking.md/">}}) it.
+You might also want to look at [Tuning Your HBase]({{<relref "posts/2017-04-09-tuning-hbase.md">}}) or maybe [benchmark]({{<relref "posts/2017-03-05-hbase-benchmarking.md">}}) it.

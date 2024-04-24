@@ -60,6 +60,6 @@ As confusing as it was, I went to check zookeeper logs. There I found the cause;
 
 ![zookeeper-time-hint](/wp-content/uploads/2017/05/IMG_20170524_150126-225x300.jpeg)
 
-Now it was evident that if you are using different set of zookeeper quorum, the value set in hbase wont affect! **What? Why do you not print this in bold on some heading?? **So this was the cause and the ticktime was needed to set in zookeeper (as done already: see the screenshot ^^). Many times GC cause long delays. Apart from increasing timeout, you may also want to tune your [GC](https://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html). Also you may want to look into [Tuning Your HBase]({{<relref "posts/2017-04-09-tuning-hbase.md">}}) or maybe [benchmark]({{<relref "posts/2017-03-05-hbase-benchmarking.md/">}}) it.
+Now it was evident that if you are using different set of zookeeper quorum, the value set in hbase wont affect! **What? Why do you not print this in bold on some heading?? **So this was the cause and the ticktime was needed to set in zookeeper (as done already: see the screenshot ^^). Many times GC cause long delays. Apart from increasing timeout, you may also want to tune your [GC](https://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html). Also you may want to look into [Tuning Your HBase]({{<relref "posts/2017-04-09-tuning-hbase.md">}}) or maybe [benchmark]({{<relref "posts/2017-03-05-hbase-benchmarking.md">}}) it.
 
 After increasing tickTime in zookeeper, it's running fine and it's been two days. Let's hope it just stays that way 🙂
