@@ -2,10 +2,12 @@
 id: 37
 title: "Simple Distributed File System in Python : PyDFS"
 date: 2017-01-02 23:55:01 +00:00
-author: sanket
+author: Sanket
 layout: single
 guid: http://superuser.blog/?p=37
-permalink: /distributed-file-system-python/
+slug: /distributed-file-system-python/
+cover:
+  image: /wp-content/uploads/2017/01/PyDFS-825x416.png
 header:
   overlay_image: /wp-content/uploads/2017/01/PyDFS-825x416.png
   overlay_filter: rgba(10, 10, 10, 0.75)
@@ -61,4 +63,7 @@ In first image we are putting a file into DFS (my public key) and the lines you 
 
 ## Recording of the talk:
 
+{{< rawhtml >}}
+
  <iframe width="560" height="315" src="https://www.youtube.com/embed/-xYwXUGM7nY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{</rawhtml >}}

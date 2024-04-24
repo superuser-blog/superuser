@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=8080&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>Setting up Inter Region AWS VPC Peering and Latency Tests | Superuser</title>
 <meta name="keywords" content="">
 <meta name="description" content="Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India. Of course there was a significant latency involved when users connect to US from other part of the world. And we wanted to test that, if a user from India connects to Mumbai region(faster handshake) and then that region uses VPC peering to us-east-1 to talk to other services.">
 <meta name="author" content="sanket">
-<link rel="canonical" href="https://example.org/posts/2017-12-14-aws-vpc-peering-latency-test/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.e087fd1dc76e73a35ae6d7028ddc1ba41e0131e7f9b3a6e2d019a208e6d6c4b5.css" integrity="sha256-4If9Hcduc6Na5tcCjdwbpB4BMef5s6bi0BmiCObWxLU=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://example.org/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
-<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:8080/posts/2017-12-14-aws-vpc-peering-latency-test/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:8080/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:8080/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:8080/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:8080/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:8080/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:8080/posts/2017-12-14-aws-vpc-peering-latency-test/">
 <noscript>
     <style>
         #theme-toggle,
@@ -37,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -56,71 +55,7 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="Setting up Inter Region AWS VPC Peering and Latency Tests" />
-<meta property="og:description" content="Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India. Of course there was a significant latency involved when users connect to US from other part of the world. And we wanted to test that, if a user from India connects to Mumbai region(faster handshake) and then that region uses VPC peering to us-east-1 to talk to other services." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.org/posts/2017-12-14-aws-vpc-peering-latency-test/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-12-14T00:00:00+00:00" />
-<meta property="article:modified_time" content="2017-12-14T00:00:00+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Setting up Inter Region AWS VPC Peering and Latency Tests"/>
-<meta name="twitter:description" content="Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India. Of course there was a significant latency involved when users connect to US from other part of the world. And we wanted to test that, if a user from India connects to Mumbai region(faster handshake) and then that region uses VPC peering to us-east-1 to talk to other services."/>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://example.org/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "Setting up Inter Region AWS VPC Peering and Latency Tests",
-      "item": "https://example.org/posts/2017-12-14-aws-vpc-peering-latency-test/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Setting up Inter Region AWS VPC Peering and Latency Tests",
-  "name": "Setting up Inter Region AWS VPC Peering and Latency Tests",
-  "description": "Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India. Of course there was a significant latency involved when users connect to US from other part of the world. And we wanted to test that, if a user from India connects to Mumbai region(faster handshake) and then that region uses VPC peering to us-east-1 to talk to other services.",
-  "keywords": [
-    
-  ],
-  "articleBody": "Most of our infrastructure and client facing services are in us-east-1 and we have lots of users connecting from different parts of the world including India. Of course there was a significant latency involved when users connect to US from other part of the world. And we wanted to test that, if a user from India connects to Mumbai region(faster handshake) and then that region uses VPC peering to us-east-1 to talk to other services. Here’s how it went:\nFirst thing we looked out for was AWS provided VPC peering, it does exist, but for limited number of regions (4, 3 US, 1 UK, at the time of writing this) and it did not include Mumbai. So we had to setup our own IPSec VPN tunnels.\nThe tool we chose for IPSec tunnel was OpenSwan. Found it easy to setup. We tried two different setups:\nEC2 \u003c=== tunnel ===\u003e EC2 EC2 \u003c=== tunnel ===\u003e AWS Managed VPN VPC Peering: EC2 \u003c=\u003e EC2 Following steps can be taken for setting up EC2, on both the regions.\nnet.ipv4.ip_forward = 1 net.ipv4.conf.all.accept_redirects = 0 net.ipv4.conf.all.send_redirects = 0 install OpenSwan: `sudo yum install openswan`\n`sudo vi /etc/ipsec.conf` and uncomment last line to include files from `ipsec.d folder.\nCreate conf files:\n(/etc/ipsec.d/us-mum.conf)\nconn us-mum type=tunnel authby=secret left=%defaultroute leftid= leftnexthop=%defaultroute leftsubnet= right= rightsubnet= pfs=yes auto=start (/etc/ipsec.d/us-mum.secrets)\n: PSK \"changemeplease\" You would want to do similar setup in the other region’s VPC EC2. Obviously, the PSK will the same and new conf files will be created ie:`/etc/ipsec.d/us-mum.secrets` and `us-mum.conf` with values changed appropriately.\nEstablishing tunnel: sudo service ipsec start sudo ipsec verify sudo service ipsec status If you see any problems with `verify` output, you may want to rectify it. For example if you have not set `send_redirects` or not set it properly, you can do:\necho 0 \u003e /proc/sys/net/ipv4/conf/all/send_redirects echo 0 \u003e /proc/sys/net/ipv4/conf/default/send_redirects echo 0 \u003e /proc/sys/net/ipv4/conf/eth0/send_redirects echo 0 \u003e /proc/sys/net/ipv4/conf/lo/send_redirects VPC Peering: EC2 \u003c=\u003e AWS Managed VPN In this case, one instance will be taken care by AWS and one will be EC2 as setup above.\nTo setup AWS side VPN:\nOnce you create VPN connection, you will get two public IPs. Use one of them in our EC2 conf as a rightid. The rest settings should be same as EC2-EC2 setup and self explanatory.\nStill not working?\nRef: https://aws.amazon.com/articles/connecting-multiple-vpcs-with-ec2-instances-ipsec/\nLatency Tests: Here’s how we performed latency tests. We had a webserver running in US region. We had one instance in both US and Mumbai region, both had nginx, proxying requests to US region.\nHere are the results:\nConnecting Directly to US from Bangalore:\nConnecting to Mumbai from Bangalore , request will be tunneled to US:\nAs you can see, for the first request, handshake is much faster (approx 10x) to Mumbai as it is near to client. But when you have the socket established, it’s clear that if you take Mumbai route (VPN) to US instead of going directly US, it is approx 1.5x slower as we encounter penalty for VPN encryption and decryption operations.\nSo that’s how that one went. Let me know if any doubts or you’re stuck anywhere. Also I would love to know how did it work for you and what improvements you saw with your setup.\n",
-  "wordCount" : "554",
-  "inLanguage": "en",
-  "datePublished": "2017-12-14T00:00:00Z",
-  "dateModified": "2017-12-14T00:00:00Z",
-  "author":{
-    "@type": "Person",
-    "name": "sanket"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://example.org/posts/2017-12-14-aws-vpc-peering-latency-test/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Superuser",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://example.org/favicon.ico"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -138,7 +73,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://example.org/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <a href="http://localhost:8080/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -170,7 +105,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://example.org/">Home</a>&nbsp;»&nbsp;<a href="https://example.org/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:8080/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:8080/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Setting up Inter Region AWS VPC Peering and Latency Tests
     </h1>
@@ -258,7 +193,8 @@ echo 0 &gt; /proc/sys/net/ipv4/conf/lo/send_redirects
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://example.org/">Superuser</a></span>
+        <span>&copy; 2024 <a href="http://localhost:8080/">Superuser</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

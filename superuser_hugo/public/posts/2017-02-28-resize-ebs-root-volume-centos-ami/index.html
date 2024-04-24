@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=8080&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>Resize EBS Root Volume of CentOS 6 AMI | Superuser</title>
 <meta name="keywords" content="ami, aws, EBS, filesystem, linux">
 <meta name="description" content="So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
 These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete.">
-<meta name="author" content="sanket">
-<link rel="canonical" href="https://example.org/posts/2017-02-28-resize-ebs-root-volume-centos-ami/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.e087fd1dc76e73a35ae6d7028ddc1ba41e0131e7f9b3a6e2d019a208e6d6c4b5.css" integrity="sha256-4If9Hcduc6Na5tcCjdwbpB4BMef5s6bi0BmiCObWxLU=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://example.org/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
-<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<meta name="author" content="Sanket">
+<link rel="canonical" href="http://localhost:8080/posts/2017-02-28-resize-ebs-root-volume-centos-ami/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:8080/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:8080/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:8080/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:8080/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:8080/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:8080/posts/2017-02-28-resize-ebs-root-volume-centos-ami/">
 <noscript>
     <style>
         #theme-toggle,
@@ -38,7 +37,7 @@ These all went good and I proceed with launching instances for HDP cluster (12 w
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -57,73 +56,7 @@ These all went good and I proceed with launching instances for HDP cluster (12 w
         }
 
     </style>
-</noscript><meta property="og:title" content="Resize EBS Root Volume of CentOS 6 AMI" />
-<meta property="og:description" content="So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
-These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.org/posts/2017-02-28-resize-ebs-root-volume-centos-ami/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-02-28T00:03:41+00:00" />
-<meta property="article:modified_time" content="2017-02-28T00:03:41+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Resize EBS Root Volume of CentOS 6 AMI"/>
-<meta name="twitter:description" content="So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
-These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete."/>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://example.org/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "Resize EBS Root Volume of CentOS 6 AMI",
-      "item": "https://example.org/posts/2017-02-28-resize-ebs-root-volume-centos-ami/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Resize EBS Root Volume of CentOS 6 AMI",
-  "name": "Resize EBS Root Volume of CentOS 6 AMI",
-  "description": "So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.\nThese all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete.",
-  "keywords": [
-    "ami", "aws", "EBS", "filesystem", "linux"
-  ],
-  "articleBody": "So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.\nThese all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete. Later only Ambari Server started throwing warnings about disk space. Despite attaching a 100 GB EBS.\nUpon checking it came to my notice that the EBS attached is indeed 100 GB but the root partition was only 8 GB. So I can make an fs out of remaining space and mount it somewhere but that’s not what I wanted.\n[sanketp@hdpm01 ~]$ lsblk NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT xvda 202:0 0 100G 0 disk └─xvda1 202:1 0 8G 0 part / So I started searching on how to extend root partition. Found may solutions. Including one on AWS Docs. Most solutions were requiring\nTo unmount and attach it somewhere else and then perform extend operation Take a snapshot and then extend and then launch new instance Taking 12 instances offline and mounting their EBS on some other instance and extending was not feasible for me. Neither was taking snapshot of every instance and launch new one with extended partition. I wanted to do it online. Tried various tools like parted, resize2fs etc. None of them worked, until I finally found one that did the job while partition being online and mounted.\ngrowpart: So this was the savior. And following were the steps I took to get it resized:\nGet the repo in place. Install the package Run the utility (last number is for partition, here it was first partition) Reboot! sudo yum install //download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm -y sudo yum install cloud-utils-growpart -y sudo growpart /dev/xvda 1 sudo reboot So this little tool came to rescue and saved many hours. This problem tends to happen with older linux versions like CentOS 6, Debian-jessie, SELS11.X. This guy has solution for Debian with same problem.\nCheers!\n",
-  "wordCount" : "359",
-  "inLanguage": "en",
-  "datePublished": "2017-02-28T00:03:41Z",
-  "dateModified": "2017-02-28T00:03:41Z",
-  "author":{
-    "@type": "Person",
-    "name": "sanket"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://example.org/posts/2017-02-28-resize-ebs-root-volume-centos-ami/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Superuser",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://example.org/favicon.ico"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -141,7 +74,7 @@ These all went good and I proceed with launching instances for HDP cluster (12 w
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://example.org/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <a href="http://localhost:8080/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -173,14 +106,17 @@ These all went good and I proceed with launching instances for HDP cluster (12 w
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://example.org/">Home</a>&nbsp;»&nbsp;<a href="https://example.org/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:8080/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:8080/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Resize EBS Root Volume of CentOS 6 AMI
     </h1>
-    <div class="post-meta"><span title='2017-02-28 00:03:41 +0000 UTC'>February 28, 2017</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;sanket
+    <div class="post-meta"><span title='2017-02-28 00:03:41 +0000 +0000'>February 28, 2017</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Sanket
 
 </div>
   </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:8080/wp-content/uploads/2017/02/centos-825x479.jpg" alt="">
+        
+</figure>
   <div class="post-content"><p>So the other day I had to create a CentOS 6 AMI for <a href="//hortonworks.com/products/data-center/hdp/">HDP</a> installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.</p>
 <p>These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete. Later only <a href="//ambari.apache.org">Ambari Server</a>  started throwing warnings about disk space. Despite attaching a 100 GB EBS.</p>
 <p>Upon checking it came to my notice that the EBS attached is indeed 100 GB but the root partition was only 8 GB. So I can make an fs out of remaining space and mount it somewhere but that&rsquo;s not what I wanted.</p>
@@ -214,18 +150,19 @@ These all went good and I proceed with launching instances for HDP cluster (12 w
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://example.org/tags/ami/">ami</a></li>
-      <li><a href="https://example.org/tags/aws/">aws</a></li>
-      <li><a href="https://example.org/tags/ebs/">EBS</a></li>
-      <li><a href="https://example.org/tags/filesystem/">filesystem</a></li>
-      <li><a href="https://example.org/tags/linux/">linux</a></li>
+      <li><a href="http://localhost:8080/tags/ami/">Ami</a></li>
+      <li><a href="http://localhost:8080/tags/aws/">Aws</a></li>
+      <li><a href="http://localhost:8080/tags/ebs/">EBS</a></li>
+      <li><a href="http://localhost:8080/tags/filesystem/">Filesystem</a></li>
+      <li><a href="http://localhost:8080/tags/linux/">Linux</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://example.org/">Superuser</a></span>
+        <span>&copy; 2024 <a href="http://localhost:8080/">Superuser</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

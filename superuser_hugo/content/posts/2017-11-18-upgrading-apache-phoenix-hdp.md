@@ -2,10 +2,10 @@
 id: 100
 title: Upgrading Apache Phoenix in HDP Cluster
 date: 2017-11-18T11:26:20+00:00
-author: sanket
+author: Sanket
 layout: single
 guid: http://superuser.blog/?p=100
-permalink: /upgrading-apache-phoenix-hdp/
+slug: /upgrading-apache-phoenix-hdp/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
@@ -89,4 +89,4 @@ And restart the cluster [server and then clients] 🙂
 
 Do read: <a href="https://phoenix.apache.org/upgrading.html" target="_blank" rel="noopener">https://phoenix.apache.org/upgrading.html </a>
 
-You might also want to look at <a href="//superuser.blog/tuning-hbase/" target="_blank" rel="noopener">Tuning HBase</a> and <a href="//superuser.blog/hbase-benchmarking/" target="_blank" rel="noopener">Benchmarking</a> the same.
+You might also want to look at [Tuning Your HBase]({{<relref "posts\2017-04-09-tuning-hbase.md">}}) or maybe [benchmark]({{<relref "posts\2017-03-05-hbase-benchmarking.md/">}}) it.

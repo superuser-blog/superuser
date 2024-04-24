@@ -2,10 +2,12 @@
 id: 95
 title: Stuff You Can Do While Tuning HBase
 date: 2017-04-09T23:42:31+00:00
-author: sanket
+author: Sanket
 layout: single
 guid: http://superuser.blog/?p=95
-permalink: /tuning-hbase/
+slug: /tuning-hbase/
+cover:
+  image: /wp-content/uploads/2017/04/hbase-config.jpg
 header:
   overlay_image: /wp-content/uploads/2017/04/hbase-config.jpg
   overlay_filter: rgba(10, 10, 10, 0.75)
@@ -17,8 +19,10 @@ tags:
 So you are setting up HBase! Congratulations! 
 
 When it comes to tuning HBase there are so many things you can do. And most of the things will be dependent upon type of data you will be storing and it's access patterns. So I will be saying this a lot: 'value of this parameter depends upon your workload'. Here I will try to enlist some of the variables that you can tweak while tuning hbase. This list is not at all exhaustive.
+{{< rawhtml >}}
 
-<img class="aligncenter" src="//hbase.apache.org/images/hbase_logo_with_orca_large.png" alt="hbase-logo" width="470" height="120" />
+<img class="aligncenter" src="https://hbase.apache.org/images/hbase_logo_with_orca_large.png" alt="hbase-logo" width="470" height="120" />
+{{< /rawhtml >}}
 
 ### 1. HBase RegionServer Maximum Memory (hbase\_regionserver\_heapsize)
 
@@ -42,7 +46,7 @@ This is number of handlers available per regionserver to serve request. Default 
 
 ### 6. Maximum Region File Size (hbase.hregion.max.filesize)
 
-This defines a size after which a region will be split into two regions. You want to tune this size because very small size will create more number of regions and it is recommended to maintain no more than 200 regions per regionserver. So you should take in account number of regionserver and size of your dataset while setting this parameter. You also want to look at <a href="//hortonworks.com/blog/apache-hbase-region-splitting-and-merging/" target="_blank" rel="noopener noreferrer">split policies</a> in hbase and want to choose one which suits your purpose.
+This defines a size after which a region will be split into two regions. You want to tune this size because very small size will create more number of regions and it is recommended to maintain no more than 200 regions per regionserver. So you should take in account number of regionserver and size of your dataset while setting this parameter. You also want to look at [split policies](https://hortonworks.com/blog/apache-hbase-region-splitting-and-merging/) in hbase and want to choose one which suits your purpose.
 
 ### 7. Timeouts (Zookeeper Session, RPC, Phoenix Query )
 
@@ -60,8 +64,8 @@ HBase also allow to schedule major compaction during certain time period. HBase 
 
 ### 10. Compression and Datablock Encoding
 
-This is one more functionality HBase provides for which there is no reason not to use it. <a href="//hadoop-hbase.blogspot.in/2016/02/hbase-compression-vs-blockencoding_17.html" target="_blank" rel="noopener noreferrer">This article</a> provides more insights into this. While this may impact the performance a little but it will save you lots of disk space.
+This is one more functionality HBase provides for which there is no reason not to use it. [This article](https://hadoop-hbase.blogspot.in/2016/02/hbase-compression-vs-blockencoding_17.html) provides more insights into this. While this may impact the performance a little but it will save you lots of disk space.
 
-As I said, this list is not exhaustive and there is a lot you can do while tuning hbase. Take a look at <a href="//hbase.apache.org/0.94/book/performance.html" target="_blank" rel="noopener noreferrer">this</a> chapter from HBase book. You also can perform <a href="//superuser.blog/hbase-benchmarking/" target="_blank" rel="noopener noreferrer">benchmarking</a> after tuning parameters so that you know how that particular change affected the performance.
+As I said, this list is not exhaustive and there is a lot you can do while tuning hbase. Take a look at [this](https://hbase.apache.org/0.94/book/performance.html) chapter from HBase book. You also can perform [benchmarking](https://superuser.blog/hbase-benchmarking/) after tuning parameters so that you know how that particular change affected the performance.
 
 Happy Tuning 😀

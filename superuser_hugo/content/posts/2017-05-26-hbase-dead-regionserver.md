@@ -2,10 +2,12 @@
 id: 175
 title: 'HBase YouAreDeadException: Dead RegionServer due to GC Pause'
 date: 2017-05-26T17:24:15+00:00
-author: sanket
+author: Sanket
 layout: single
 guid: https://superuser.blog/?p=175
-permalink: /hbase-dead-regionserver/
+slug: /hbase-dead-regionserver/
+cover:
+  image: /wp-content/uploads/2017/05/hbase_rs_status-811x510.png
 header:
   overlay_image: /wp-content/uploads/2017/05/hbase_rs_status-811x510.png
   overlay_filter: rgba(10, 10, 10, 0.75)
@@ -35,7 +37,7 @@ This alone did not tell much. Further scrolling up in logs, I found this:
 1434184 No GCs detected
 ```
 
-So according to these lines, something paused the JVM and it was not able to send hart-beat to zookeeper. The node there in zookeeper expired and the HBase Master marked it as dead regionserver. They also have given a <a href="//hbase.apache.org/book.html#trouble.rs.runtime.zkexpired" target="_blank" rel="noopener noreferrer">link</a> in log line which points out to a solution. Go ahead and have a look at it. So basically it says these could be the reasons behind:
+So according to these lines, something paused the JVM and it was not able to send hart-beat to zookeeper. The node there in zookeeper expired and the HBase Master marked it as dead regionserver. They also have given a [link](https://hbase.apache.org/book.html#trouble.rs.runtime.zkexpired) in log line which points out to a solution. Go ahead and have a look at it. So basically it says these could be the reasons behind:
 
   * Not enough RAM while running large imports.
   * Swap partition enabled
@@ -58,6 +60,6 @@ As confusing as it was, I went to check zookeeper logs. There I found the cause;
 
 ![zookeeper-time-hint](/wp-content/uploads/2017/05/IMG_20170524_150126-225x300.jpeg)
 
-Now it was evident that if you are using different set of zookeeper quorum, the value set in hbase wont affect! **What? Why do you not print this in bold on some heading?? **So this was the cause and the ticktime was needed to set in zookeeper (as done already: see the screenshot ^^). Many times GC cause long delays. Apart from increasing timeout, you may also want to <a href="//www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html" target="_blank" rel="noopener noreferrer">tune your GC</a>. Also you may want to look into <a href="//superuser.blog/tuning-hbase/" target="_blank" rel="noopener noreferrer">Tuning Your HBase</a> or maybe <a href="//superuser.blog/hbase-benchmarking/" target="_blank" rel="noopener noreferrer">benchmark</a> it.
+Now it was evident that if you are using different set of zookeeper quorum, the value set in hbase wont affect! **What? Why do you not print this in bold on some heading?? **So this was the cause and the ticktime was needed to set in zookeeper (as done already: see the screenshot ^^). Many times GC cause long delays. Apart from increasing timeout, you may also want to tune your [GC](https://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html). Also you may want to look into [Tuning Your HBase]({{<relref "posts\2017-04-09-tuning-hbase.md">}}) or maybe [benchmark]({{<relref "posts\2017-03-05-hbase-benchmarking.md/">}}) it.
 
 After increasing tickTime in zookeeper, it's running fine and it's been two days. Let's hope it just stays that way 🙂

@@ -2,10 +2,10 @@
 id: 109
 title: Configure PS of PYNQ to work with SDK
 date: 2017-04-11T04:05:30+00:00
-author: parth parikh
+author: Parth Parikh
 layout: single
 guid: https://superuser.blog/?p=109
-permalink: /configure-ps-pynq-work-sdk/
+slug: /configure-ps-pynq-work-sdk/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false

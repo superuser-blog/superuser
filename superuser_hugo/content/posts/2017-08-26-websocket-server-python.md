@@ -2,10 +2,12 @@
 id: 187
 title: 'Writing Simple WebSocket Server in Python: PyWSocket'
 date: 2017-08-26T14:40:53+00:00
-author: sanket
+author: Sanket
 layout: single
 guid: https://superuser.blog/?p=187
-permalink: /websocket-server-python/
+slug: /websocket-server-python/
+cover:
+  image: /wp-content/uploads/2017/08/pywsocket-825x463.jpg
 header:
   overlay_image: /wp-content/uploads/2017/08/pywsocket-825x463.jpg
   overlay_filter: rgba(10, 10, 10, 0.75)
@@ -41,7 +43,7 @@ We will be writing our server in 4 parts:
   3. Decoding/Receiving data/frames
   4. Sending data/frames
 
-I will be discussing the protocol implementations as we go thru steps. You can also take a pause have a look at <a href="//developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers" target="_blank" rel="noopener">this</a> awesome piece written by Mozilla on WebSocket Servers. It is a must read. Now or later.
+I will be discussing the protocol implementations as we go thru steps. You can also take a pause have a look at [this](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers) awesome piece written by Mozilla on WebSocket Servers. It is a must read. Now or later.
 
 ### 1. Writing a TCP/HTTP Server to Identify WebSocket Request
 
@@ -148,7 +150,7 @@ Now that the connection is established, client/the other side can send us data. 
      +---------------------------------------------------------------+
 ```
 
-I will discuss the fields which we will be using here. Please read that <a href="//developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers" target="_blank" rel="noopener">Mozilla article</a> I mentioned before to get more idea around this.
+I will discuss the fields which we will be using here. Please read that [Mozilla article](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers) I mentioned before to get more idea around this.
 
 The FIN bit suggests that this is the last frame.We will assume/set it to 1 as we will be sending small amount of data only. Next 3 bits are reserved. The opcode suggests what kind of operation is this. 0x0 for continuation, 0x1 for text, 0x2 for binary etc. We will be using 0x1. The MASK bit we will discuss shortly.
 
@@ -201,13 +203,13 @@ Yep, that easy. So that wraps up our server. Now let's have a look at how can we
 
 ![websocket_js](/wp-content/uploads/2017/08/websocket_js.png)
 
-We asked our browser side websocket to print whatever it receives in console. And our server is sending back whatever the client sends. So there you are. The mighty WebSockets with <80 lines of python code 😀 Check it out on <a href="//github.com/sanketplus/PyWSocket" target="_blank" rel="noopener">GitHub</a>.
+We asked our browser side websocket to print whatever it receives in console. And our server is sending back whatever the client sends. So there you are. The mighty WebSockets with <80 lines of python code 😀 Check it out on [GitHub](https://github.com/sanketplus/PyWSocket).
 
 Some interesting links which helped me get here:
 
   1. [https://www.fullstackpython.com/websockets.html](https://www.fullstackpython.com/websockets.html) 
   2. [https://blog.pusher.com/websockets-from-scratch](https://blog.pusher.com/websockets-from-scratch/)
-
+  
 If you want production grade websocket implementations:
   1. [Autobahn-Python](https://github.com/crossbario/autobahn-python)
   2. [aiohttp](https://aiohttp.readthedocs.io/en/stable/) (I have used this personally)
