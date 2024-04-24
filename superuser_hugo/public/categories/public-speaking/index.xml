@@ -2,40 +2,40 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Public Speaking on Superuser</title>
-    <link>https://exampleeeee.org/categories/public-speaking/</link>
+    <link>http://localhost:1313/categories/public-speaking/</link>
     <description>Recent content in Public Speaking on Superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 13 Oct 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://exampleeeee.org/categories/public-speaking/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/public-speaking/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SRECon&#39;21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]</title>
-      <link>https://exampleeeee.org/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</link>
+      <link>http://localhost:1313/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</link>
       <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</guid>
+      <guid>http://localhost:1313/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</guid>
       <description>Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was supposed to happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.
 The talk describes the approach to detect application hotspots our team developed in collaboration with the ML team.</description>
     </item>
     <item>
       <title>PyCon19 India: Let&#39;s Hunt a Memory Leak</title>
-      <link>https://exampleeeee.org/posts/2019-11-15-pycon-lets-hunt-memory-leak/</link>
+      <link>http://localhost:1313/posts/2019-11-15-pycon-lets-hunt-memory-leak/</link>
       <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/posts/2019-11-15-pycon-lets-hunt-memory-leak/</guid>
+      <guid>http://localhost:1313/posts/2019-11-15-pycon-lets-hunt-memory-leak/</guid>
       <description>We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let&#39;s Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers.</description>
     </item>
     <item>
       <title>SRECon19 Asia: Let&#39;s Build a Distributed File System</title>
-      <link>https://exampleeeee.org/posts/2019-07-21-lets-build-distributed-filesystem/</link>
+      <link>http://localhost:1313/posts/2019-07-21-lets-build-distributed-filesystem/</link>
       <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/posts/2019-07-21-lets-build-distributed-filesystem/</guid>
+      <guid>http://localhost:1313/posts/2019-07-21-lets-build-distributed-filesystem/</guid>
       <description>In the first post on this blog, I wrote about a tiny distributed filesystem I made in python for educational purpose. This year, I had a chance to use it in a talk delivered at SRECon 19 Asia. The title was
 Let&amp;rsquo;s Build a Distributed File System The talk was listed under something called Core Principles track and Talks in this track will focus on providing a deep understanding of how technologies we use everyday function and why it&#39;s important to know these details when supporting and scaling your infrastructure.</description>
     </item>
     <item>
       <title>Serverless Meets CI/CD</title>
-      <link>https://exampleeeee.org/posts/2018-12-10-serverless-meets-ci-cd/</link>
+      <link>http://localhost:1313/posts/2018-12-10-serverless-meets-ci-cd/</link>
       <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/posts/2018-12-10-serverless-meets-ci-cd/</guid>
+      <guid>http://localhost:1313/posts/2018-12-10-serverless-meets-ci-cd/</guid>
       <description>I have been attending LSPE [Large Scale Production Engineering] Meetup for last two years. And for the last one, I decided to give it back to the community. I conducted a hands-on session titled:
 Serverless meets CI/CD The session briefly introduced what is Serverless and CD/CD and why should you be concerned about it. We then went hands-on with AWS Lambda as serverless platform and Bitbucket Pipelines for CI/CD. Started from making a Hello World!</description>
     </item>

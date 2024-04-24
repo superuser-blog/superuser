@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>Curious Case of Python 2 and Integers | Superuser</title>
 <meta name="keywords" content="">
 <meta name="description" content="In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let&rsquo;s take a deeper look at what exactly happens!
 Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let&rsquo;s Hunt a Memory Leak or just scroll down to the bottom of the page.">
 <meta name="author" content="sanket">
-<link rel="canonical" href="https://exampleeeee.org/posts/2019-09-20-python-2-integers/">
+<link rel="canonical" href="http://localhost:1313/posts/2019-09-20-python-2-integers/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://exampleeeee.org/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://exampleeeee.org/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://exampleeeee.org/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://exampleeeee.org/apple-touch-icon.png">
-<link rel="mask-icon" href="https://exampleeeee.org/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://exampleeeee.org/posts/2019-09-20-python-2-integers/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/2019-09-20-python-2-integers/">
 <noscript>
     <style>
         #theme-toggle,
@@ -57,75 +57,6 @@ Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed
 
     </style>
 </noscript>
-  
-
-<meta property="og:title" content="Curious Case of Python 2 and Integers" />
-<meta property="og:description" content="In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let&rsquo;s take a deeper look at what exactly happens!
-Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let&rsquo;s Hunt a Memory Leak or just scroll down to the bottom of the page." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://exampleeeee.org/posts/2019-09-20-python-2-integers/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2019-09-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-09-20T00:00:00+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Curious Case of Python 2 and Integers"/>
-<meta name="twitter:description" content="In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let&rsquo;s take a deeper look at what exactly happens!
-Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let&rsquo;s Hunt a Memory Leak or just scroll down to the bottom of the page."/>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://exampleeeee.org/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "Curious Case of Python 2 and Integers",
-      "item": "https://exampleeeee.org/posts/2019-09-20-python-2-integers/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Curious Case of Python 2 and Integers",
-  "name": "Curious Case of Python 2 and Integers",
-  "description": "In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let\u0026rsquo;s take a deeper look at what exactly happens!\nUpdate: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let\u0026rsquo;s Hunt a Memory Leak or just scroll down to the bottom of the page.",
-  "keywords": [
-    
-  ],
-  "articleBody": "In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let’s take a deeper look at what exactly happens!\nUpdate: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let’s Hunt a Memory Leak or just scroll down to the bottom of the page.\nPython 2.7.15 (default, Jan 12 2019, 21:07:57) [GCC 4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.11.45.5)] on darwin Type \"help\", \"copyright\", \"credits\" or \"license\" for more information. \u003e\u003e\u003e import os, psutil, gc, time \u003e\u003e\u003e \u003e\u003e\u003e l=[i for i in range(100000000)] \u003e\u003e\u003e print(psutil.Process(os.getpid()).memory_info()) pmem(rss=3244871680L, vms=7824240640L, pfaults=1365384, pageins=460) \u003e\u003e\u003e \u003e\u003e\u003e del l \u003e\u003e\u003e print(psutil.Process(os.getpid()).memory_info()) pmem(rss=2509352960L, vms=6964514816L, pfaults=1381131, pageins=460) After deleting the list explicitly, the memory usage still is at 2.5G. That means the integers are still floating around. (see what I did there?)\nPython Objects Everything in python is an object, including our beloved integer.\n// Include/object.h /* Nothing is actually declared to be a PyObject, but every pointer to * a Python object can be cast to a PyObject*. This is inheritance built * by hand. Similarly every pointer to a variable-size Python object can, * in addition, be cast to PyVarObject*. */ typedef struct _object { PyObject_HEAD } PyObject; // Include/intobject.h typedef struct { PyObject_HEAD long ob_ival; } PyIntObject; So PyIntObject is just a wrapper around a C type long, with added python specific HEAD struct which contains additional information like reference count, pointer to various methods which will be called when we do print, delete, get, set, etc on the object.\nLet’s try to allocate an integer: We execute a really simple python assignment statement and we can see that the function PyObject * PyInt_FromLong(long ival), which takes a long variable and returns a PyObject (of course). From this point onwards, we will dive deep into two things:\nLook deeper into the said function above, and see how exactly an object is allocated Look into what happens when we delete it and try to understand the behavior we saw in the beginning Also: did you look at the call stack? The int object is created when the code is being compiled to bytecode! (The AST [abstract syntax tree] function calls) And not at during run time.\n1. Creating The Int Object PyObject * PyInt_FromLong(long ival) { register PyIntObject *v; // TRIMMED SOME CODE HERE if (free_list == NULL) { if ((free_list = fill_free_list()) == NULL) return NULL; } /* Inline PyObject_New */ v = free_list; free_list = (PyIntObject *)Py_TYPE(v); (void)PyObject_INIT(v, \u0026PyInt_Type); v-\u003eob_ival = ival; return (PyObject *) v; } The code above is responsible for creating an integer object from given long value. The trimmed code in the snipped above handles small integers separately. Leaving some links in the bottom if you’re interested in the specifics.\nSo the first thing that happens here is filling some sort of free list. Let’s take a look at what it is.\n/* Integers are quite normal objects, to make object handling uniform. (Using odd pointers to represent integers would save much space but require extra checks for this special case throughout the code.) Since a typical Python program spends much of its time allocating and deallocating integers, these operations should be very fast. Therefore we use a dedicated allocation scheme with a much lower overhead (in space and time) than straight malloc(): a simple dedicated free list, filled when necessary with memory from malloc(). block_list is a singly-linked list of all PyIntBlocks ever allocated, linked via their next members. PyIntBlocks are never returned to the system before shutdown (PyInt_Fini). free_list is a singly-linked list of available PyIntObjects, linked via abuse of their ob_type members. */ #define BLOCK_SIZE 1000 /* 1K less typical malloc overhead */ #define BHEAD_SIZE 8 /* Enough for a 64-bit pointer */ #define N_INTOBJECTS ((BLOCK_SIZE - BHEAD_SIZE) / sizeof(PyIntObject)) struct _intblock { struct _intblock *next; PyIntObject objects[N_INTOBJECTS]; }; typedef struct _intblock PyIntBlock; static PyIntBlock *block_list = NULL; static PyIntObject *free_list = NULL; static PyIntObject * fill_free_list(void) { PyIntObject *p, *q; /* Python's object allocator isn't appropriate for large blocks. */ p = (PyIntObject *) PyMem_MALLOC(sizeof(PyIntBlock)); if (p == NULL) return (PyIntObject *) PyErr_NoMemory(); ((PyIntBlock *)p)-\u003enext = block_list; block_list = (PyIntBlock *)p; /* Link the int objects together, from rear to front, then return the address of the last int object in the block. */ p = \u0026((PyIntBlock *)p)-\u003eobjects[0]; q = p + N_INTOBJECTS; while (--q \u003e p) Py_TYPE(q) = (struct _typeobject *)(q-1); Py_TYPE(q) = NULL; return p + N_INTOBJECTS - 1; } There are some spoilers in the comment in the code above. There are two new variables introduced above. The block_list and the free_list. block_list is a singly linked list of bunch of PytIntObjects. free_list is the pointer to next free object in this said bunch of Int objects in a block. So here is what happens in plain English:\nAllocate a new PyIntBlock Add the block at the beginning of the block_list linked list. Now link the linked list of those bunch of Int objects. Return the address of last Int Object. Here block_list is connected using *next and free_list is linked using *ob_type which is included in each Python object’s header.\nNow if we went back to the function PyInt_FromLong above, what we’re doing is attaching our new long variable to the next free slot in free_list and return it.\nWhy? Why do all these convoluted things? As the comment said, int objects are frequently allocated in python. So this approach allocates a bunch of int objects in one go (N_INTOBJECTS many, 24 in other words). So in one single alloc call, we reserve space for 24 objects. So that next 23 int allocations can go relatively faster!!\nPyIntBlock PyIntBlock +-----------------+ +-------------------+ | | | | | *next+-----------\u003e+ *next +---------\u003e block_list+-\u003e+ objects | | | | + | | + | +-----------------+ +-------------------+ | | v | +-----+----------+ v NULL \u003c---------+*ob_type | | ob_ival=NAN |PyIntObject | | +----+-----------+ ^ | + 21 similar objects ^ +*free_list | | +----+-----------+ | | *ob_type +\u003c------+ | ob_ival=NAN |PyIntObject | | +----+-----------+ ^ | | +----+-----------+ | *ob_type | | ob_ival=11 |PyIntObject | | +----------------+ 2. Deleting The Int Object So that was how a python object is allocated. Let’s see what happens when we delete it We can see static void int_dealloc(PyIntObject *v) is called. But how does python know what function to call? It is stored in the definition of PyIntObject specifically in the HEAD part. Here’s the function:\nint_dealloc(PyIntObject *v) { if (PyInt_CheckExact(v)) { Py_TYPE(v) = (struct _typeobject *)free_list; free_list = v; } else Py_TYPE(v)-\u003etp_free((PyObject *)v); } It is relatively simple, if the given object is indeed int, then just move the free_list pointer to the deleting object.\nPyIntBlock PyIntBlock +-----------------+ +-------------------+ | | | | | *next+-----------\u003e+ *next +---------\u003e block_list+-\u003e+ objects | | | | + | | + | +-----------------+ +-------------------+ | | v | +-----+----------+ v NULL \u003c---------+*ob_type | | ob_ival=NAN |PyIntObject | | +----+-----------+ ^ | + 21 similar objects ^ | +----+-----------+ | *ob_type | | ob_ival=NAN |PyIntObject | | +----+-----------+ ^ | *free_list | + +----+-----------+ | | *ob_type +\u003c----------+ | ob_ival=NAN |PyIntObject | | +----------------+ Bottomline: As we saw, we allocate a bunch of int objects (inside a block) when we create a new int and there’s not enough space in the current block. But when we delete, we just move the free_list pointer around. And not call actual dealloc function to free any memory. So that explains the initial behavior!\nAlso, floats work the same way.\nOther good reads on python2 and integers: Python Internals – Integer object pool Int Object in Python Recording of the talk: ",
-  "wordCount" : "1308",
-  "inLanguage": "en",
-  "datePublished": "2019-09-20T00:00:00Z",
-  "dateModified": "2019-09-20T00:00:00Z",
-  "author":{
-    "@type": "Person",
-    "name": "sanket"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://exampleeeee.org/posts/2019-09-20-python-2-integers/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Superuser",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://exampleeeee.org/favicon.ico"
-    }
-  }
-}
-</script>
 </head>
 
 <body class="" id="top">
@@ -143,7 +74,7 @@ Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://exampleeeee.org/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -175,7 +106,7 @@ Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://exampleeeee.org/">Home</a>&nbsp;»&nbsp;<a href="https://exampleeeee.org/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Curious Case of Python 2 and Integers
     </h1>
@@ -410,7 +341,7 @@ block_list+-&gt;+         objects |         |                   |
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="https://exampleeeee.org/">Superuser</a></span> · 
+        <span>&copy; 2024 <a href="http://localhost:1313/">Superuser</a></span> · 
 
     <span>
         Powered by

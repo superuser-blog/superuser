@@ -2,171 +2,171 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Superuser</title>
-    <link>https://exampleeeee.org/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 18 Nov 2017 11:26:20 +0000</lastBuildDate>
-    <atom:link href="https://exampleeeee.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hbase</title>
-      <link>https://exampleeeee.org/tags/hbase/</link>
+      <link>http://localhost:1313/tags/hbase/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/hbase/</guid>
+      <guid>http://localhost:1313/tags/hbase/</guid>
       <description></description>
     </item>
     <item>
       <title>Hdp</title>
-      <link>https://exampleeeee.org/tags/hdp/</link>
+      <link>http://localhost:1313/tags/hdp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/hdp/</guid>
+      <guid>http://localhost:1313/tags/hdp/</guid>
       <description></description>
     </item>
     <item>
       <title>Phoenix</title>
-      <link>https://exampleeeee.org/tags/phoenix/</link>
+      <link>http://localhost:1313/tags/phoenix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/phoenix/</guid>
+      <guid>http://localhost:1313/tags/phoenix/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
-      <link>https://exampleeeee.org/tags/python/</link>
+      <link>http://localhost:1313/tags/python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/python/</guid>
+      <guid>http://localhost:1313/tags/python/</guid>
       <description></description>
     </item>
     <item>
       <title>Websocket</title>
-      <link>https://exampleeeee.org/tags/websocket/</link>
+      <link>http://localhost:1313/tags/websocket/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/websocket/</guid>
+      <guid>http://localhost:1313/tags/websocket/</guid>
       <description></description>
     </item>
     <item>
       <title>FPGA</title>
-      <link>https://exampleeeee.org/tags/fpga/</link>
+      <link>http://localhost:1313/tags/fpga/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/fpga/</guid>
+      <guid>http://localhost:1313/tags/fpga/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux</title>
-      <link>https://exampleeeee.org/tags/linux/</link>
+      <link>http://localhost:1313/tags/linux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/linux/</guid>
+      <guid>http://localhost:1313/tags/linux/</guid>
       <description></description>
     </item>
     <item>
       <title>Vivado</title>
-      <link>https://exampleeeee.org/tags/vivado/</link>
+      <link>http://localhost:1313/tags/vivado/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/vivado/</guid>
+      <guid>http://localhost:1313/tags/vivado/</guid>
       <description></description>
     </item>
     <item>
       <title>Zynq</title>
-      <link>https://exampleeeee.org/tags/zynq/</link>
+      <link>http://localhost:1313/tags/zynq/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/zynq/</guid>
+      <guid>http://localhost:1313/tags/zynq/</guid>
       <description></description>
     </item>
     <item>
       <title>Metrics</title>
-      <link>https://exampleeeee.org/tags/metrics/</link>
+      <link>http://localhost:1313/tags/metrics/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/metrics/</guid>
+      <guid>http://localhost:1313/tags/metrics/</guid>
       <description></description>
     </item>
     <item>
       <title>Opentsdb</title>
-      <link>https://exampleeeee.org/tags/opentsdb/</link>
+      <link>http://localhost:1313/tags/opentsdb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/opentsdb/</guid>
+      <guid>http://localhost:1313/tags/opentsdb/</guid>
       <description></description>
     </item>
     <item>
       <title>PYNQ</title>
-      <link>https://exampleeeee.org/tags/pynq/</link>
+      <link>http://localhost:1313/tags/pynq/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/pynq/</guid>
+      <guid>http://localhost:1313/tags/pynq/</guid>
       <description></description>
     </item>
     <item>
       <title>PYNQ-Z1</title>
-      <link>https://exampleeeee.org/tags/pynq-z1/</link>
+      <link>http://localhost:1313/tags/pynq-z1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/pynq-z1/</guid>
+      <guid>http://localhost:1313/tags/pynq-z1/</guid>
       <description></description>
     </item>
     <item>
       <title>Xilinx</title>
-      <link>https://exampleeeee.org/tags/xilinx/</link>
+      <link>http://localhost:1313/tags/xilinx/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/xilinx/</guid>
+      <guid>http://localhost:1313/tags/xilinx/</guid>
       <description></description>
     </item>
     <item>
       <title>Ami</title>
-      <link>https://exampleeeee.org/tags/ami/</link>
+      <link>http://localhost:1313/tags/ami/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/ami/</guid>
+      <guid>http://localhost:1313/tags/ami/</guid>
       <description></description>
     </item>
     <item>
       <title>Aws</title>
-      <link>https://exampleeeee.org/tags/aws/</link>
+      <link>http://localhost:1313/tags/aws/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/aws/</guid>
+      <guid>http://localhost:1313/tags/aws/</guid>
       <description></description>
     </item>
     <item>
       <title>EBS</title>
-      <link>https://exampleeeee.org/tags/ebs/</link>
+      <link>http://localhost:1313/tags/ebs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/ebs/</guid>
+      <guid>http://localhost:1313/tags/ebs/</guid>
       <description></description>
     </item>
     <item>
       <title>Filesystem</title>
-      <link>https://exampleeeee.org/tags/filesystem/</link>
+      <link>http://localhost:1313/tags/filesystem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/filesystem/</guid>
+      <guid>http://localhost:1313/tags/filesystem/</guid>
       <description></description>
     </item>
     <item>
       <title>Debugging</title>
-      <link>https://exampleeeee.org/tags/debugging/</link>
+      <link>http://localhost:1313/tags/debugging/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/debugging/</guid>
+      <guid>http://localhost:1313/tags/debugging/</guid>
       <description></description>
     </item>
     <item>
       <title>Process</title>
-      <link>https://exampleeeee.org/tags/process/</link>
+      <link>http://localhost:1313/tags/process/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/process/</guid>
+      <guid>http://localhost:1313/tags/process/</guid>
       <description></description>
     </item>
     <item>
       <title>Distributed File System</title>
-      <link>https://exampleeeee.org/tags/distributed-file-system/</link>
+      <link>http://localhost:1313/tags/distributed-file-system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/distributed-file-system/</guid>
+      <guid>http://localhost:1313/tags/distributed-file-system/</guid>
       <description></description>
     </item>
     <item>
       <title>Hadoop</title>
-      <link>https://exampleeeee.org/tags/hadoop/</link>
+      <link>http://localhost:1313/tags/hadoop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/hadoop/</guid>
+      <guid>http://localhost:1313/tags/hadoop/</guid>
       <description></description>
     </item>
     <item>
       <title>HDFS</title>
-      <link>https://exampleeeee.org/tags/hdfs/</link>
+      <link>http://localhost:1313/tags/hdfs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://exampleeeee.org/tags/hdfs/</guid>
+      <guid>http://localhost:1313/tags/hdfs/</guid>
       <description></description>
     </item>
   </channel>
