@@ -2,80 +2,80 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Categories on Superuser</title>
-    <link>http://localhost:8080/categories/</link>
+    <link>https://exampleeeee.org/categories/</link>
     <description>Recent content in Categories on Superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 13 Oct 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:8080/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://exampleeeee.org/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Public Speaking</title>
-      <link>http://localhost:8080/categories/public-speaking/</link>
+      <link>https://exampleeeee.org/categories/public-speaking/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/public-speaking/</guid>
+      <guid>https://exampleeeee.org/categories/public-speaking/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
-      <link>http://localhost:8080/categories/python/</link>
+      <link>https://exampleeeee.org/categories/python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/python/</guid>
+      <guid>https://exampleeeee.org/categories/python/</guid>
       <description></description>
     </item>
     <item>
       <title>Golang</title>
-      <link>http://localhost:8080/categories/golang/</link>
+      <link>https://exampleeeee.org/categories/golang/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/golang/</guid>
+      <guid>https://exampleeeee.org/categories/golang/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux</title>
-      <link>http://localhost:8080/categories/linux/</link>
+      <link>https://exampleeeee.org/categories/linux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/linux/</guid>
+      <guid>https://exampleeeee.org/categories/linux/</guid>
       <description></description>
     </item>
     <item>
       <title>Aws</title>
-      <link>http://localhost:8080/categories/aws/</link>
+      <link>https://exampleeeee.org/categories/aws/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/aws/</guid>
+      <guid>https://exampleeeee.org/categories/aws/</guid>
       <description></description>
     </item>
     <item>
       <title>Networking</title>
-      <link>http://localhost:8080/categories/networking/</link>
+      <link>https://exampleeeee.org/categories/networking/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/networking/</guid>
+      <guid>https://exampleeeee.org/categories/networking/</guid>
       <description></description>
     </item>
     <item>
       <title>HBase</title>
-      <link>http://localhost:8080/categories/hbase/</link>
+      <link>https://exampleeeee.org/categories/hbase/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/hbase/</guid>
+      <guid>https://exampleeeee.org/categories/hbase/</guid>
       <description></description>
     </item>
     <item>
       <title>HDP</title>
-      <link>http://localhost:8080/categories/hdp/</link>
+      <link>https://exampleeeee.org/categories/hdp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/hdp/</guid>
+      <guid>https://exampleeeee.org/categories/hdp/</guid>
       <description></description>
     </item>
     <item>
       <title>FPGA</title>
-      <link>http://localhost:8080/categories/fpga/</link>
+      <link>https://exampleeeee.org/categories/fpga/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/fpga/</guid>
+      <guid>https://exampleeeee.org/categories/fpga/</guid>
       <description></description>
     </item>
     <item>
       <title>Zynq</title>
-      <link>http://localhost:8080/categories/zynq/</link>
+      <link>https://exampleeeee.org/categories/zynq/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:8080/categories/zynq/</guid>
+      <guid>https://exampleeeee.org/categories/zynq/</guid>
       <description></description>
     </item>
   </channel>

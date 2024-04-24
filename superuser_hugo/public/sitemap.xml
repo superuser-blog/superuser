@@ -2,196 +2,196 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:8080/categories/</loc>
+    <loc>https://exampleeeee.org/categories/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/</loc>
+    <loc>https://exampleeeee.org/posts/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/public-speaking/</loc>
+    <loc>https://exampleeeee.org/categories/public-speaking/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</loc>
+    <loc>https://exampleeeee.org/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/</loc>
+    <loc>https://exampleeeee.org/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/python/</loc>
+    <loc>https://exampleeeee.org/categories/python/</loc>
     <lastmod>2020-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2020-08-11-python-metaprogramming-flask-google-cloud-functions/</loc>
+    <loc>https://exampleeeee.org/posts/2020-08-11-python-metaprogramming-flask-google-cloud-functions/</loc>
     <lastmod>2020-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/golang/</loc>
+    <loc>https://exampleeeee.org/categories/golang/</loc>
     <lastmod>2020-03-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2020-03-31-golang-http-gzip-compression/</loc>
+    <loc>https://exampleeeee.org/posts/2020-03-31-golang-http-gzip-compression/</loc>
     <lastmod>2020-03-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2019-12-18-gdb-python/</loc>
+    <loc>https://exampleeeee.org/posts/2019-12-18-gdb-python/</loc>
     <lastmod>2019-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/linux/</loc>
+    <loc>https://exampleeeee.org/categories/linux/</loc>
     <lastmod>2019-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2019-11-15-pycon-lets-hunt-memory-leak/</loc>
+    <loc>https://exampleeeee.org/posts/2019-11-15-pycon-lets-hunt-memory-leak/</loc>
     <lastmod>2019-11-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2019-09-20-python-2-integers/</loc>
+    <loc>https://exampleeeee.org/posts/2019-09-20-python-2-integers/</loc>
     <lastmod>2019-09-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2019-08-14-site-wide-memory-leak-on-call-story/</loc>
+    <loc>https://exampleeeee.org/posts/2019-08-14-site-wide-memory-leak-on-call-story/</loc>
     <lastmod>2019-08-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2019-07-21-lets-build-distributed-filesystem/</loc>
+    <loc>https://exampleeeee.org/posts/2019-07-21-lets-build-distributed-filesystem/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/aws/</loc>
+    <loc>https://exampleeeee.org/categories/aws/</loc>
     <lastmod>2018-12-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2018-12-10-serverless-meets-ci-cd/</loc>
+    <loc>https://exampleeeee.org/posts/2018-12-10-serverless-meets-ci-cd/</loc>
     <lastmod>2018-12-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2018-10-15-detect-memory-leak-python/</loc>
+    <loc>https://exampleeeee.org/posts/2018-10-15-detect-memory-leak-python/</loc>
     <lastmod>2018-10-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2018-09-30-encrypt-exisitng-aws-rds/</loc>
+    <loc>https://exampleeeee.org/posts/2018-09-30-encrypt-exisitng-aws-rds/</loc>
     <lastmod>2018-09-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2018-09-23-encrypt-s3-bucket/</loc>
+    <loc>https://exampleeeee.org/posts/2018-09-23-encrypt-s3-bucket/</loc>
     <lastmod>2018-09-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/2018-08-28-encrypt-aws-ebs/</loc>
+    <loc>https://exampleeeee.org/posts/2018-08-28-encrypt-aws-ebs/</loc>
     <lastmod>2018-08-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/networking/</loc>
+    <loc>https://exampleeeee.org/categories/networking/</loc>
     <lastmod>2017-12-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/aws-vpc-peering-latency-test/</loc>
+    <loc>https://exampleeeee.org/posts/aws-vpc-peering-latency-test/</loc>
     <lastmod>2017-12-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/hbase/</loc>
+    <loc>https://exampleeeee.org/tags/hbase/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/hbase/</loc>
+    <loc>https://exampleeeee.org/categories/hbase/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/hdp/</loc>
+    <loc>https://exampleeeee.org/tags/hdp/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/hdp/</loc>
+    <loc>https://exampleeeee.org/categories/hdp/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/phoenix/</loc>
+    <loc>https://exampleeeee.org/tags/phoenix/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/</loc>
+    <loc>https://exampleeeee.org/tags/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/upgrading-apache-phoenix-hdp/</loc>
+    <loc>https://exampleeeee.org/posts/upgrading-apache-phoenix-hdp/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/tcp-fast-open-python/</loc>
+    <loc>https://exampleeeee.org/posts/tcp-fast-open-python/</loc>
     <lastmod>2017-11-08T20:14:58+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/python/</loc>
+    <loc>https://exampleeeee.org/tags/python/</loc>
     <lastmod>2017-08-26T14:40:53+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/websocket/</loc>
+    <loc>https://exampleeeee.org/tags/websocket/</loc>
     <lastmod>2017-08-26T14:40:53+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/websocket-server-python/</loc>
+    <loc>https://exampleeeee.org/posts/websocket-server-python/</loc>
     <lastmod>2017-08-26T14:40:53+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/hbase-dead-regionserver/</loc>
+    <loc>https://exampleeeee.org/posts/hbase-dead-regionserver/</loc>
     <lastmod>2017-05-26T17:24:15+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/fpga/</loc>
+    <loc>https://exampleeeee.org/tags/fpga/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/fpga/</loc>
+    <loc>https://exampleeeee.org/categories/fpga/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/reconfigure-zynq-pl-go/</loc>
+    <loc>https://exampleeeee.org/posts/reconfigure-zynq-pl-go/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/linux/</loc>
+    <loc>https://exampleeeee.org/tags/linux/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/vivado/</loc>
+    <loc>https://exampleeeee.org/tags/vivado/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/zynq/</loc>
+    <loc>https://exampleeeee.org/tags/zynq/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/categories/zynq/</loc>
+    <loc>https://exampleeeee.org/categories/zynq/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/pynq-linux-on-zedboard/</loc>
+    <loc>https://exampleeeee.org/posts/pynq-linux-on-zedboard/</loc>
     <lastmod>2017-05-07T19:09:58+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/metrics/</loc>
+    <loc>https://exampleeeee.org/tags/metrics/</loc>
     <lastmod>2017-04-24T22:52:16+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/migrate-opentsdb-hbase/</loc>
+    <loc>https://exampleeeee.org/posts/migrate-opentsdb-hbase/</loc>
     <lastmod>2017-04-24T22:52:16+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/opentsdb/</loc>
+    <loc>https://exampleeeee.org/tags/opentsdb/</loc>
     <lastmod>2017-04-24T22:52:16+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/configure-ps-pynq-work-sdk/</loc>
+    <loc>https://exampleeeee.org/posts/configure-ps-pynq-work-sdk/</loc>
     <lastmod>2017-04-11T04:05:30+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/pynq/</loc>
+    <loc>https://exampleeeee.org/tags/pynq/</loc>
     <lastmod>2017-04-11T04:05:30+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/pynq-z1/</loc>
+    <loc>https://exampleeeee.org/tags/pynq-z1/</loc>
     <lastmod>2017-04-11T04:05:30+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/xilinx/</loc>
+    <loc>https://exampleeeee.org/tags/xilinx/</loc>
     <lastmod>2017-04-11T04:05:30+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/tuning-hbase/</loc>
+    <loc>https://exampleeeee.org/posts/tuning-hbase/</loc>
     <lastmod>2017-04-09T23:42:31+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/hbase-benchmarking/</loc>
+    <loc>https://exampleeeee.org/posts/hbase-benchmarking/</loc>
     <lastmod>2017-03-05T22:28:23+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/ami/</loc>
+    <loc>https://exampleeeee.org/tags/ami/</loc>
     <lastmod>2017-02-28T00:03:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/aws/</loc>
+    <loc>https://exampleeeee.org/tags/aws/</loc>
     <lastmod>2017-02-28T00:03:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/ebs/</loc>
+    <loc>https://exampleeeee.org/tags/ebs/</loc>
     <lastmod>2017-02-28T00:03:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/filesystem/</loc>
+    <loc>https://exampleeeee.org/tags/filesystem/</loc>
     <lastmod>2017-02-28T00:03:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/resize-ebs-root-volume-centos-ami/</loc>
+    <loc>https://exampleeeee.org/posts/resize-ebs-root-volume-centos-ami/</loc>
     <lastmod>2017-02-28T00:03:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/debugging/</loc>
+    <loc>https://exampleeeee.org/tags/debugging/</loc>
     <lastmod>2017-02-06T00:22:05+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/debugging-stuck-process-linux/</loc>
+    <loc>https://exampleeeee.org/posts/debugging-stuck-process-linux/</loc>
     <lastmod>2017-02-06T00:22:05+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/process/</loc>
+    <loc>https://exampleeeee.org/tags/process/</loc>
     <lastmod>2017-02-06T00:22:05+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/distributed-file-system/</loc>
+    <loc>https://exampleeeee.org/tags/distributed-file-system/</loc>
     <lastmod>2017-01-02T23:55:01+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/hadoop/</loc>
+    <loc>https://exampleeeee.org/tags/hadoop/</loc>
     <lastmod>2017-01-02T23:55:01+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/tags/hdfs/</loc>
+    <loc>https://exampleeeee.org/tags/hdfs/</loc>
     <lastmod>2017-01-02T23:55:01+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:8080/posts/distributed-file-system-python/</loc>
+    <loc>https://exampleeeee.org/posts/distributed-file-system-python/</loc>
     <lastmod>2017-01-02T23:55:01+00:00</lastmod>
   </url>
 </urlset>
