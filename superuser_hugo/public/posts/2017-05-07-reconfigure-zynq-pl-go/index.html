@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=8080&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>How to reconfigure Zynq-PL on-the-go? | Superuser</title>
 <meta name="keywords" content="FPGA, linux, Vivado, Zynq">
 <meta name="description" content="You would have wondered if i&rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&rsquo;s possible and as simple as,
 echo &#39;0&#39; &gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo &#39;1&#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit &amp;gt; /dev/xdevcfg Yeah, tha&rsquo;s it! Make sure you&rsquo;re running it as root.
 Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard">
 <meta name="author" content="parth">
-<link rel="canonical" href="https://example.org/posts/2017-05-07-reconfigure-zynq-pl-go/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.e087fd1dc76e73a35ae6d7028ddc1ba41e0131e7f9b3a6e2d019a208e6d6c4b5.css" integrity="sha256-4If9Hcduc6Na5tcCjdwbpB4BMef5s6bi0BmiCObWxLU=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://example.org/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
-<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:8080/posts/2017-05-07-reconfigure-zynq-pl-go/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:8080/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:8080/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:8080/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:8080/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:8080/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:8080/posts/2017-05-07-reconfigure-zynq-pl-go/">
 <noscript>
     <style>
         #theme-toggle,
@@ -39,7 +38,7 @@ Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linu
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -58,75 +57,7 @@ Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linu
         }
 
     </style>
-</noscript><meta property="og:title" content="How to reconfigure Zynq-PL on-the-go?" />
-<meta property="og:description" content="You would have wondered if i&rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&rsquo;s possible and as simple as,
-echo &#39;0&#39; &gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo &#39;1&#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit &amp;gt; /dev/xdevcfg Yeah, tha&rsquo;s it! Make sure you&rsquo;re running it as root.
-Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.org/posts/2017-05-07-reconfigure-zynq-pl-go/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-05-07T19:27:39+00:00" />
-<meta property="article:modified_time" content="2017-05-07T19:27:39+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="How to reconfigure Zynq-PL on-the-go?"/>
-<meta name="twitter:description" content="You would have wondered if i&rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&rsquo;s possible and as simple as,
-echo &#39;0&#39; &gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo &#39;1&#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit &amp;gt; /dev/xdevcfg Yeah, tha&rsquo;s it! Make sure you&rsquo;re running it as root.
-Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard"/>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://example.org/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "How to reconfigure Zynq-PL on-the-go?",
-      "item": "https://example.org/posts/2017-05-07-reconfigure-zynq-pl-go/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "How to reconfigure Zynq-PL on-the-go?",
-  "name": "How to reconfigure Zynq-PL on-the-go?",
-  "description": "You would have wondered if i\u0026rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i\u0026rsquo;s possible and as simple as,\necho \u0026#39;0\u0026#39; \u0026gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo \u0026#39;1\u0026#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit \u0026amp;gt; /dev/xdevcfg Yeah, tha\u0026rsquo;s it! Make sure you\u0026rsquo;re running it as root.\nDon\u0026rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard",
-  "keywords": [
-    "FPGA", "linux", "Vivado", "Zynq"
-  ],
-  "articleBody": "You would have wondered if i’s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i’s possible and as simple as,\necho '0' \u003e /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo '1' for partial bitstreams cat whatever_the_bit_file_name_is.bit \u0026gt; /dev/xdevcfg Yeah, tha’s it! Make sure you’re running it as root.\nDon’t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard\n",
-  "wordCount" : "67",
-  "inLanguage": "en",
-  "datePublished": "2017-05-07T19:27:39Z",
-  "dateModified": "2017-05-07T19:27:39Z",
-  "author":{
-    "@type": "Person",
-    "name": "parth"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://example.org/posts/2017-05-07-reconfigure-zynq-pl-go/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Superuser",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://example.org/favicon.ico"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -144,7 +75,7 @@ Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linu
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://example.org/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <a href="http://localhost:8080/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -176,11 +107,11 @@ Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linu
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://example.org/">Home</a>&nbsp;»&nbsp;<a href="https://example.org/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:8080/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:8080/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       How to reconfigure Zynq-PL on-the-go?
     </h1>
-    <div class="post-meta"><span title='2017-05-07 19:27:39 +0000 UTC'>May 7, 2017</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;parth
+    <div class="post-meta"><span title='2017-05-07 19:27:39 +0000 +0000'>May 7, 2017</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;parth
 
 </div>
   </header> 
@@ -189,24 +120,25 @@ Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linu
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#echo &#39;1&#39; for partial bitstreams</span>
 </span></span><span style="display:flex;"><span>cat whatever_the_bit_file_name_is.bit &amp;gt; /dev/xdevcfg
 </span></span></code></pre></div><p>Yeah, tha&rsquo;s it! Make sure you&rsquo;re running it as root.</p>
-<p>Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at <!-- raw HTML omitted -->PYNQ Linux on ZedBoard<!-- raw HTML omitted --></p>
+<p>Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at <a href="https://superuser.blog/pynq-linux-on-zedboard">PYNQ Linux on ZedBoard</a></p>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://example.org/tags/fpga/">FPGA</a></li>
-      <li><a href="https://example.org/tags/linux/">linux</a></li>
-      <li><a href="https://example.org/tags/vivado/">Vivado</a></li>
-      <li><a href="https://example.org/tags/zynq/">Zynq</a></li>
+      <li><a href="http://localhost:8080/tags/fpga/">FPGA</a></li>
+      <li><a href="http://localhost:8080/tags/linux/">Linux</a></li>
+      <li><a href="http://localhost:8080/tags/vivado/">Vivado</a></li>
+      <li><a href="http://localhost:8080/tags/zynq/">Zynq</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://example.org/">Superuser</a></span>
+        <span>&copy; 2024 <a href="http://localhost:8080/">Superuser</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

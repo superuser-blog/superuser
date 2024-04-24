@@ -2,10 +2,10 @@
 id: 240
 title: Setting up Inter Region AWS VPC Peering and Latency Tests
 date: 2017-12-14
-author: sanket
+author: Sanket
 layout: single
 guid: https://superuser.blog/?p=240
-permalink: /aws-vpc-peering-latency-test/
+slug: /aws-vpc-peering-latency-test/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
@@ -160,14 +160,19 @@ Here are the results:
 **Connecting to Mumbai from Bangalore , request will be tunneled to US:**
 
 <figure>
-<img src="//superuser.blog/wp-content/uploads/2017/12/mum_initial.jpg" alt="" width="521" height="271" srcset="https://superuser.blog/wp-content/uploads/2017/12/mum_initial.jpg 521w, https://superuser.blog/wp-content/uploads/2017/12/mum_initial-300x156.jpg 300w" sizes="(max-width: 521px) 100vw, 521px" />
+<img src="//superuser.blog" alt="" width="521" height="271" srcset="https://superuser.blog/wp-content/uploads/2017/12/mum_initial.jpg 521w, https://superuser.blog 300w" sizes="(max-width: 521px) 100vw, 521px" />
 <figcaption >Initial connection: Bangalore to Mumbai</figcaption>
 </figure> 
 
+![websocket_js](/wp-content/uploads/2017/12/mum_initial-300x156.jpg)
+
+
 <figure>
-<img class="wp-image-245 size-full" src="//superuser.blog/wp-content/uploads/2017/12/mum_repeat.jpg" alt="" width="520" height="247" srcset="https://superuser.blog/wp-content/uploads/2017/12/mum_repeat.jpg 520w, https://superuser.blog/wp-content/uploads/2017/12/mum_repeat-300x143.jpg 300w" sizes="(max-width: 520px) 100vw, 520px" />
+<img class="wp-image-245 size-full" src="//superuser.blog/wp-content/uploads/2017/12/mum_repeat.jpg" alt="" width="520" height="247" srcset="https://superuser.blog/wp-content/uploads/2017/12/mum_repeat.jpg 520w, https://superuser.blogg 300w" sizes="(max-width: 520px) 100vw, 520px" />
 <figcaption >socket reuse: from bangalore to mumbai, tunneled to US</figcaption>
 </figure> 
+
+![websocket_js](/wp-content/uploads/2017/12/mum_repeat-300x143.jp)
 
 
 As you can see, for the first request, handshake is much faster (approx 10x) to Mumbai as it is near to client. But when you have the socket established, it's clear that if you take Mumbai route (VPN) to US instead of going directly US, it is approx 1.5x slower as we encounter penalty for VPN encryption and decryption operations.

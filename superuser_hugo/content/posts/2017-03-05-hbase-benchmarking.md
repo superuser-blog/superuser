@@ -2,10 +2,12 @@
 id: 87
 title: HBase Benchmarking
 date: 2017-03-05T22:28:23+00:00
-author: sanket
+author: Sanket
 layout: single
 guid: http://superuser.blog/?p=87
-permalink: /hbase-benchmarking/
+slug: /hbase-benchmarking/
+cover:
+  image: /wp-content/uploads/2017/03/hbase-benchmarking-825x397.jpg 
 header:
   overlay_image: /wp-content/uploads/2017/03/hbase-benchmarking-825x397.jpg
   overlay_filter: rgba(10, 10, 10, 0.70)
@@ -15,7 +17,7 @@ categories:
 tags:
   - Hbase
 ---
-Currently I am working with new setup of Apache HBase cluster to query data using <a href="//phoenix.apache.org/" target="_blank" rel="noopener noreferrer">Phoenix</a>  on top of <a href="//hortonworks.com/products/data-center/hdp/" target="_blank" rel="noopener noreferrer">HDP</a> Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved.
+Currently I am working with new setup of Apache HBase cluster to query data using [Phoenix](https://phoenix.apache.org/) on top of [HDP](https://hortonworks.com/products/data-center/hdp/) Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved.
 Now for the improvement part, understanding of  HBase internals is needed. How does a write work in HBase. What is the read path. What is the data access and data writing patterns. By analyzing these aspects, you vary parameters. But after varying, one needs to see the effect of variance right? And thus you need something to measure performance and benchmark the cluster.
 
 I found two tools for this purpose:

@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=8080&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>Migrating OpenTSDB to Another HBase Cluster | Superuser</title>
 <meta name="keywords" content="Hbase, metrics, opentsdb">
 <meta name="description" content="As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was ExportSnapshot.
 So these are the steps roughly:
 Stop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start TSDs Steps 1 and 5 are self understood. We will look at how to take,transfer and restore snapshots.">
-<meta name="author" content="sanket">
-<link rel="canonical" href="https://example.org/posts/2017-04-24-migrate-opentsdb-hbase/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.e087fd1dc76e73a35ae6d7028ddc1ba41e0131e7f9b3a6e2d019a208e6d6c4b5.css" integrity="sha256-4If9Hcduc6Na5tcCjdwbpB4BMef5s6bi0BmiCObWxLU=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://example.org/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
-<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<meta name="author" content="Sanket">
+<link rel="canonical" href="http://localhost:8080/posts/2017-04-24-migrate-opentsdb-hbase/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:8080/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:8080/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:8080/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:8080/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:8080/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:8080/posts/2017-04-24-migrate-opentsdb-hbase/">
 <noscript>
     <style>
         #theme-toggle,
@@ -39,7 +38,7 @@ Stop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -58,77 +57,7 @@ Stop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start
         }
 
     </style>
-</noscript><meta property="og:title" content="Migrating OpenTSDB to Another HBase Cluster" />
-<meta property="og:description" content="As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was ExportSnapshot.
-So these are the steps roughly:
-Stop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start TSDs Steps 1 and 5 are self understood. We will look at how to take,transfer and restore snapshots." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.org/posts/2017-04-24-migrate-opentsdb-hbase/" />
-<meta property="og:image" content="https://example.org/wp-content/uploads/2017/04/tsdb-hbase.jpg" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-04-24T22:52:16+00:00" />
-<meta property="article:modified_time" content="2017-04-24T22:52:16+00:00" />
-
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://example.org/wp-content/uploads/2017/04/tsdb-hbase.jpg" />
-<meta name="twitter:title" content="Migrating OpenTSDB to Another HBase Cluster"/>
-<meta name="twitter:description" content="As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was ExportSnapshot.
-So these are the steps roughly:
-Stop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start TSDs Steps 1 and 5 are self understood. We will look at how to take,transfer and restore snapshots."/>
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://example.org/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "Migrating OpenTSDB to Another HBase Cluster",
-      "item": "https://example.org/posts/2017-04-24-migrate-opentsdb-hbase/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Migrating OpenTSDB to Another HBase Cluster",
-  "name": "Migrating OpenTSDB to Another HBase Cluster",
-  "description": "As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was ExportSnapshot.\nSo these are the steps roughly:\nStop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start TSDs Steps 1 and 5 are self understood. We will look at how to take,transfer and restore snapshots.",
-  "keywords": [
-    "Hbase", "metrics", "opentsdb"
-  ],
-  "articleBody": "As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was ExportSnapshot.\nSo these are the steps roughly:\nStop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start TSDs Steps 1 and 5 are self understood. We will look at how to take,transfer and restore snapshots.\nSnapshot OpenTSDB Tables: Fire up hbase shell and take snapshot of opentsdb tables. You can choose any name for snapshot to be created.\nhbase\u003e snapshot 'tsdb', 'tsdb-' hbase\u003e snapshot 'tsdb-uid', 'tsdb-uid-' hbase\u003e snapshot 'tsdb-meta', 'tsdb-meta-' hbase\u003e snapshot 'tsdb-tree', 'tsdb-tree-' Transfer OpenTSDB Tables to New HBase Cluster Here we will use ExportSnapshot utility provided by HBase. It takes snapshot name, destination cluster address as primary arguments. As it will run as a map-reduce job, you can also specify number of mapper to use.\n$ sudo su - hdfs export HADOOP_MAPRED_HOME=/usr/lib/hadoop-0.20-mapreduce/ export HADOOP_HOME=/usr/lib/hadoop export HBASE_HOME=/usr/lib/hbase $ hbase org.apache.hadoop.hbase.snapshot.ExportSnapshot -snapshot tsdb- -copy-to hdfs://:8020/hbase -mappers 4 Repeat last line for other three opentsdb tables also. This will copy all the snapshot meta data and related HFiles to destination cluster. Make sure you set correct hbase path in destination cluster.\nOnce done you can check for copied snapshot files in destination cluster. You also want to check owner of the copied files so that HBase can access it properly. In case of HDP cluster it needed to get changed to _hbase:hdfs _and here is how to do it.\n$ sudo su - hdfs hadoop fs -chown -R hbase:hdfs /apps/hbase/data/archive hadoop fs -chown -R hbase:hdfs /apps/hbase/data/.hbase-snapshot/tsdb- You may want to repeat last line for all four opentsdb tables snapshots.\nRestoring OpenTSDB Table Snapshots Now to list and restore snapshots on destination cluster, you can do the following in HBase shell. The first command should list all the snapshot and that should include all four opentsdb table snapshots we just transferred. The second line will restore a snapshot into a table.\nhbase\u003e list_snapshots hbase\u003e restore_snapshot 'tsdb-' If you have already created tables in destination cluster then you may want to disable table first and then restore snapshot and then enable it. Repeat the second line for all four tsdb tables.\nOnce all tables are restored and you have verified it, you can change HBase address in TSDs and start them.\nUpdate: It is also recommended to run major compaction on tables to reattain data locality.\n",
-  "wordCount" : "412",
-  "inLanguage": "en",
-  "image":"https://example.org/wp-content/uploads/2017/04/tsdb-hbase.jpg","datePublished": "2017-04-24T22:52:16Z",
-  "dateModified": "2017-04-24T22:52:16Z",
-  "author":{
-    "@type": "Person",
-    "name": "sanket"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://example.org/posts/2017-04-24-migrate-opentsdb-hbase/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Superuser",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://example.org/favicon.ico"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -146,7 +75,7 @@ Stop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://example.org/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <a href="http://localhost:8080/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -178,18 +107,18 @@ Stop TSDs Take snapshot(s) Transfer snapshots Restore snapshots Modify and start
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://example.org/">Home</a>&nbsp;»&nbsp;<a href="https://example.org/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:8080/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:8080/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Migrating OpenTSDB to Another HBase Cluster
     </h1>
-    <div class="post-meta"><span title='2017-04-24 22:52:16 +0000 UTC'>April 24, 2017</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;sanket
+    <div class="post-meta"><span title='2017-04-24 22:52:16 +0000 +0000'>April 24, 2017</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Sanket
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="eager" src="https://example.org/wp-content/uploads/2017/04/tsdb-hbase.jpg" alt="">
+<figure class="entry-cover"><img loading="eager" src="http://localhost:8080/wp-content/uploads/2017/04/tsdb-hbase.jpg" alt="">
         
 </figure>
-  <div class="post-content"><p>As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was <!-- raw HTML omitted -->ExportSnapshot<!-- raw HTML omitted -->.</p>
+  <div class="post-content"><p>As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was <a href="https://hbase.apache.org/0.94/book/ops.snapshots.html">ExportSnapshot</a>.</p>
 <p><img loading="lazy" src="/wp-content/uploads/2017/04/opentsdb-300x62.png" alt="open_tsdb"  />
 </p>
 <p>So these are the steps roughly:</p>
@@ -233,16 +162,17 @@ hbase&gt; restore_snapshot &#39;tsdb-&lt;date&gt;&#39;
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://example.org/tags/hbase/">Hbase</a></li>
-      <li><a href="https://example.org/tags/metrics/">metrics</a></li>
-      <li><a href="https://example.org/tags/opentsdb/">opentsdb</a></li>
+      <li><a href="http://localhost:8080/tags/hbase/">Hbase</a></li>
+      <li><a href="http://localhost:8080/tags/metrics/">Metrics</a></li>
+      <li><a href="http://localhost:8080/tags/opentsdb/">Opentsdb</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://example.org/">Superuser</a></span>
+        <span>&copy; 2024 <a href="http://localhost:8080/">Superuser</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

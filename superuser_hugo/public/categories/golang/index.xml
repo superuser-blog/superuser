@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>golang on Superuser</title>
-    <link>https://example.org/categories/golang/</link>
-    <description>Recent content in golang on Superuser</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <title>Golang on Superuser</title>
+    <link>http://localhost:8080/categories/golang/</link>
+    <description>Recent content in Golang on Superuser</description>
+    <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 31 Mar 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://example.org/categories/golang/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:8080/categories/golang/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golang Http Client and Compression</title>
-      <link>https://example.org/posts/2020-03-31-golang-http-gzip-compression/</link>
+      <link>http://localhost:8080/posts/2020-03-31-golang-http-gzip-compression/</link>
       <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>https://example.org/posts/2020-03-31-golang-http-gzip-compression/</guid>
+      <guid>http://localhost:8080/posts/2020-03-31-golang-http-gzip-compression/</guid>
       <description>I had a very (seemingly) simple task. Verify my golang http client, talking with an ElasticSearch cluster, is compressing data on wire. Because in trials, there was around 8x data compression and 100ms latency improvement. Sounds simple? Apparently not!
 ElasticSearch Side of Things Http compression is enabled by default and it&amp;rsquo;s an easy configuration. Despite it being enabled by default, still added following in config
 http.compression: true And verified it works by</description>

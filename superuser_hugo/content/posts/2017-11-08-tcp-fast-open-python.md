@@ -2,10 +2,10 @@
 id: 215
 title: 'TCP Fast Open: In Action with Python'
 date: 2017-11-08T20:14:58+00:00
-author: sanket
+author: Sanket
 layout: single
 guid: https://superuser.blog/?p=215
-permalink: /tcp-fast-open-python/
+slug: /tcp-fast-open-python/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
@@ -21,28 +21,22 @@ TCP Fast Open is an optimization over TCP which eliminates the need to wait for 
 
 Here's roughly how it happens: First time 3 way handshake happens, server will generate a cookie and pass it to the client. Next time, in first step on 3 way handshake (SYN), client will send cookie+data along with SYN. If cookie stands valid, data is delivered to application, then application can process data and reply. Here we do not wait for 3 way handshake to complete next time.
 
-Here is the traditional 3 way handshake.
+Here is the traditional 3 way handshake. 
 
-<figure>
-  <img src="{{ site.url }}{{ site.baseurl }}/wp-content/uploads/2017/11/3whs.png" alt="3 way handshake">
-  <figcaption>Credits: lwn.net</figcaption>
-</figure> 
+![websocket_js](/wp-content/uploads/2017/11/3whs.png)
+
 
 So here, if round trip time is 100ms, application will have to wait at least 200ms before it can send any data to server.
 
 If client had set TCP Fast Option set (we will see server and client code soon), server will create a cookie and send back the cookie to client, as shown in the following diagram.
 
-<figure>
-  <img src="{{ site.url }}{{ site.baseurl }}/wp-content/uploads/2017/11/foc_creation.png" alt="">
-  <figcaption>Credits: lwn.net</figcaption>
-</figure> 
+
+![websocket_js](/wp-content/uploads/2017/11/foc_creation.png)
+
 
 Now from next time onward, client will send cookie in SYN and if it stands valid, server can immediately send reply back without waiting for handshake to complete as shown below.
 
-<figure>
-  <img src="{{ site.url }}{{ site.baseurl }}/wp-content/uploads/2017/11/foc_use.png" alt="">
-  <figcaption>Credits: lwn.net</figcaption>
-</figure> 
+![websocket_js](/wp-content/uploads/2017/11/foc_use.png)
 
 We can see that 3 way handshake still happens but application does not need to wait for it as data is delivered to it immediately if valid cookie is present.
 
@@ -118,24 +112,18 @@ number 3 will add support for both TFO client and server.
 
 Let's look at network traces to see TFO working in action:
 
-<figure>
-  <img src="{{ site.url }}{{ site.baseurl }}/wp-content/uploads/2017/11/normal_3way-768x73.png" alt="3 way handshake">
-  <figcaption>3 way handshake of a curl request</figcaption>
-</figure> 
+![websocket_js](/wp-content/uploads/2017/11/normal_3way-768x73.png)
+
 This was trace for simple curl request to server. No TFO set. As we can see, first 3 way handshake happens [first 3 packets] then application (curl) sends HTTP request and after that it gets response.
 
-<figure>
-  <img src="{{ site.url }}{{ site.baseurl }}/wp-content/uploads/2017/11/tfo_curl-768x207.png" alt="3 way handshake">
-  <figcaption>curl with TFO enabled</figcaption>
-</figure> 
+
+![websocket_js](/wp-content/uploads/2017/11/tfo_curl-768x207.png)
+
 Here with &#8211;tcp-fastopen option to curl, in the fist packet itself [46645] client will send request data. and it was immediately delivered to application (echo server). Also note that the three way handshake still happens.
 
 Also see how cookie was sent with SYN packet[46645] itself.
 
-<figure>
-  <img src="{{ site.url }}{{ site.baseurl }}/wp-content/uploads/2017/11/cookie_tfo-768x213.png" alt="">
-  <figcaption>TFO Cookie</figcaption>
-</figure> 
+![websocket_js](/wp-content/uploads/2017/11/cookie_tfo-768x213.png)
 
 ## How fast was it?
 

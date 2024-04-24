@@ -5,7 +5,7 @@ date: 2017-05-07T19:09:58+00:00
 author: parth
 layout: single
 guid: https://superuser.blog/?p=114
-permalink: /pynq-linux-on-zedboard/
+slug: /pynq-linux-on-zedboard/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
@@ -34,7 +34,7 @@ What we need to worry about? everything but the rootfs.
 ## **TL;DR**
 
 > Write the image file on SD card same as in the pynq tutorial, and replace the files in BOOT partition with these&#8230;
-	<a class="download-link" title="Version 1.0" href="https://drive.google.com/file/d/0B9OutAup6VgTNktMLTRpajBSTk0/view?usp=drivesdk" rel="nofollow"> ZedBoard BOOT files</a>
+	[ZedBoard BOOT files](https://drive.google.com/file/d/0B9OutAup6VgTNktMLTRpajBSTk0/view?usp=drivesdk)
 > 
 > **Update:**
 > 

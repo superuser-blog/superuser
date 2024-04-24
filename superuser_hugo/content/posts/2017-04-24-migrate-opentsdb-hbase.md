@@ -2,10 +2,12 @@
 id: 97
 title: Migrating OpenTSDB to Another HBase Cluster
 date: 2017-04-24T22:52:16+00:00
-author: sanket
+author: Sanket
 layout: single
 guid: http://superuser.blog/?p=97
-permalink: /migrate-opentsdb-hbase/
+slug: /migrate-opentsdb-hbase/
+cover:
+  image: /wp-content/uploads/2017/04/tsdb-hbase.jpg
 header:
   overlay_image: /wp-content/uploads/2017/04/tsdb-hbase.jpg
   overlay_filter: rgba(10, 10, 10, 0.75)
@@ -20,7 +22,7 @@ tags:
   - metrics
   - opentsdb
 ---
-As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was <a href="//hbase.apache.org/0.94/book/ops.snapshots.html" target="_blank" rel="noopener noreferrer">ExportSnapshot</a>.
+As a part of migration from CDH cluster to HDP cluster, we also had to migrate OpenTSDB which was running on CDH cluster. There are many methods to copy/transfer data between clusters and what we used here was [ExportSnapshot](https://hbase.apache.org/0.94/book/ops.snapshots.html).
 
 
 ![open_tsdb](/wp-content/uploads/2017/04/opentsdb-300x62.png)

@@ -2,10 +2,12 @@
 id: 65
 title: Debugging Stuck Process in Linux
 date: 2017-02-06T00:22:05+00:00
-author: sanket
+author: Sanket
 layout: single
 guid: http://superuser.blog/?p=65
-permalink: /debugging-stuck-process-linux/
+slug: /debugging-stuck-process-linux/
+cover:
+  image: /wp-content/uploads/2017/02/stuck_proc-825x500.jpg 
 header:
   overlay_image: /wp-content/uploads/2017/02/stuck_proc-825x500.jpg
   overlay_filter: rgba(10, 10, 10, 0.75)
