@@ -15,13 +15,13 @@ params:
 menu:
   main:
     - name: Archive
-      url: archives
+      url: /archives
       weight: 5
     - name: Search
-      url: search/
+      url: /search/
       weight: 10
     - name: Tags
-      url: tags/
+      url: /tags/
       weight: 10
     - name: About Me
       url: https://sanket.plus
