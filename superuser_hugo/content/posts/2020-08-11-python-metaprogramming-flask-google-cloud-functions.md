@@ -1,15 +1,15 @@
 ---
 id: 200811
 title: "Python Metaprogramming: Functions, Flask and Google Cloud Functions"
-author: sanket
+author: Sanket
 date: 2020-08-11
 layout: single
 guid: https://superuser.blog/?p=200811
-permalink: /python-metaprogramming-flask-google-cloud-functions
+slug: /python-metaprogramming-flask-google-cloud-functions
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - python
 ---
 Everything in Python is an object. And that includes functions. Let's see what I learned while I was trying to work with Google cloud functions with python runtime.

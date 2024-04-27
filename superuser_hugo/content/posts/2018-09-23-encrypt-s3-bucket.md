@@ -1,15 +1,15 @@
 ---
 id: 18923
 title: 'Encrypt Existing S3 Bucket : The GDPR Series'
-author: sanket
+author: Sanket
 layout: single
 date: 2018-09-23
 guid: https://superuser.blog/?p=18923
-permalink: /encrypt-s3-bucket/
+slug: /encrypt-s3-bucket/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - AWS
 ---
 

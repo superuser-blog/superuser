@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Filesystem on Superuser</title>
+    <title>Filesystem on superuser</title>
     <link>http://localhost:1313/tags/filesystem/</link>
-    <description>Recent content in Filesystem on Superuser</description>
+    <description>Recent content in Filesystem on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 28 Feb 2017 00:03:41 +0000</lastBuildDate>

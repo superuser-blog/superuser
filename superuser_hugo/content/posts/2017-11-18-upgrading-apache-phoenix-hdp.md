@@ -9,7 +9,7 @@ slug: /upgrading-apache-phoenix-hdp/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - HBase
   - HDP
 tags:

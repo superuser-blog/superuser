@@ -2,70 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/posts/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/public-speaking/</loc>
+    <loc>http://localhost:1313/tags/public-speaking/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</loc>
+    <loc>http://localhost:1313/posts/srecon-21-ml-application-hotspot-detect/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/python/</loc>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/python/</loc>
     <lastmod>2020-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2020-08-11-python-metaprogramming-flask-google-cloud-functions/</loc>
+    <loc>http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/</loc>
     <lastmod>2020-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/golang/</loc>
+    <loc>http://localhost:1313/tags/golang/</loc>
     <lastmod>2020-03-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2020-03-31-golang-http-gzip-compression/</loc>
+    <loc>http://localhost:1313/posts/golang-http-gzip-compression/</loc>
     <lastmod>2020-03-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2019-12-18-gdb-python/</loc>
+    <loc>http://localhost:1313/posts/debug-running-python-process/</loc>
     <lastmod>2019-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/linux/</loc>
+    <loc>http://localhost:1313/tags/linux/</loc>
     <lastmod>2019-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2019-11-15-pycon-lets-hunt-memory-leak/</loc>
+    <loc>http://localhost:1313/posts/pycon-lets-hunt-memory-leak/</loc>
     <lastmod>2019-11-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2019-09-20-python-2-integers/</loc>
+    <loc>http://localhost:1313/posts/python-2-integers/</loc>
     <lastmod>2019-09-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2019-08-14-site-wide-memory-leak-on-call-story/</loc>
+    <loc>http://localhost:1313/posts/site-wide-memory-leak-on-call-story/</loc>
     <lastmod>2019-08-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2019-07-21-lets-build-distributed-filesystem/</loc>
+    <loc>http://localhost:1313/posts/lets-build-distributed-filesystem/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/aws/</loc>
+    <loc>http://localhost:1313/tags/aws/</loc>
     <lastmod>2018-12-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2018-12-10-serverless-meets-ci-cd/</loc>
+    <loc>http://localhost:1313/posts/serverless-meets-ci-cd/</loc>
     <lastmod>2018-12-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2018-10-15-detect-memory-leak-python/</loc>
+    <loc>http://localhost:1313/posts/detect-memory-leak-python/</loc>
     <lastmod>2018-10-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2018-09-30-encrypt-exisitng-aws-rds/</loc>
+    <loc>http://localhost:1313/posts/encrypt-existing-aws-rds/</loc>
     <lastmod>2018-09-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2018-09-23-encrypt-s3-bucket/</loc>
+    <loc>http://localhost:1313/posts/encrypt-s3-bucket/</loc>
     <lastmod>2018-09-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2018-08-28-encrypt-aws-ebs/</loc>
+    <loc>http://localhost:1313/posts/encrypt-aws-ebs/</loc>
     <lastmod>2018-08-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/networking/</loc>
+    <loc>http://localhost:1313/tags/networking/</loc>
     <lastmod>2017-12-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/aws-vpc-peering-latency-test/</loc>
@@ -74,19 +74,10 @@
     <loc>http://localhost:1313/tags/hbase/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/hbase/</loc>
-    <lastmod>2017-11-18T11:26:20+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/tags/hdp/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/hdp/</loc>
-    <lastmod>2017-11-18T11:26:20+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/tags/phoenix/</loc>
-    <lastmod>2017-11-18T11:26:20+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2017-11-18T11:26:20+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/upgrading-apache-phoenix-hdp/</loc>
@@ -94,9 +85,6 @@
   </url><url>
     <loc>http://localhost:1313/posts/tcp-fast-open-python/</loc>
     <lastmod>2017-11-08T20:14:58+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/python/</loc>
-    <lastmod>2017-08-26T14:40:53+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/websocket/</loc>
     <lastmod>2017-08-26T14:40:53+00:00</lastmod>
@@ -110,22 +98,13 @@
     <loc>http://localhost:1313/tags/fpga/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/fpga/</loc>
-    <lastmod>2017-05-07T19:27:39+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/posts/reconfigure-zynq-pl-go/</loc>
-    <lastmod>2017-05-07T19:27:39+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/linux/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/vivado/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/zynq/</loc>
-    <lastmod>2017-05-07T19:27:39+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/zynq/</loc>
     <lastmod>2017-05-07T19:27:39+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/pynq-linux-on-zedboard/</loc>
@@ -161,9 +140,6 @@
     <loc>http://localhost:1313/tags/ami/</loc>
     <lastmod>2017-02-28T00:03:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/aws/</loc>
-    <lastmod>2017-02-28T00:03:41+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/tags/ebs/</loc>
     <lastmod>2017-02-28T00:03:41+00:00</lastmod>
   </url><url>
@@ -193,5 +169,11 @@
   </url><url>
     <loc>http://localhost:1313/posts/distributed-file-system-python/</loc>
     <lastmod>2017-01-02T23:55:01+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/archives/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/search/</loc>
   </url>
 </urlset>

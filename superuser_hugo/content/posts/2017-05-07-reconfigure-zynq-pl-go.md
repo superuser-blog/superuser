@@ -9,7 +9,7 @@ slug: /reconfigure-zynq-pl-go/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - FPGA
   - Linux
   - Zynq

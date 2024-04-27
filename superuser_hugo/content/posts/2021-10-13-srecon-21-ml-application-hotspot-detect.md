@@ -2,15 +2,17 @@
 id: 211013
 title: "SRECon'21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]"
 date: 2021-10-13
-author: sanket
+author: Sanket
 layout: single
 guid: https://superuser.blog/?p=211013
-permalink: /srecon-21-ml-application-hotspot-detect/
+slug: /srecon-21-ml-application-hotspot-detect/
+cover:
+  image: /assets/images/srecon-21.jpg 
 header:
   overlay_image: /assets/images/srecon-21.jpg
   overlay_filter: rgba(10, 10, 10, 0.75)  
   show_overlay_excerpt: false
-categories:
+tags:
   - public speaking
 ---
 
@@ -31,4 +33,6 @@ Note: you do not need to be a machine learning expert to make sense of this talk
  - [Slides](https://www.usenix.org/system/files/srecon21_slides_patel.pdf) 
  - [YouTube](https://youtu.be/rsjOpKl_lgE) 
 
+{{<rawhtml>}}
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rsjOpKl_lgE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{</rawhtml>}}

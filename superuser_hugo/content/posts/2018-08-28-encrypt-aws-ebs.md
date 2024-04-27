@@ -1,15 +1,15 @@
 ---
 id: 18830
 title: 'Encrypting Existing AWS EBS : The GDPR Series'
-author: sanket
+author: Sanket
 layout: single
 date: 2018-08-28
 guid: https://superuser.blog/?p=18830
-permalink: /encrypt-aws-ebs/
+slug: /encrypt-aws-ebs/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - AWS
 ---
 

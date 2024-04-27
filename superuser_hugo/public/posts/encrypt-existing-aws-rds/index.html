@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Encrypt Existing AWS RDS : The GDPR Series | superuser</title>
+<meta name="keywords" content="AWS">
+<meta name="description" content="Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.
+The task was dreaded because there is no way to enable encryption once RDS has been created and most ways, which we will discuss, incurred downtime.
+The Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.
+The RDS instance we had was a MySQL one which is also multi AZ.">
+<meta name="author" content="Sanket">
+<link rel="canonical" href="http://localhost:1313/posts/encrypt-existing-aws-rds/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/encrypt-existing-aws-rds/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="superuser (Alt + H)">superuser</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://sanket.plus" title="About Me">
+                    <span>About Me</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Encrypt Existing AWS RDS : The GDPR Series
+    </h1>
+    <div class="post-meta"><span title='2018-09-30 00:00:00 +0000 UTC'>September 30, 2018</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;Sanket
+
+</div>
+  </header> 
+  <div class="post-content"><p>Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.</p>
+<p>The task was dreaded because <strong>there is no way to enable encryption once RDS has been created</strong> and most ways, which we will discuss, incurred downtime.</p>
+<h2 id="the-task">The Task<a hidden class="anchor" aria-hidden="true" href="#the-task">#</a></h2>
+<blockquote>
+<p>Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.</p>
+</blockquote>
+<p>The RDS instance we had was a MySQL one which is also multi AZ. After lots of docs reading, googling around and chatting with AWS support we found following ways to go about it.</p>
+<ol>
+<li>The Snapshot Way [huge downtime]</li>
+<li>The dump way.</li>
+<li>The DMS Way</li>
+<li>The Looong Way</li>
+</ol>
+<h2 id="the-snapshot-way">The Snapshot Way:<a hidden class="anchor" aria-hidden="true" href="#the-snapshot-way">#</a></h2>
+<p>Probably the easiest to follow, the one mentioned in AWS docs too. BUT. Huge downtime depending on the DB size. Because once the RDS instance has been created, there is no way to enable encryption, what AWS suggests is to do:</p>
+<ul>
+<li>Take a snapshot.</li>
+<li>Encrypt snapshot.</li>
+<li>Restore an RDS from encrypted snapshot.</li>
+</ul>
+<p>Clearly, if we don&rsquo;t want to miss-out writes, we will have to shut the DB down and that is downtime. Not the way to go about it.</p>
+<h2 id="the-dump-way">The Dump Way:<a hidden class="anchor" aria-hidden="true" href="#the-dump-way">#</a></h2>
+<p>Also has downtime bus lesser than the previous one. The idea is to take dump of whatever db you want to be encrypted only. And not whole DB instance. And upload it to newly created empty encrypted RDS. We tried taking dump and uploaded on new RDS and measured time. It was in minutes and not acceptable.</p>
+<h2 id="the-dms-way">The DMS Way:<a hidden class="anchor" aria-hidden="true" href="#the-dms-way">#</a></h2>
+<p>AWS has this cool service called Database Migration Service [DMS] which lets you migrate databases across DB engines. And from same engine to same engine too ie from MySQL to MySQL.</p>
+<p>So here we though the trick that should work is:</p>
+<ol>
+<li>Create new RDS with encryption enabled (we can only do it while starting new one)</li>
+<li>Create DMS job to migrate existing DB to new one.</li>
+<li>Also choose <code>replicate old data and continue to keep DBs in sync</code></li>
+</ol>
+<p>So what DMS basically does (I think) is you give them two DBs. Source and destination (encrypted here). And tell it to keep them in sync. So they will upload initial DB dump on new db and then continue replicating bin log on new one and thus keeping them in sync.</p>
+<p>This should work, right? <strong>Wrong!</strong> It was all cool on test setup. It did replicate old db to new one and it also kept replicating live writes. And mind well that this was on dump of our production db that we wanted to encrypt. But when we tried to move this setup with staging infra. DMS replication started failing! Why? <strong>The JSON Columns</strong>. Turns out, DMS did not support replicating JSON columns so when one such cell is updated in source DB, it could not replicate the same on destination encrypted db.</p>
+<p><strong>BUMMER!</strong> I thought life is easy. Nope! Hence,</p>
+<h2 id="the-looong-way">The Looong Way:<a hidden class="anchor" aria-hidden="true" href="#the-looong-way">#</a></h2>
+<p>Running out of options we had to go this way:</p>
+<ol>
+<li>Make a read replica of existing non-encrypted DB</li>
+<li>Wait for replica to start and get in sync with source.</li>
+<li>Stop replication on read replica</li>
+<li>Note where replication was stopped.</li>
+<li>Take snapshot of read replica</li>
+<li>Encrypt snapshot</li>
+<li>Restore RDS from step 6 snapshot</li>
+<li>Start replication. Set RDS master as the original db and replication start point as noted in step 4</li>
+</ol>
+<p>Now before you start, make sure binlog are enabled and is in row format (by default it is). Also increase bin log retention duration so that we have it to get replicated to new db.</p>
+<pre tabindex="0"><code>show variables like &#39;binlog_format&#39;;
+# Create replication user and increase binlog retention to 24hrs:
+CREATE USER &#39;rep_user&#39;@&#39;%&#39; IDENTIFIED BY &#39;rep_user&#39;;
+GRANT REPLICATION slave ON *.* TO &#39;rep_user&#39;@&#39;%&#39; IDENTIFIED BY &#39;rep_user&#39;;
+FLUSH PRIVILEGES;
+
+# increase binlog retention
+call mysql.rds_set_configuration(&#39;binlog retention hours&#39;, 24);
+</code></pre><p>Now create a read replica of existing RDS from AWS console. Wait for it to get in sync and be available fully. Monitor the console and see when it becomes available. Also you can log-in to ReadReplica (RR) and <code>do show slave status\G;</code></p>
+<p>Now moving to step 3, we will stop replication and note the points.</p>
+<pre tabindex="0"><code>Stop replication:
+CALL mysql.rds_stop_replication;
+# Note the replication state:
+show slave status\G;
+</code></pre><p>And note-down <code>Relay_Master_log_file</code> and <code>Exec_Master_log_pos</code> :: this basically says in which file till which position replication has been done. We will use the same position while resuming replication.</p>
+<p>RDS page should say replication has been stopped using command in RED fonts. Take snapshot from RDS UI.
+Check for snapshot progress and once done encrypt snapshot using RDS UI only. Restore RDS from encrypted snapshot. It will have most settings as default, you can set rds name here. You can make whatever modification you want to have in your new encrypted DB.</p>
+<p>Once RDS has been started it will have default SG (no access from EC2 or office), have backup disabled, default parameter group etc. Just modify this RDS to have same setting as source RDS. we will need to reboot this RDS to apply parameter group.</p>
+<p>Now we have encrypted RDS which has data similar to what ReadReplica had. Now we need to enable replication from the points we noted above.On new encrypted RDS</p>
+<pre tabindex="0"><code>CALL mysql.rds_set_external_master(&#39;&lt;source rds&gt;&#39;, 3306, &#39;&lt;replication user&gt;&#39;, &#39;&lt;that user&#39;s passwd&gt;&#39;, &#39;&lt;Relay_Master_log_file&gt;&#39;, &lt;Exec_Master_log_pos&gt;, 0);
+
+CALL mysql.rds_start_replication;
+</code></pre><p>Now do <code>show slave status\G;</code> and monitor Replication Delay. It would be in some thousands of seconds as it takes time to take and encrypt snapshot. Withing couple of minutes, new RDS should sync and delay should get to 0.</p>
+<p>Now you have both the RDS in sync, any writes to unencrypted one is replicated to encrypted one. You can now switch your application to use new one. While migrating we should make sure that all service instance are migrated <strong>at once</strong> , ie there should be no point where both RDS are in use by set of services. Why? Because this may break replication.</p>
+<p>Example: Say we have auto-increment column in a DB and we have written till column 100. Now if you write on slave (encrypted RDS here), you will be able to write and that column will be 101. If you write on master (unencrypted RDS here) you also will be able to write with column 101. But the replication will try to replicate master&rsquo;s 101 column and because it already exists on slave replication would break and all DB will stop getting replicated :)</p>
+<p>So let&rsquo;s tear replication down as there are no writes on master. Do this on slave (new encrypted RDS):</p>
+<pre tabindex="0"><code>	CALL mysql.rds_stop_replication;
+	CALL mysql.rds_reset_external_master;
+</code></pre><p>And that is it! Again, couple things to remember:</p>
+<ol>
+<li>Needless to say, try it all on staging setup. Try it couple of times</li>
+<li>While migrating, there should be no instance while both RDS are simultaneously being used by service.</li>
+<li>Try using DMS if you don&rsquo;t have json columns.</li>
+</ol>
+<p>Ref:</p>
+<ol>
+<li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html">Encrypting Amazon RDS Resources</a></li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/aws/">Aws</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">superuser</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

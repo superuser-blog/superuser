@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Zynq on Superuser</title>
+    <title>Zynq on superuser</title>
     <link>http://localhost:1313/tags/zynq/</link>
-    <description>Recent content in Zynq on Superuser</description>
+    <description>Recent content in Zynq on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 07 May 2017 19:27:39 +0000</lastBuildDate>

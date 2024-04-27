@@ -9,7 +9,7 @@ slug: /tcp-fast-open-python/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - Networking
   - python
 ---

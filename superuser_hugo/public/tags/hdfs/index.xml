@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>HDFS on Superuser</title>
+    <title>HDFS on superuser</title>
     <link>http://localhost:1313/tags/hdfs/</link>
-    <description>Recent content in HDFS on Superuser</description>
+    <description>Recent content in HDFS on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 02 Jan 2017 23:55:01 +0000</lastBuildDate>

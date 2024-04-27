@@ -15,7 +15,7 @@ header:
 cover:
   image: wp-content/uploads/2017/04/tsdb-hbase.jpg
   hiddenInList: true
-categories:
+tags:
   - HBase
 tags:
   - Hbase

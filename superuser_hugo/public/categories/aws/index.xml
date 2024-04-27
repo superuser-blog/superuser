@@ -10,17 +10,17 @@
     <atom:link href="http://localhost:1313/categories/aws/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Serverless Meets CI/CD</title>
-      <link>http://localhost:1313/posts/2018-12-10-serverless-meets-ci-cd/</link>
+      <link>http://localhost:1313/posts/serverless-meets-ci-cd/</link>
       <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-12-10-serverless-meets-ci-cd/</guid>
+      <guid>http://localhost:1313/posts/serverless-meets-ci-cd/</guid>
       <description>I have been attending LSPE [Large Scale Production Engineering] Meetup for last two years. And for the last one, I decided to give it back to the community. I conducted a hands-on session titled:
 Serverless meets CI/CD The session briefly introduced what is Serverless and CD/CD and why should you be concerned about it. We then went hands-on with AWS Lambda as serverless platform and Bitbucket Pipelines for CI/CD. Started from making a Hello World!</description>
     </item>
     <item>
       <title>Encrypt Existing AWS RDS : The GDPR Series</title>
-      <link>http://localhost:1313/posts/2018-09-30-encrypt-exisitng-aws-rds/</link>
+      <link>http://localhost:1313/posts/encrypt-existing-aws-rds/</link>
       <pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-09-30-encrypt-exisitng-aws-rds/</guid>
+      <guid>http://localhost:1313/posts/encrypt-existing-aws-rds/</guid>
       <description>Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.
 The task was dreaded because there is no way to enable encryption once RDS has been created and most ways, which we will discuss, incurred downtime.
 The Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.
@@ -28,18 +28,18 @@ The RDS instance we had was a MySQL one which is also multi AZ.</description>
     </item>
     <item>
       <title>Encrypt Existing S3 Bucket : The GDPR Series</title>
-      <link>http://localhost:1313/posts/2018-09-23-encrypt-s3-bucket/</link>
+      <link>http://localhost:1313/posts/encrypt-s3-bucket/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-09-23-encrypt-s3-bucket/</guid>
+      <guid>http://localhost:1313/posts/encrypt-s3-bucket/</guid>
       <description>So next in line was S3 bucket. This too did not have encryption enabled, ie: data encryption at rest.
 The Task Encrypt existing S3 bucket which contains user data with zero downtime.
 A word on encrypted S3 objects/buckets: By default there is no encryption involved when you create or put objects in an S3 bucket. However, you can enable default encryption on a bucket and any object put in the bucket will be encrypted by default.</description>
     </item>
     <item>
       <title>Encrypting Existing AWS EBS : The GDPR Series</title>
-      <link>http://localhost:1313/posts/2018-08-28-encrypt-aws-ebs/</link>
+      <link>http://localhost:1313/posts/encrypt-aws-ebs/</link>
       <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-08-28-encrypt-aws-ebs/</guid>
+      <guid>http://localhost:1313/posts/encrypt-aws-ebs/</guid>
       <description>It&amp;rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were
 Encrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I will be sharing my experiences and how did we went on with it.
 The Task Encrypt EBS that is currently in use by a MongoDB cluster.</description>

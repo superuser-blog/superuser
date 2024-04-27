@@ -1,6 +1,6 @@
-baseURL: https://exampleeeee.org/
+baseURL: https://stg.superuser.blog/
 languageCode: en-us
-title: Superuser
+title: superuser
 theme: 
   - "PaperMod"
 
@@ -11,4 +11,24 @@ params:
   homeInfoParams:
     Title: Hi there 👋
     Content: Welcome to superuser! Expect to find linux, python, SRE and related contents.
-  
+
+menu:
+  main:
+    - name: Archive
+      url: archives
+      weight: 5
+    - name: Search
+      url: search/
+      weight: 10
+    - name: Tags
+      url: tags/
+      weight: 10
+    - name: About Me
+      url: https://sanket.plus
+
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # necessary for search
