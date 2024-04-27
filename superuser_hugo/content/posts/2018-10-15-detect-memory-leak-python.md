@@ -1,15 +1,15 @@
 ---
 id: 181015
 title: 'Detecting Memory Leak in Python'
-author: sanket
+author: Sanket
 layout: single
 date: 2018-10-15
 guid: https://superuser.blog/?p=181015
-permalink: /detect-memory-leak-python/
+slug: /detect-memory-leak-python/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - python
 ---
 
@@ -18,7 +18,7 @@ In production, a memory leak will not always bubble up. And there could be multi
 The flask app we had to debug had same characteristics. It never had huge surge of traffic and there would be multiple deployments over week. Although it had cgroup memory usage limit, it had some room to grow and the leak never appeared. Until we decided to implement cache warmer which would be generating significant traffic and there it goes, uWSGI processes getting killed by OOM Killer!
 
 ### Update:
-I gave a talk at PyCon 2019 on the same subject, if you prefer detailed explanation in video format, checkout [PyCon19 India: Let's Hunt a Memory Leak](/pycon-lets-hunt-memory-leak/) or just scroll down to the bottom of the page.
+I gave a talk at PyCon 2019 on the same subject, if you prefer detailed explanation in video format, checkout [PyCon19 India: Let's Hunt a Memory Leak](/posts/pycon-lets-hunt-memory-leak/) or just scroll down to the bottom of the page.
 
 ## A Word on Python Memory Management:
 Python does memory management on its own and it's completely abstracted from user. It generally is not needed to know how is it done internally but when your workers are dying, you gotta know.
@@ -173,5 +173,6 @@ Interesting reads:
 
 ## Recording of the talk:
 
+{{<rawhtml>}}
  <iframe width="560" height="315" src="https://www.youtube.com/embed/s9kAghWpzoE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+{{</rawhtml>}}

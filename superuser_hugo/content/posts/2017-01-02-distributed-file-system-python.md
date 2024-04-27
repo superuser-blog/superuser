@@ -15,7 +15,7 @@ header:
   cta_label: "GitHub Repo"
   cta_url: "https://github.com/sanketplus/pydfs"
   #overlay_color: "#333"
-categories: 
+tags: 
   - python
 tags:
   - distributed file system

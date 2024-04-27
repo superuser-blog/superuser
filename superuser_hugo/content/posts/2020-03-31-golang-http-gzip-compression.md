@@ -1,15 +1,15 @@
 ---
 id: 200331
 title: "Golang Http Client and Compression"
-author: sanket
+author: Sanket
 date: 2020-03-31
 layout: single
 guid: https://superuser.blog/?p=200331
-permalink: /golang-http-gzip-compression
+slug: /golang-http-gzip-compression
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - golang
 ---
 

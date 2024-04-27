@@ -1,16 +1,18 @@
 ---
 id: 181210
 title: 'Serverless Meets CI/CD'
-author: sanket
+author: Sanket
 layout: single
 date: 2018-12-10
 guid: https://superuser.blog/?p=181210
-permalink: /serverless-meets-ci-cd/
+slug: /serverless-meets-ci-cd/
+cover:
+  image: /assets/images/lspe_1.jpeg
 header:
   overlay_image: /assets/images/lspe_1.jpeg
   overlay_filter: rgba(10, 10, 10, 0.55)
   show_overlay_excerpt: false
-categories:
+tags:
   - python
   - aws
   - public speaking

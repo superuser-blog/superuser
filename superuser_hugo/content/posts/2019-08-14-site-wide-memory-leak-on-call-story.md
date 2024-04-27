@@ -1,15 +1,15 @@
 ---
 id: 190814
 title: "Site Wide Memory Leak: An On-Call Story"
-author: sanket
+author: Sanket
 layout: single
 date: 2019-08-14
 guid: https://superuser.blog/?p=190814
-permalink: /site-wide-memory-leak-on-call-story/
+slug: /site-wide-memory-leak-on-call-story/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - linux
 ---
 
@@ -63,7 +63,7 @@ sanket@tfs:~$ sudo slabtop --once
  71883  49685   0%    0.19K   3423       21     313692K dentry
 ...
 ```
-So something called `dentry` was eating all the memory. What is it? It is a directory entry which is cached. When you look up for a file or a directory, the operation goes iteratively scanning each component of the path. For example, to get `/etc/passwd`, it has to first find dir `/` and list its contents, after finding `etc` in it, it has to list contents of `etc` and so on. When this lookup is finally done, the kernel will cache it because the above iterative resolution has to do expensive disk reads. (If you want to know more on this, checkout [talk I gave on filesystem](/lets-build-distributed-filesystem/))
+So something called `dentry` was eating all the memory. What is it? It is a directory entry which is cached. When you look up for a file or a directory, the operation goes iteratively scanning each component of the path. For example, to get `/etc/passwd`, it has to first find dir `/` and list its contents, after finding `etc` in it, it has to list contents of `etc` and so on. When this lookup is finally done, the kernel will cache it because the above iterative resolution has to do expensive disk reads. (If you want to know more on this, checkout [talk I gave on filesystem](/posts/lets-build-distributed-filesystem/))
 
 Now, something was filling up the cache. Wasn't sure what it was but having found what was using the memory, a fix was also found. Because it's a cache, it should be (moderately?) safe to drop it.
 ```bash

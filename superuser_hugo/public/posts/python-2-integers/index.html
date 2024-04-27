@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Curious Case of Python 2 and Integers | superuser</title>
+<meta name="keywords" content="python">
+<meta name="description" content="In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let&rsquo;s take a deeper look at what exactly happens!
+Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let&rsquo;s Hunt a Memory Leak or just scroll down to the bottom of the page.">
+<meta name="author" content="Sanket">
+<link rel="canonical" href="http://localhost:1313/posts/python-2-integers/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/python-2-integers/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="superuser (Alt + H)">superuser</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://sanket.plus" title="About Me">
+                    <span>About Me</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Curious Case of Python 2 and Integers
+    </h1>
+    <div class="post-meta"><span title='2019-09-20 00:00:00 +0000 UTC'>September 20, 2019</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;Sanket
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/assets/images/delete_int.png" alt="">
+        
+</figure>
+  <div class="post-content"><p>In <a href="/detect-memory-leak-python/">Detecting Memory Leak in Python</a>, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let&rsquo;s take a deeper look at what exactly happens!</p>
+<h3 id="update">Update:<a hidden class="anchor" aria-hidden="true" href="#update">#</a></h3>
+<p>I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout <a href="/pycon-lets-hunt-memory-leak/">PyCon19 India: Let&rsquo;s Hunt a Memory Leak</a> or just scroll down to the bottom of the page.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Python <span style="color:#ae81ff">2.7.15</span> (default, Jan <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">2019</span>, <span style="color:#ae81ff">21</span>:<span style="color:#ae81ff">07</span>:<span style="color:#ae81ff">57</span>)
+</span></span><span style="display:flex;"><span>[GCC <span style="color:#ae81ff">4.2.1</span> Compatible Apple LLVM <span style="color:#ae81ff">10.0.0</span> (clang<span style="color:#f92672">-</span><span style="color:#ae81ff">1000.11.45.5</span>)] on darwin
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#34;help&#34;</span>, <span style="color:#e6db74">&#34;copyright&#34;</span>, <span style="color:#e6db74">&#34;credits&#34;</span> <span style="color:#f92672">or</span> <span style="color:#e6db74">&#34;license&#34;</span> <span style="color:#66d9ef">for</span> more information<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> os<span style="color:#f92672">,</span> psutil<span style="color:#f92672">,</span> gc<span style="color:#f92672">,</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> l<span style="color:#f92672">=</span>[i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100000000</span>)]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(psutil<span style="color:#f92672">.</span>Process(os<span style="color:#f92672">.</span>getpid())<span style="color:#f92672">.</span>memory_info())
+</span></span><span style="display:flex;"><span>pmem(rss<span style="color:#f92672">=</span><span style="color:#ae81ff">3244871680</span>L, vms<span style="color:#f92672">=</span><span style="color:#ae81ff">7824240640</span>L, pfaults<span style="color:#f92672">=</span><span style="color:#ae81ff">1365384</span>, pageins<span style="color:#f92672">=</span><span style="color:#ae81ff">460</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">del</span> l
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(psutil<span style="color:#f92672">.</span>Process(os<span style="color:#f92672">.</span>getpid())<span style="color:#f92672">.</span>memory_info())
+</span></span><span style="display:flex;"><span>pmem(rss<span style="color:#f92672">=</span><span style="color:#ae81ff">2509352960</span>L, vms<span style="color:#f92672">=</span><span style="color:#ae81ff">6964514816</span>L, pfaults<span style="color:#f92672">=</span><span style="color:#ae81ff">1381131</span>, pageins<span style="color:#f92672">=</span><span style="color:#ae81ff">460</span>)
+</span></span></code></pre></div><p>After deleting the list explicitly, the memory usage still is at 2.5G. That means the integers are still <em>floating</em> around. (see what I did there?)</p>
+<h1 id="python-objects">Python Objects<a hidden class="anchor" aria-hidden="true" href="#python-objects">#</a></h1>
+<p>Everything in python is an object, including our beloved integer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// Include/object.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/* Nothing is actually declared to be a PyObject, but every pointer to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * a Python object can be cast to a PyObject*.  This is inheritance built
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * by hand.  Similarly every pointer to a variable-size Python object can,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * in addition, be cast to PyVarObject*.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> _object {
+</span></span><span style="display:flex;"><span>    PyObject_HEAD
+</span></span><span style="display:flex;"><span>} PyObject;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Include/intobject.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    PyObject_HEAD
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">long</span> ob_ival;
+</span></span><span style="display:flex;"><span>} PyIntObject;
+</span></span></code></pre></div><p>So <code>PyIntObject</code> is just a wrapper around a C type <code>long</code>, with added python specific HEAD struct which contains additional information like reference count, pointer to various methods which will be called when we do print, delete, get, set, etc on the object.</p>
+<h2 id="lets-try-to-allocate-an-integer">Let&rsquo;s try to allocate an integer:<a hidden class="anchor" aria-hidden="true" href="#lets-try-to-allocate-an-integer">#</a></h2>
+<p><img loading="lazy" src="/assets/images/create_int.png" alt="Create Integer"  />
+</p>
+<p>We execute a really simple python assignment statement and we can see that the function <code>PyObject * PyInt_FromLong(long ival)</code>, which takes a long variable and returns a <code>PyObject</code> (of course). From this point onwards, we will dive deep into two things:</p>
+<ol>
+<li>Look deeper into the said function above, and see how exactly an object is allocated</li>
+<li>Look into what happens when we delete it and try to understand the behavior we saw in the beginning</li>
+</ol>
+<p><em>Also: did you look at the call stack? The int object is created when the code is being compiled to bytecode! (The AST [abstract syntax tree] function calls) And not at during run time.</em></p>
+<h3 id="1-creating-the-int-object">1. Creating The Int Object<a hidden class="anchor" aria-hidden="true" href="#1-creating-the-int-object">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>PyObject <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">PyInt_FromLong</span>(<span style="color:#66d9ef">long</span> ival)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">register</span> PyIntObject <span style="color:#f92672">*</span>v;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// TRIMMED SOME CODE HERE
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (free_list <span style="color:#f92672">==</span> NULL) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((free_list <span style="color:#f92672">=</span> <span style="color:#a6e22e">fill_free_list</span>()) <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Inline PyObject_New */</span>
+</span></span><span style="display:flex;"><span>    v <span style="color:#f92672">=</span> free_list;
+</span></span><span style="display:flex;"><span>    free_list <span style="color:#f92672">=</span> (PyIntObject <span style="color:#f92672">*</span>)<span style="color:#a6e22e">Py_TYPE</span>(v);
+</span></span><span style="display:flex;"><span>    (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">PyObject_INIT</span>(v, <span style="color:#f92672">&amp;</span>PyInt_Type);
+</span></span><span style="display:flex;"><span>    v<span style="color:#f92672">-&gt;</span>ob_ival <span style="color:#f92672">=</span> ival;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (PyObject <span style="color:#f92672">*</span>) v;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The code above is responsible for creating an integer object from given long value. The trimmed code in the snipped above handles small integers separately. Leaving some links in the bottom if you&rsquo;re interested in the specifics.</p>
+<p>So the first thing that happens here is filling some sort of free list. Let&rsquo;s take a look at what it is.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* Integers are quite normal objects, to make object handling uniform.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   (Using odd pointers to represent integers would save much space
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   but require extra checks for this special case throughout the code.)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   Since a typical Python program spends much of its time allocating
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   and deallocating integers, these operations should be very fast.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   Therefore we use a dedicated allocation scheme with a much lower
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   overhead (in space and time) than straight malloc(): a simple
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   dedicated free list, filled when necessary with memory from malloc().
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   block_list is a singly-linked list of all PyIntBlocks ever allocated,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   linked via their next members.  PyIntBlocks are never returned to the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   system before shutdown (PyInt_Fini).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   free_list is a singly-linked list of available PyIntObjects, linked
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   via abuse of their ob_type members.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define BLOCK_SIZE      1000    </span><span style="color:#75715e">/* 1K less typical malloc overhead */</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define BHEAD_SIZE      8       </span><span style="color:#75715e">/* Enough for a 64-bit pointer */</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define N_INTOBJECTS    ((BLOCK_SIZE - BHEAD_SIZE) / sizeof(PyIntObject))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> _intblock {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> _intblock <span style="color:#f92672">*</span>next;
+</span></span><span style="display:flex;"><span>    PyIntObject objects[N_INTOBJECTS];
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> _intblock PyIntBlock;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> PyIntBlock <span style="color:#f92672">*</span>block_list <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> PyIntObject <span style="color:#f92672">*</span>free_list <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> PyIntObject <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fill_free_list</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    PyIntObject <span style="color:#f92672">*</span>p, <span style="color:#f92672">*</span>q;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Python&#39;s object allocator isn&#39;t appropriate for large blocks. */</span>
+</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">=</span> (PyIntObject <span style="color:#f92672">*</span>) <span style="color:#a6e22e">PyMem_MALLOC</span>(<span style="color:#66d9ef">sizeof</span>(PyIntBlock));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (p <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (PyIntObject <span style="color:#f92672">*</span>) <span style="color:#a6e22e">PyErr_NoMemory</span>();
+</span></span><span style="display:flex;"><span>    ((PyIntBlock <span style="color:#f92672">*</span>)p)<span style="color:#f92672">-&gt;</span>next <span style="color:#f92672">=</span> block_list;
+</span></span><span style="display:flex;"><span>    block_list <span style="color:#f92672">=</span> (PyIntBlock <span style="color:#f92672">*</span>)p;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Link the int objects together, from rear to front, then return
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">       the address of the last int object in the block. */</span>
+</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>((PyIntBlock <span style="color:#f92672">*</span>)p)<span style="color:#f92672">-&gt;</span>objects[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>    q <span style="color:#f92672">=</span> p <span style="color:#f92672">+</span> N_INTOBJECTS;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (<span style="color:#f92672">--</span>q <span style="color:#f92672">&gt;</span> p)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Py_TYPE</span>(q) <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> _typeobject <span style="color:#f92672">*</span>)(q<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Py_TYPE</span>(q) <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> p <span style="color:#f92672">+</span> N_INTOBJECTS <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>There are some spoilers in the comment in the code above. There are two new variables introduced above. The <code>block_list</code> and the <code>free_list</code>. <code>block_list</code> is a singly linked list of bunch of <code>PytIntObjects</code>. <code>free_list</code> is the pointer to next free object in this said bunch of Int objects in a block. So here is what happens in plain English:</p>
+<ol>
+<li>Allocate a new <code>PyIntBlock</code></li>
+<li>Add the block at the beginning of the <code>block_list</code> linked list.</li>
+<li>Now link the linked list of those <em>bunch of Int objects.</em></li>
+<li>Return the address of last Int Object.</li>
+</ol>
+<p>Here <code>block_list</code> is connected using <code>*next</code> and <code>free_list</code> is linked using <code>*ob_type</code> which is included in each Python object&rsquo;s header.</p>
+<p>Now if we went back to the function <code>PyInt_FromLong</code> above, what we&rsquo;re doing is attaching our new long variable to the next free slot in <code>free_list</code> and return it.</p>
+<p><strong>Why? Why do all these convoluted things? As the comment said, int objects are frequently allocated in python. So this approach allocates <em>a bunch of int objects</em> in one go (<code>N_INTOBJECTS</code> many, 24 in other words). So in one single alloc call, we reserve space for 24 objects. So that next 23 int allocations can go relatively faster!!</strong></p>
+<pre tabindex="0"><code>                   PyIntBlock                   PyIntBlock
+             +-----------------+         +-------------------+
+             |                 |         |                   |
+             |         *next+-----------&gt;+           *next +---------&gt;
+block_list+-&gt;+         objects |         |                   |
+             |          +      |         |               +   |
+             +-----------------+         +-------------------+
+                        |                                |
+                        v                                |
+                  +-----+----------+                     v
+       NULL &lt;---------+*ob_type    |
+                  |    ob_ival=NAN |PyIntObject
+                  |                |
+                  +----+-----------+
+                       ^
+                       |
+                       +
+                  21 similar objects
+                       ^                   +*free_list
+                       |                   |
+                  +----+-----------+       |
+                  |    *ob_type    +&lt;------+
+                  |    ob_ival=NAN |PyIntObject
+                  |                |
+                  +----+-----------+
+                       ^
+                       |
+                       |
+                  +----+-----------+
+                  |    *ob_type    |
+                  |    ob_ival=11  |PyIntObject
+                  |                |
+                  +----------------+
+</code></pre><h3 id="2-deleting-the-int-object">2. Deleting The Int Object<a hidden class="anchor" aria-hidden="true" href="#2-deleting-the-int-object">#</a></h3>
+<p>So that was how a python object is allocated. Let&rsquo;s see what happens when we delete it
+<img loading="lazy" src="/assets/images/delete_int.png" alt="Delete Integer"  />
+</p>
+<p>We can see <code>static void int_dealloc(PyIntObject *v)</code> is called. But how does python know what function to call? It is stored in the definition of <code>PyIntObject</code> specifically in the HEAD part. Here&rsquo;s the function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">int_dealloc</span>(PyIntObject <span style="color:#f92672">*</span>v)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">PyInt_CheckExact</span>(v)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Py_TYPE</span>(v) <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> _typeobject <span style="color:#f92672">*</span>)free_list;
+</span></span><span style="display:flex;"><span>        free_list <span style="color:#f92672">=</span> v;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Py_TYPE</span>(v)<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">tp_free</span>((PyObject <span style="color:#f92672">*</span>)v);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It is relatively simple, if the given object is indeed int, then just move the <code>free_list</code> pointer to the deleting object.</p>
+<pre tabindex="0"><code>                   PyIntBlock                   PyIntBlock
+             +-----------------+         +-------------------+
+             |                 |         |                   |
+             |         *next+-----------&gt;+           *next +---------&gt;
+block_list+-&gt;+         objects |         |                   |
+             |          +      |         |               +   |
+             +-----------------+         +-------------------+
+                        |                                |
+                        v                                |
+                  +-----+----------+                     v
+       NULL &lt;---------+*ob_type    |
+                  |    ob_ival=NAN |PyIntObject
+                  |                |
+                  +----+-----------+
+                       ^
+                       |
+                       +
+                  21 similar objects
+                       ^
+                       |
+                  +----+-----------+
+                  |    *ob_type    |
+                  |    ob_ival=NAN |PyIntObject
+                  |                |
+                  +----+-----------+
+                       ^
+                       |                    *free_list
+                       |                       +
+                  +----+-----------+           |
+                  |    *ob_type    +&lt;----------+
+                  |    ob_ival=NAN |PyIntObject
+                  |                |
+                  +----------------+
+</code></pre><h3 id="bottomline">Bottomline:<a hidden class="anchor" aria-hidden="true" href="#bottomline">#</a></h3>
+<p>As we saw, we allocate <em>a bunch of int objects</em> (inside a block) when we create a new int and there&rsquo;s not enough space in the current block. But when we delete, we just move the <code>free_list</code> pointer around. And not call actual dealloc function to free any memory. So that explains the initial behavior!</p>
+<p>Also, floats work the same way.</p>
+<h3 id="other-good-reads-on-python2-and-integers">Other good reads on python2 and integers:<a hidden class="anchor" aria-hidden="true" href="#other-good-reads-on-python2-and-integers">#</a></h3>
+<ol>
+<li><a href="https://davejingtian.org/2014/12/11/python-internals-integer-object-pool-pyintobject/">Python Internals – Integer object pool</a></li>
+<li><a href="http://jasonleaster.github.io/2016/02/03/memory-model-of-int-object-in-python/">Int Object in Python</a></li>
+</ol>
+<h2 id="recording-of-the-talk">Recording of the talk:<a hidden class="anchor" aria-hidden="true" href="#recording-of-the-talk">#</a></h2>
+
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/s9kAghWpzoE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/python/">Python</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">superuser</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

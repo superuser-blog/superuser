@@ -9,7 +9,7 @@ slug: /pynq-linux-on-zedboard/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - FPGA
   - Linux
   - Zynq

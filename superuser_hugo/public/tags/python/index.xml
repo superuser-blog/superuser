@@ -1,13 +1,76 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Python on Superuser</title>
+    <title>Python on superuser</title>
     <link>http://localhost:1313/tags/python/</link>
-    <description>Recent content in Python on Superuser</description>
+    <description>Recent content in Python on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Aug 2017 14:40:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python Metaprogramming: Functions, Flask and Google Cloud Functions</title>
+      <link>http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/</link>
+      <pubDate>Tue, 11 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/</guid>
+      <description>Everything in Python is an object. And that includes functions. Let&amp;rsquo;s see what I learned while I was trying to work with Google cloud functions with python runtime.
+Python Functions Since functions too are objects, we can see what all attributes a function contains as following
+&amp;gt;&amp;gt;&amp;gt; def hello(name): ... print(f&amp;#34;Hello, {name}!&amp;#34;) ... &amp;gt;&amp;gt;&amp;gt; dir(hello) [&amp;#39;__annotations__&amp;#39;, &amp;#39;__call__&amp;#39;, &amp;#39;__class__&amp;#39;, &amp;#39;__closure__&amp;#39;, &amp;#39;__code__&amp;#39;, &amp;#39;__defaults__&amp;#39;, &amp;#39;__delattr__&amp;#39;, &amp;#39;__dict__&amp;#39;, &amp;#39;__dir__&amp;#39;, &amp;#39;__doc__&amp;#39;, &amp;#39;__eq__&amp;#39;, &amp;#39;__format__&amp;#39;, &amp;#39;__ge__&amp;#39;, &amp;#39;__get__&amp;#39;, &amp;#39;__getattribute__&amp;#39;, &amp;#39;__globals__&amp;#39;, &amp;#39;__gt__&amp;#39;, &amp;#39;__hash__&amp;#39;, &amp;#39;__init__&amp;#39;, &amp;#39;__init_subclass__&amp;#39;, &amp;#39;__kwdefaults__&amp;#39;, &amp;#39;__le__&amp;#39;, &amp;#39;__lt__&amp;#39;, &amp;#39;__module__&amp;#39;, &amp;#39;__name__&amp;#39;, &amp;#39;__ne__&amp;#39;, &amp;#39;__new__&amp;#39;, &amp;#39;__qualname__&amp;#39;, &amp;#39;__reduce__&amp;#39;, &amp;#39;__reduce_ex__&amp;#39;, &amp;#39;__repr__&amp;#39;, &amp;#39;__setattr__&amp;#39;, &amp;#39;__sizeof__&amp;#39;, &amp;#39;__str__&amp;#39;, &amp;#39;__subclasshook__&amp;#39;] While there are a lot of them, let&amp;rsquo;s look at some interesting ones</description>
+    </item>
+    <item>
+      <title>Debugging a Running Python Process</title>
+      <link>http://localhost:1313/posts/debug-running-python-process/</link>
+      <pubDate>Wed, 18 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/debug-running-python-process/</guid>
+      <description>Only if it were as easy as installing debug symbols, attach the process with gdb and py-bt! So we have a python agent, which distributes files, running across the fleet. And on some random hosts, it went haywire! On those set of hosts, the process was using 100% of CPU and not doing anything meaningful work. Restarting the process fixes the problem. I had worked on debugging a stuck process, but this was the opposite.</description>
+    </item>
+    <item>
+      <title>PyCon19 India: Let&#39;s Hunt a Memory Leak</title>
+      <link>http://localhost:1313/posts/pycon-lets-hunt-memory-leak/</link>
+      <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/pycon-lets-hunt-memory-leak/</guid>
+      <description>We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let&#39;s Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers.</description>
+    </item>
+    <item>
+      <title>Curious Case of Python 2 and Integers</title>
+      <link>http://localhost:1313/posts/python-2-integers/</link>
+      <pubDate>Fri, 20 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/python-2-integers/</guid>
+      <description>In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let&amp;rsquo;s take a deeper look at what exactly happens!
+Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let&amp;rsquo;s Hunt a Memory Leak or just scroll down to the bottom of the page.</description>
+    </item>
+    <item>
+      <title>SRECon19 Asia: Let&#39;s Build a Distributed File System</title>
+      <link>http://localhost:1313/posts/lets-build-distributed-filesystem/</link>
+      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/lets-build-distributed-filesystem/</guid>
+      <description>In the first post on this blog, I wrote about a tiny distributed filesystem I made in python for educational purpose. This year, I had a chance to use it in a talk delivered at SRECon 19 Asia. The title was
+Let&amp;rsquo;s Build a Distributed File System The talk was listed under something called Core Principles track and Talks in this track will focus on providing a deep understanding of how technologies we use everyday function and why it&#39;s important to know these details when supporting and scaling your infrastructure.</description>
+    </item>
+    <item>
+      <title>Serverless Meets CI/CD</title>
+      <link>http://localhost:1313/posts/serverless-meets-ci-cd/</link>
+      <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/serverless-meets-ci-cd/</guid>
+      <description>I have been attending LSPE [Large Scale Production Engineering] Meetup for last two years. And for the last one, I decided to give it back to the community. I conducted a hands-on session titled:
+Serverless meets CI/CD The session briefly introduced what is Serverless and CD/CD and why should you be concerned about it. We then went hands-on with AWS Lambda as serverless platform and Bitbucket Pipelines for CI/CD. Started from making a Hello World!</description>
+    </item>
+    <item>
+      <title>Detecting Memory Leak in Python</title>
+      <link>http://localhost:1313/posts/detect-memory-leak-python/</link>
+      <pubDate>Mon, 15 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/detect-memory-leak-python/</guid>
+      <description>In production, a memory leak will not always bubble up. And there could be multiple reasons behind it. You may not be getting enough traffic. Frequent deployments. No hard memory usage limit set. Or mix of them.
+The flask app we had to debug had same characteristics. It never had huge surge of traffic and there would be multiple deployments over week. Although it had cgroup memory usage limit, it had some room to grow and the leak never appeared.</description>
+    </item>
+    <item>
+      <title>TCP Fast Open: In Action with Python</title>
+      <link>http://localhost:1313/posts/tcp-fast-open-python/</link>
+      <pubDate>Wed, 08 Nov 2017 20:14:58 +0000</pubDate>
+      <guid>http://localhost:1313/posts/tcp-fast-open-python/</guid>
+      <description>Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.
+What is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminates the need to wait for 3 way handshake before application can send data over it.</description>
+    </item>
     <item>
       <title>Writing Simple WebSocket Server in Python: PyWSocket</title>
       <link>http://localhost:1313/posts/websocket-server-python/</link>

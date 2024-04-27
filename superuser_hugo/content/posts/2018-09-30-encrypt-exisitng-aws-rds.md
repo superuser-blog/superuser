@@ -1,15 +1,15 @@
 ---
 id: 18930
 title: 'Encrypt Existing AWS RDS : The GDPR Series'
-author: sanket
+author: Sanket
 layout: single
 date: 2018-09-30
 guid: https://superuser.blog/?p=18930
-permalink: /encrypt-existing-aws-rds/
+slug: /encrypt-existing-aws-rds/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - AWS
 ---
 

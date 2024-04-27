@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>PYNQ-Z1 on Superuser</title>
+    <title>PYNQ-Z1 on superuser</title>
     <link>http://localhost:1313/tags/pynq-z1/</link>
-    <description>Recent content in PYNQ-Z1 on Superuser</description>
+    <description>Recent content in PYNQ-Z1 on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 11 Apr 2017 04:05:30 +0000</lastBuildDate>

@@ -1,16 +1,18 @@
 ---
 id: 190721
 title: "SRECon19 Asia: Let's Build a Distributed File System"
-author: sanket
+author: Sanket
 layout: single
 date: 2019-07-21
 guid: https://superuser.blog/?p=190721
-permalink: /lets-build-distributed-filesystem/
+slug: /lets-build-distributed-filesystem/
+cover:
+  image: /assets/images/srecon-2.jpeg
 header:
   overlay_image: /assets/images/srecon-2.jpeg
   overlay_filter: rgba(10, 10, 10, 0.35)  
   show_overlay_excerpt: false
-categories:
+tags:
   - python
   - public speaking
 ---
@@ -30,9 +32,12 @@ We also will then implement a tiny distributed file system in Python to see all 
  - [GitHub](https://github.com/sanketplus/pydfs/tree/srecon)
  - [YouTube](https://www.youtube.com/watch?v=-xYwXUGM7nY) 
 
+
+{{<rawhtml>}}
  <iframe width="560" height="315" src="https://www.youtube.com/embed/-xYwXUGM7nY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <br/>
+{{</rawhtml>}}
 
 Couple of images :)
 

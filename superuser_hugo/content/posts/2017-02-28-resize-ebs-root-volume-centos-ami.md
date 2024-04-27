@@ -12,7 +12,7 @@ header:
   overlay_image: /wp-content/uploads/2017/02/centos-825x479.jpg
   overlay_filter: rgba(10, 10, 10, 0.75)
   show_overlay_excerpt: false
-categories:
+tags:
   - AWS
   - Linux
 tags:

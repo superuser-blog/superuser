@@ -11,7 +11,7 @@ cover:
 header:
   overlay_image: /wp-content/uploads/2017/04/hbase-config.jpg
   overlay_filter: rgba(10, 10, 10, 0.75)
-categories:
+tags:
   - HBase
 tags:
   - Hbase

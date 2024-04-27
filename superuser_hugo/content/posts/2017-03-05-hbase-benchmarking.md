@@ -12,7 +12,7 @@ header:
   overlay_image: /wp-content/uploads/2017/03/hbase-benchmarking-825x397.jpg
   overlay_filter: rgba(10, 10, 10, 0.70)
   show_overlay_excerpt: false
-categories:
+tags:
   - HBase
 tags:
   - Hbase

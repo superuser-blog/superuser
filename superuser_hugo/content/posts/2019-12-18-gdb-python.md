@@ -1,16 +1,18 @@
 ---
 id: 191218
 title: "Debugging a Running Python Process"
-author: sanket
+author: Sanket
 date: 2019-12-18
 layout: single
 guid: https://superuser.blog/?p=191218
-permalink: /debug-running-python-process
+slug: /debug-running-python-process
+cover:
+  image: /assets/images/gdb-py.png
 header:
   overlay_image: assets/images/gdb-py.png
   overlay_filter: rgba(10, 10, 10, 0.55)  
   show_overlay_excerpt: false
-categories:
+tags:
   - python
   - linux
 ---

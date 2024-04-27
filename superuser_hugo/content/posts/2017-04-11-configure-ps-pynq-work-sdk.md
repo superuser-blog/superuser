@@ -9,7 +9,7 @@ slug: /configure-ps-pynq-work-sdk/
 header:
   overlay_color: "#333"
   show_overlay_excerpt: false
-categories:
+tags:
   - FPGA
 tags:
   - FPGA

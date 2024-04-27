@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Encrypting Existing AWS EBS : The GDPR Series | superuser</title>
+<meta name="keywords" content="AWS">
+<meta name="description" content="It&rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were
+Encrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I will be sharing my experiences and how did we went on with it.
+The Task Encrypt EBS that is currently in use by a MongoDB cluster.">
+<meta name="author" content="Sanket">
+<link rel="canonical" href="http://localhost:1313/posts/encrypt-aws-ebs/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/encrypt-aws-ebs/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="superuser (Alt + H)">superuser</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://sanket.plus" title="About Me">
+                    <span>About Me</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Encrypting Existing AWS EBS : The GDPR Series
+    </h1>
+    <div class="post-meta"><span title='2018-08-28 00:00:00 +0000 UTC'>August 28, 2018</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Sanket
+
+</div>
+  </header> 
+  <div class="post-content"><p>It&rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were</p>
+<ol>
+<li>Encrypting existing EBS</li>
+<li>Encrypt S3 buckets</li>
+<li>Encrypt RDS</li>
+</ol>
+<p>In this GDPR series, I will be sharing my experiences and how did we went on with it.</p>
+<h2 id="the-task">The Task<a hidden class="anchor" aria-hidden="true" href="#the-task">#</a></h2>
+<blockquote>
+<p>Encrypt EBS that is currently in use by a MongoDB cluster. With zero downtime.</p>
+</blockquote>
+<h4 id="a-word-on-encrypted-ebs">A word on encrypted EBS:<a hidden class="anchor" aria-hidden="true" href="#a-word-on-encrypted-ebs">#</a></h4>
+<p>EBS encryption makes data encrypted at rest and it is decrypted only on your physical hardware. So on wire ie. from EBS storage till your physical hardware where your instance runs, and on its storage, it is encrypted.</p>
+<p>The setup was consisting 3 mongo node with data replicated on all. No fancy stuff like sharding. Because we had three node cluster, the goal of zero downtime was achievable. We could simply take one node down, do our stuff, put it back in cluster. We will discuss the &lsquo;do our stuff&rsquo; part here and not the mongo specific instructions. Ie how to take a node out of cluster and put in back in.</p>
+<h3 id="step-1--unmount-the-volume">Step 1 : Unmount the volume<a hidden class="anchor" aria-hidden="true" href="#step-1--unmount-the-volume">#</a></h3>
+<p>In mongo terms, take node out of cluster, meaning make sure no process is using that volume and it is free to unmount.</p>
+<pre tabindex="0"><code>sudo umount &lt;mount point&gt;
+</code></pre><p>If unmount fails stating volume is in use, you can find process using that volume using</p>
+<pre tabindex="0"><code>sudo lsof | grep &lt;mount point&gt;
+</code></pre><h3 id="step-2--encrypt-it">Step 2 : Encrypt it<a hidden class="anchor" aria-hidden="true" href="#step-2--encrypt-it">#</a></h3>
+<p>We had two options to go with this step:</p>
+<ol>
+<li>Attach new encrypted volume and rsync your data</li>
+<li>Encrypt existing volume</li>
+</ol>
+<p>I remember measuring time for both the options and they were comparable. We found option 2 to be faster because the whole copying-encrypting process is done by AWS and not on your instance. So we decided to go with second way of doing it, which would involve following steps:</p>
+<ul>
+<li>Take a snapshot of your EBS volume</li>
+<li>Copy snapshot with encryption enabled.</li>
+<li>Create a new EBS from copied encrypted snapshot</li>
+</ul>
+<p>All the steps mentioned above may take some time depending on size of volume.</p>
+<h3 id="step-3--mount-it">Step 3 : Mount it<a hidden class="anchor" aria-hidden="true" href="#step-3--mount-it">#</a></h3>
+<p>Now newly restored EBS can be attached to instance and mounted to older mount point. With mongo, we just start mongo back again and it will get in sync with cluster by replicating missed data.</p>
+<p>Yes so that is how that one went. While encrypting master node of mongo, we had to fail master over to other cluster member and then we followed the same procedure. More detailed docs info can be found on <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">this AWS Guide</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/aws/">Aws</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">superuser</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

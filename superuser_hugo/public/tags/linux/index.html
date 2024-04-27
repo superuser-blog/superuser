@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>Linux | Superuser</title>
+<title>Linux | superuser</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -74,7 +74,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Superuser (Alt + H)">Superuser</a>
+            <a href="http://localhost:1313/" accesskey="h" title="superuser (Alt + H)">superuser</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -99,6 +99,32 @@
             </div>
         </div>
         <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://sanket.plus" title="About Me">
+                    <span>About Me</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -108,6 +134,33 @@
     Linux
   </h1>
 </header>
+
+<article class="post-entry tag-entry"> 
+<figure class="entry-cover"><img loading="lazy" src="http://localhost:1313/assets/images/gdb-py.png" alt="">
+</figure>
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Debugging a Running Python Process
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Only if it were as easy as installing debug symbols, attach the process with gdb and py-bt! So we have a python agent, which distributes files, running across the fleet. And on some random hosts, it went haywire! On those set of hosts, the process was using 100% of CPU and not doing anything meaningful work. Restarting the process fixes the problem. I had worked on debugging a stuck process, but this was the opposite....</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-12-18 00:00:00 +0000 UTC'>December 18, 2019</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;Sanket</footer>
+  <a class="entry-link" aria-label="post link to Debugging a Running Python Process" href="http://localhost:1313/posts/debug-running-python-process/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Site Wide Memory Leak: An On-Call Story
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This happened a while back, sometime in the year of 2017. I was on-call for the week and it was the weekend. Usually, things are quiet over the weekends but not that weekend. Pages started coming frequently affecting different hosts. The alert was titled
+WARNING: Memory usage is more than 80% And that was just not one or set of hosts. This started coming from random hosts from across the infrastructure....</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-08-14 00:00:00 +0000 UTC'>August 14, 2019</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Sanket</footer>
+  <a class="entry-link" aria-label="post link to Site Wide Memory Leak: An On-Call Story" href="http://localhost:1313/posts/site-wide-memory-leak-on-call-story/"></a>
+</article>
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
@@ -170,7 +223,7 @@ Now I could simply have restarted the stuck process but that wouldn’t tell me 
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://localhost:1313/">Superuser</a></span> · 
+        <span>&copy; 2024 <a href="http://localhost:1313/">superuser</a></span> · 
 
     <span>
         Powered by

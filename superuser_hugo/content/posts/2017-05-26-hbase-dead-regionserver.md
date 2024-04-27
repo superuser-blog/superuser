@@ -12,7 +12,7 @@ header:
   overlay_image: /wp-content/uploads/2017/05/hbase_rs_status-811x510.png
   overlay_filter: rgba(10, 10, 10, 0.75)
   show_overlay_excerpt: false
-categories:
+tags:
   - HBase
   - HDP
 tags:

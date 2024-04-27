@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Superuser</title>
+    <title>superuser</title>
     <link>http://localhost:1313/</link>
-    <description>Recent content on Superuser</description>
+    <description>Recent content on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 13 Oct 2021 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SRECon&#39;21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]</title>
-      <link>http://localhost:1313/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</link>
+      <link>http://localhost:1313/posts/srecon-21-ml-application-hotspot-detect/</link>
       <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2021-10-13-srecon-21-ml-application-hotspot-detect/</guid>
+      <guid>http://localhost:1313/posts/srecon-21-ml-application-hotspot-detect/</guid>
       <description>Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was supposed to happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.
 The talk describes the approach to detect application hotspots our team developed in collaboration with the ML team.</description>
     </item>
     <item>
       <title>Python Metaprogramming: Functions, Flask and Google Cloud Functions</title>
-      <link>http://localhost:1313/posts/2020-08-11-python-metaprogramming-flask-google-cloud-functions/</link>
+      <link>http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/</link>
       <pubDate>Tue, 11 Aug 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2020-08-11-python-metaprogramming-flask-google-cloud-functions/</guid>
+      <guid>http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/</guid>
       <description>Everything in Python is an object. And that includes functions. Let&amp;rsquo;s see what I learned while I was trying to work with Google cloud functions with python runtime.
 Python Functions Since functions too are objects, we can see what all attributes a function contains as following
 &amp;gt;&amp;gt;&amp;gt; def hello(name): ... print(f&amp;#34;Hello, {name}!&amp;#34;) ... &amp;gt;&amp;gt;&amp;gt; dir(hello) [&amp;#39;__annotations__&amp;#39;, &amp;#39;__call__&amp;#39;, &amp;#39;__class__&amp;#39;, &amp;#39;__closure__&amp;#39;, &amp;#39;__code__&amp;#39;, &amp;#39;__defaults__&amp;#39;, &amp;#39;__delattr__&amp;#39;, &amp;#39;__dict__&amp;#39;, &amp;#39;__dir__&amp;#39;, &amp;#39;__doc__&amp;#39;, &amp;#39;__eq__&amp;#39;, &amp;#39;__format__&amp;#39;, &amp;#39;__ge__&amp;#39;, &amp;#39;__get__&amp;#39;, &amp;#39;__getattribute__&amp;#39;, &amp;#39;__globals__&amp;#39;, &amp;#39;__gt__&amp;#39;, &amp;#39;__hash__&amp;#39;, &amp;#39;__init__&amp;#39;, &amp;#39;__init_subclass__&amp;#39;, &amp;#39;__kwdefaults__&amp;#39;, &amp;#39;__le__&amp;#39;, &amp;#39;__lt__&amp;#39;, &amp;#39;__module__&amp;#39;, &amp;#39;__name__&amp;#39;, &amp;#39;__ne__&amp;#39;, &amp;#39;__new__&amp;#39;, &amp;#39;__qualname__&amp;#39;, &amp;#39;__reduce__&amp;#39;, &amp;#39;__reduce_ex__&amp;#39;, &amp;#39;__repr__&amp;#39;, &amp;#39;__setattr__&amp;#39;, &amp;#39;__sizeof__&amp;#39;, &amp;#39;__str__&amp;#39;, &amp;#39;__subclasshook__&amp;#39;] While there are a lot of them, let&amp;rsquo;s look at some interesting ones</description>
     </item>
     <item>
       <title>Golang Http Client and Compression</title>
-      <link>http://localhost:1313/posts/2020-03-31-golang-http-gzip-compression/</link>
+      <link>http://localhost:1313/posts/golang-http-gzip-compression/</link>
       <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2020-03-31-golang-http-gzip-compression/</guid>
+      <guid>http://localhost:1313/posts/golang-http-gzip-compression/</guid>
       <description>I had a very (seemingly) simple task. Verify my golang http client, talking with an ElasticSearch cluster, is compressing data on wire. Because in trials, there was around 8x data compression and 100ms latency improvement. Sounds simple? Apparently not!
 ElasticSearch Side of Things Http compression is enabled by default and it&amp;rsquo;s an easy configuration. Despite it being enabled by default, still added following in config
 http.compression: true And verified it works by</description>
     </item>
     <item>
       <title>Debugging a Running Python Process</title>
-      <link>http://localhost:1313/posts/2019-12-18-gdb-python/</link>
+      <link>http://localhost:1313/posts/debug-running-python-process/</link>
       <pubDate>Wed, 18 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2019-12-18-gdb-python/</guid>
+      <guid>http://localhost:1313/posts/debug-running-python-process/</guid>
       <description>Only if it were as easy as installing debug symbols, attach the process with gdb and py-bt! So we have a python agent, which distributes files, running across the fleet. And on some random hosts, it went haywire! On those set of hosts, the process was using 100% of CPU and not doing anything meaningful work. Restarting the process fixes the problem. I had worked on debugging a stuck process, but this was the opposite.</description>
     </item>
     <item>
       <title>PyCon19 India: Let&#39;s Hunt a Memory Leak</title>
-      <link>http://localhost:1313/posts/2019-11-15-pycon-lets-hunt-memory-leak/</link>
+      <link>http://localhost:1313/posts/pycon-lets-hunt-memory-leak/</link>
       <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2019-11-15-pycon-lets-hunt-memory-leak/</guid>
+      <guid>http://localhost:1313/posts/pycon-lets-hunt-memory-leak/</guid>
       <description>We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let&#39;s Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers.</description>
     </item>
     <item>
       <title>Curious Case of Python 2 and Integers</title>
-      <link>http://localhost:1313/posts/2019-09-20-python-2-integers/</link>
+      <link>http://localhost:1313/posts/python-2-integers/</link>
       <pubDate>Fri, 20 Sep 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2019-09-20-python-2-integers/</guid>
+      <guid>http://localhost:1313/posts/python-2-integers/</guid>
       <description>In Detecting Memory Leak in Python, scenarios were shown where python does not release memory when we created a huge list and then explicitly deleted it. The given explanation was that python caches these objects and does not release the memory back to OS. Let&amp;rsquo;s take a deeper look at what exactly happens!
 Update: I gave a talk at PyCon 2019 on a similar subject, if you prefer detailed explanation in video format, checkout PyCon19 India: Let&amp;rsquo;s Hunt a Memory Leak or just scroll down to the bottom of the page.</description>
     </item>
     <item>
       <title>Site Wide Memory Leak: An On-Call Story</title>
-      <link>http://localhost:1313/posts/2019-08-14-site-wide-memory-leak-on-call-story/</link>
+      <link>http://localhost:1313/posts/site-wide-memory-leak-on-call-story/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2019-08-14-site-wide-memory-leak-on-call-story/</guid>
+      <guid>http://localhost:1313/posts/site-wide-memory-leak-on-call-story/</guid>
       <description>This happened a while back, sometime in the year of 2017. I was on-call for the week and it was the weekend. Usually, things are quiet over the weekends but not that weekend. Pages started coming frequently affecting different hosts. The alert was titled
 WARNING: Memory usage is more than 80% And that was just not one or set of hosts. This started coming from random hosts from across the infrastructure.</description>
     </item>
     <item>
       <title>SRECon19 Asia: Let&#39;s Build a Distributed File System</title>
-      <link>http://localhost:1313/posts/2019-07-21-lets-build-distributed-filesystem/</link>
+      <link>http://localhost:1313/posts/lets-build-distributed-filesystem/</link>
       <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2019-07-21-lets-build-distributed-filesystem/</guid>
+      <guid>http://localhost:1313/posts/lets-build-distributed-filesystem/</guid>
       <description>In the first post on this blog, I wrote about a tiny distributed filesystem I made in python for educational purpose. This year, I had a chance to use it in a talk delivered at SRECon 19 Asia. The title was
 Let&amp;rsquo;s Build a Distributed File System The talk was listed under something called Core Principles track and Talks in this track will focus on providing a deep understanding of how technologies we use everyday function and why it&#39;s important to know these details when supporting and scaling your infrastructure.</description>
     </item>
     <item>
       <title>Serverless Meets CI/CD</title>
-      <link>http://localhost:1313/posts/2018-12-10-serverless-meets-ci-cd/</link>
+      <link>http://localhost:1313/posts/serverless-meets-ci-cd/</link>
       <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-12-10-serverless-meets-ci-cd/</guid>
+      <guid>http://localhost:1313/posts/serverless-meets-ci-cd/</guid>
       <description>I have been attending LSPE [Large Scale Production Engineering] Meetup for last two years. And for the last one, I decided to give it back to the community. I conducted a hands-on session titled:
 Serverless meets CI/CD The session briefly introduced what is Serverless and CD/CD and why should you be concerned about it. We then went hands-on with AWS Lambda as serverless platform and Bitbucket Pipelines for CI/CD. Started from making a Hello World!</description>
     </item>
     <item>
       <title>Detecting Memory Leak in Python</title>
-      <link>http://localhost:1313/posts/2018-10-15-detect-memory-leak-python/</link>
+      <link>http://localhost:1313/posts/detect-memory-leak-python/</link>
       <pubDate>Mon, 15 Oct 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-10-15-detect-memory-leak-python/</guid>
+      <guid>http://localhost:1313/posts/detect-memory-leak-python/</guid>
       <description>In production, a memory leak will not always bubble up. And there could be multiple reasons behind it. You may not be getting enough traffic. Frequent deployments. No hard memory usage limit set. Or mix of them.
 The flask app we had to debug had same characteristics. It never had huge surge of traffic and there would be multiple deployments over week. Although it had cgroup memory usage limit, it had some room to grow and the leak never appeared.</description>
     </item>
     <item>
       <title>Encrypt Existing AWS RDS : The GDPR Series</title>
-      <link>http://localhost:1313/posts/2018-09-30-encrypt-exisitng-aws-rds/</link>
+      <link>http://localhost:1313/posts/encrypt-existing-aws-rds/</link>
       <pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-09-30-encrypt-exisitng-aws-rds/</guid>
+      <guid>http://localhost:1313/posts/encrypt-existing-aws-rds/</guid>
       <description>Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.
 The task was dreaded because there is no way to enable encryption once RDS has been created and most ways, which we will discuss, incurred downtime.
 The Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.
@@ -100,18 +100,18 @@ The RDS instance we had was a MySQL one which is also multi AZ.</description>
     </item>
     <item>
       <title>Encrypt Existing S3 Bucket : The GDPR Series</title>
-      <link>http://localhost:1313/posts/2018-09-23-encrypt-s3-bucket/</link>
+      <link>http://localhost:1313/posts/encrypt-s3-bucket/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-09-23-encrypt-s3-bucket/</guid>
+      <guid>http://localhost:1313/posts/encrypt-s3-bucket/</guid>
       <description>So next in line was S3 bucket. This too did not have encryption enabled, ie: data encryption at rest.
 The Task Encrypt existing S3 bucket which contains user data with zero downtime.
 A word on encrypted S3 objects/buckets: By default there is no encryption involved when you create or put objects in an S3 bucket. However, you can enable default encryption on a bucket and any object put in the bucket will be encrypted by default.</description>
     </item>
     <item>
       <title>Encrypting Existing AWS EBS : The GDPR Series</title>
-      <link>http://localhost:1313/posts/2018-08-28-encrypt-aws-ebs/</link>
+      <link>http://localhost:1313/posts/encrypt-aws-ebs/</link>
       <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2018-08-28-encrypt-aws-ebs/</guid>
+      <guid>http://localhost:1313/posts/encrypt-aws-ebs/</guid>
       <description>It&amp;rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were
 Encrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I will be sharing my experiences and how did we went on with it.
 The Task Encrypt EBS that is currently in use by a MongoDB cluster.</description>

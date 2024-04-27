@@ -1,16 +1,18 @@
 ---
 id: 190920
 title: "Curious Case of Python 2 and Integers"
-author: sanket
+author: Sanket
 layout: single
 date: 2019-09-20
 guid: https://superuser.blog/?p=190920
-permalink: /python-2-integers/
+slug: /python-2-integers/
+cover:
+    image: /assets/images/delete_int.png
 header:
   overlay_image: /assets/images/delete_int.png
   overlay_filter: rgba(10, 10, 10, 0.35)    
   show_overlay_excerpt: false
-categories:
+tags:
   - python
 ---
 
@@ -260,4 +262,6 @@ Also, floats work the same way.
 
 ## Recording of the talk:
 
+{{<rawhtml>}}
  <iframe width="560" height="315" src="https://www.youtube.com/embed/s9kAghWpzoE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{</rawhtml>}}

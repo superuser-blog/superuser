@@ -13,7 +13,7 @@ header:
   overlay_filter: rgba(10, 10, 10, 0.75)
   show_overlay_excerpt: false
   #overlay_color: "#333"
-categories:
+tags:
   - Linux
 tags:
   - debugging

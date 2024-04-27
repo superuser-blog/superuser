@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Hbase on Superuser</title>
+    <title>Hbase on superuser</title>
     <link>http://localhost:1313/tags/hbase/</link>
-    <description>Recent content in Hbase on Superuser</description>
+    <description>Recent content in Hbase on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 18 Nov 2017 11:26:20 +0000</lastBuildDate>
