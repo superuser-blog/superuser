@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Websocket on superuser</title>
-    <link>http://localhost:1313/tags/websocket/</link>
+    <link>//localhost:1313/tags/websocket/</link>
     <description>Recent content in Websocket on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 26 Aug 2017 14:40:53 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/websocket/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/tags/websocket/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Writing Simple WebSocket Server in Python: PyWSocket</title>
-      <link>http://localhost:1313/posts/websocket-server-python/</link>
+      <link>//localhost:1313/posts/websocket-server-python/</link>
       <pubDate>Sat, 26 Aug 2017 14:40:53 +0000</pubDate>
-      <guid>http://localhost:1313/posts/websocket-server-python/</guid>
+      <guid>//localhost:1313/posts/websocket-server-python/</guid>
       <description>Echo websocket server implemented by hand on raw TCP Sockets.
 Journey to websocket was pretty long. I started with an idea to make an app which can play music in sync across the devices during college period. No wonder I couldn&amp;rsquo;t get through it. Later this year I stumbled upon this new thing called WebSockets and they were intriguing. I thought I could finish that app with websockets (and I did, with partial success).</description>
     </item>
