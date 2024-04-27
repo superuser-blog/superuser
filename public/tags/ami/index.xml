@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Ami on superuser</title>
-    <link>http://localhost:1313/tags/ami/</link>
+    <link>//localhost:1313/tags/ami/</link>
     <description>Recent content in Ami on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 28 Feb 2017 00:03:41 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ami/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/tags/ami/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Resize EBS Root Volume of CentOS 6 AMI</title>
-      <link>http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/</link>
+      <link>//localhost:1313/posts/resize-ebs-root-volume-centos-ami/</link>
       <pubDate>Tue, 28 Feb 2017 00:03:41 +0000</pubDate>
-      <guid>http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/</guid>
+      <guid>//localhost:1313/posts/resize-ebs-root-volume-centos-ami/</guid>
       <description>So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
 These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete.</description>
     </item>
