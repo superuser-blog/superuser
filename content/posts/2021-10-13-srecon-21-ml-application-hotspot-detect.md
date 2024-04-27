@@ -14,6 +14,8 @@ header:
   show_overlay_excerpt: false
 tags:
   - public speaking
+  - AI
+  - ML
 ---
 
 Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was _supposed to_ happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.
