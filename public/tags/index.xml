@@ -2,192 +2,192 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on superuser</title>
-    <link>//localhost:1313/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on superuser</description>
     <generator>Hugo -- 0.125.3</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 13 Oct 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="//localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Public Speaking</title>
-      <link>//localhost:1313/tags/public-speaking/</link>
+      <link>http://localhost:1313/tags/public-speaking/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/public-speaking/</guid>
+      <guid>http://localhost:1313/tags/public-speaking/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
-      <link>//localhost:1313/tags/python/</link>
+      <link>http://localhost:1313/tags/python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/python/</guid>
+      <guid>http://localhost:1313/tags/python/</guid>
       <description></description>
     </item>
     <item>
       <title>Golang</title>
-      <link>//localhost:1313/tags/golang/</link>
+      <link>http://localhost:1313/tags/golang/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/golang/</guid>
+      <guid>http://localhost:1313/tags/golang/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux</title>
-      <link>//localhost:1313/tags/linux/</link>
+      <link>http://localhost:1313/tags/linux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/linux/</guid>
+      <guid>http://localhost:1313/tags/linux/</guid>
       <description></description>
     </item>
     <item>
       <title>Aws</title>
-      <link>//localhost:1313/tags/aws/</link>
+      <link>http://localhost:1313/tags/aws/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/aws/</guid>
+      <guid>http://localhost:1313/tags/aws/</guid>
       <description></description>
     </item>
     <item>
       <title>Networking</title>
-      <link>//localhost:1313/tags/networking/</link>
+      <link>http://localhost:1313/tags/networking/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/networking/</guid>
+      <guid>http://localhost:1313/tags/networking/</guid>
       <description></description>
     </item>
     <item>
       <title>Hbase</title>
-      <link>//localhost:1313/tags/hbase/</link>
+      <link>http://localhost:1313/tags/hbase/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/hbase/</guid>
+      <guid>http://localhost:1313/tags/hbase/</guid>
       <description></description>
     </item>
     <item>
       <title>Hdp</title>
-      <link>//localhost:1313/tags/hdp/</link>
+      <link>http://localhost:1313/tags/hdp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/hdp/</guid>
+      <guid>http://localhost:1313/tags/hdp/</guid>
       <description></description>
     </item>
     <item>
       <title>Phoenix</title>
-      <link>//localhost:1313/tags/phoenix/</link>
+      <link>http://localhost:1313/tags/phoenix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/phoenix/</guid>
+      <guid>http://localhost:1313/tags/phoenix/</guid>
       <description></description>
     </item>
     <item>
       <title>Websocket</title>
-      <link>//localhost:1313/tags/websocket/</link>
+      <link>http://localhost:1313/tags/websocket/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/websocket/</guid>
+      <guid>http://localhost:1313/tags/websocket/</guid>
       <description></description>
     </item>
     <item>
       <title>FPGA</title>
-      <link>//localhost:1313/tags/fpga/</link>
+      <link>http://localhost:1313/tags/fpga/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/fpga/</guid>
+      <guid>http://localhost:1313/tags/fpga/</guid>
       <description></description>
     </item>
     <item>
       <title>Vivado</title>
-      <link>//localhost:1313/tags/vivado/</link>
+      <link>http://localhost:1313/tags/vivado/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/vivado/</guid>
+      <guid>http://localhost:1313/tags/vivado/</guid>
       <description></description>
     </item>
     <item>
       <title>Zynq</title>
-      <link>//localhost:1313/tags/zynq/</link>
+      <link>http://localhost:1313/tags/zynq/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/zynq/</guid>
+      <guid>http://localhost:1313/tags/zynq/</guid>
       <description></description>
     </item>
     <item>
       <title>Metrics</title>
-      <link>//localhost:1313/tags/metrics/</link>
+      <link>http://localhost:1313/tags/metrics/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/metrics/</guid>
+      <guid>http://localhost:1313/tags/metrics/</guid>
       <description></description>
     </item>
     <item>
       <title>Opentsdb</title>
-      <link>//localhost:1313/tags/opentsdb/</link>
+      <link>http://localhost:1313/tags/opentsdb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/opentsdb/</guid>
+      <guid>http://localhost:1313/tags/opentsdb/</guid>
       <description></description>
     </item>
     <item>
       <title>PYNQ</title>
-      <link>//localhost:1313/tags/pynq/</link>
+      <link>http://localhost:1313/tags/pynq/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/pynq/</guid>
+      <guid>http://localhost:1313/tags/pynq/</guid>
       <description></description>
     </item>
     <item>
       <title>PYNQ-Z1</title>
-      <link>//localhost:1313/tags/pynq-z1/</link>
+      <link>http://localhost:1313/tags/pynq-z1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/pynq-z1/</guid>
+      <guid>http://localhost:1313/tags/pynq-z1/</guid>
       <description></description>
     </item>
     <item>
       <title>Xilinx</title>
-      <link>//localhost:1313/tags/xilinx/</link>
+      <link>http://localhost:1313/tags/xilinx/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/xilinx/</guid>
+      <guid>http://localhost:1313/tags/xilinx/</guid>
       <description></description>
     </item>
     <item>
       <title>Ami</title>
-      <link>//localhost:1313/tags/ami/</link>
+      <link>http://localhost:1313/tags/ami/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/ami/</guid>
+      <guid>http://localhost:1313/tags/ami/</guid>
       <description></description>
     </item>
     <item>
       <title>EBS</title>
-      <link>//localhost:1313/tags/ebs/</link>
+      <link>http://localhost:1313/tags/ebs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/ebs/</guid>
+      <guid>http://localhost:1313/tags/ebs/</guid>
       <description></description>
     </item>
     <item>
       <title>Filesystem</title>
-      <link>//localhost:1313/tags/filesystem/</link>
+      <link>http://localhost:1313/tags/filesystem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/filesystem/</guid>
+      <guid>http://localhost:1313/tags/filesystem/</guid>
       <description></description>
     </item>
     <item>
       <title>Debugging</title>
-      <link>//localhost:1313/tags/debugging/</link>
+      <link>http://localhost:1313/tags/debugging/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/debugging/</guid>
+      <guid>http://localhost:1313/tags/debugging/</guid>
       <description></description>
     </item>
     <item>
       <title>Process</title>
-      <link>//localhost:1313/tags/process/</link>
+      <link>http://localhost:1313/tags/process/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/process/</guid>
+      <guid>http://localhost:1313/tags/process/</guid>
       <description></description>
     </item>
     <item>
       <title>Distributed File System</title>
-      <link>//localhost:1313/tags/distributed-file-system/</link>
+      <link>http://localhost:1313/tags/distributed-file-system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/distributed-file-system/</guid>
+      <guid>http://localhost:1313/tags/distributed-file-system/</guid>
       <description></description>
     </item>
     <item>
       <title>Hadoop</title>
-      <link>//localhost:1313/tags/hadoop/</link>
+      <link>http://localhost:1313/tags/hadoop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/hadoop/</guid>
+      <guid>http://localhost:1313/tags/hadoop/</guid>
       <description></description>
     </item>
     <item>
       <title>HDFS</title>
-      <link>//localhost:1313/tags/hdfs/</link>
+      <link>http://localhost:1313/tags/hdfs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tags/hdfs/</guid>
+      <guid>http://localhost:1313/tags/hdfs/</guid>
       <description></description>
     </item>
   </channel>
