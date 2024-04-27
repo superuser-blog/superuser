@@ -4,13 +4,13 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>PyCon19 India: Let&#39;s Hunt a Memory Leak | superuser</title>
 <meta name="keywords" content="python, public speaking">
 <meta name="description" content="We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let&#39;s Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/pycon-lets-hunt-memory-leak/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -27,48 +27,85 @@
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="PyCon19 India: Let&#39;s Hunt a Memory Leak" />
+<meta property="og:description" content="We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let&#39;s Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/pycon-lets-hunt-memory-leak/" />
+<meta property="og:image" content="http://localhost:1313/assets/images/pycon19-1.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-11-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-15T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/assets/images/pycon19-1.jpg" />
+<meta name="twitter:title" content="PyCon19 India: Let&#39;s Hunt a Memory Leak"/>
+<meta name="twitter:description" content="We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let&#39;s Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "PyCon19 India: Let's Hunt a Memory Leak",
+      "item": "http://localhost:1313/posts/pycon-lets-hunt-memory-leak/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "PyCon19 India: Let's Hunt a Memory Leak",
+  "name": "PyCon19 India: Let\u0027s Hunt a Memory Leak",
+  "description": "We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let's Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers.",
+  "keywords": [
+    "python", "public speaking"
+  ],
+  "articleBody": "We faced a memory leak in production and I wrote about it in this blog post. A while back, I somewhere came across the open Call for Proposals for Pycon India 2019 and I submitted a talk titled Let's Hunt a Memory Leak. It got selected and I had to prepare! While learning python internals and especially memory related behaviour, I also wrote about werid behaviour with python 2 and integers. The PyCon finally happened and it was pretty fun to learn new things and to deliver it!\nLet’s Hunt a Memory Leak The talk’s description looked something like:\nPython being a high level interpreted language, it never bothers us to deal with garbage collection. However, because we do not explicitly free memory like we do in C language, python has to clean it for us and hence there is garbage collection involved with python. While garbage collection works most of the times and never becomes an issue, when there is a memory leak in the code, we have no choice but to dig deeper to uncover it. In this talk we will first look at how python manages memory and how does garbage collection works with python. We will look at some hands on examples to confirm the python memory management behavior and we will see why is it important to be aware about this behavior. Further, we will look at a simulated memory leak scenario which we faced in production with Flask environment and we will look at one of the ways we used to hunt it down.\nSlides and Recording Slides YouTube A couple of images :)\n",
+  "wordCount" : "270",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/assets/images/pycon19-1.jpg","datePublished": "2019-11-15T00:00:00Z",
+  "dateModified": "2019-11-15T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/pycon-lets-hunt-memory-leak/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -180,6 +217,19 @@ Further, we will look at a simulated memory leak scenario which we faced in prod
       <li><a href="http://localhost:1313/tags/python/">Python</a></li>
       <li><a href="http://localhost:1313/tags/public-speaking/">Public Speaking</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/debug-running-python-process/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Debugging a Running Python Process</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/python-2-integers/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Curious Case of Python 2 and Integers</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

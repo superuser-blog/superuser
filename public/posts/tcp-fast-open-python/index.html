@@ -4,14 +4,14 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>TCP Fast Open: In Action with Python | superuser</title>
 <meta name="keywords" content="Networking, python">
 <meta name="description" content="Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.
 What is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminates the need to wait for 3 way handshake before application can send data over it.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/tcp-fast-open-python/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -28,48 +28,85 @@ What is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminate
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="TCP Fast Open: In Action with Python" />
+<meta property="og:description" content="Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.
+What is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminates the need to wait for 3 way handshake before application can send data over it." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/tcp-fast-open-python/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-11-08T20:14:58+00:00" />
+<meta property="article:modified_time" content="2017-11-08T20:14:58+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TCP Fast Open: In Action with Python"/>
+<meta name="twitter:description" content="Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.
+What is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminates the need to wait for 3 way handshake before application can send data over it."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "TCP Fast Open: In Action with Python",
+      "item": "http://localhost:1313/posts/tcp-fast-open-python/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "TCP Fast Open: In Action with Python",
+  "name": "TCP Fast Open: In Action with Python",
+  "description": "Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.\nWhat is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminates the need to wait for 3 way handshake before application can send data over it.",
+  "keywords": [
+    "Networking", "python"
+  ],
+  "articleBody": "Recently I was revisiting concepts of TCP protocol and that reminded me that there was also a thing called TCP Fast Open. Digging further on the same revealed a lot. We will briefly discuss how this enhancement works. What are the limitations. And later we will do the hands on and see how the TCP Fast Open drastically reduces the load time.\nWhat is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminates the need to wait for 3 way handshake before application can send data over it.\nHere’s roughly how it happens: First time 3 way handshake happens, server will generate a cookie and pass it to the client. Next time, in first step on 3 way handshake (SYN), client will send cookie+data along with SYN. If cookie stands valid, data is delivered to application, then application can process data and reply. Here we do not wait for 3 way handshake to complete next time.\nHere is the traditional 3 way handshake.\nSo here, if round trip time is 100ms, application will have to wait at least 200ms before it can send any data to server.\nIf client had set TCP Fast Option set (we will see server and client code soon), server will create a cookie and send back the cookie to client, as shown in the following diagram.\nNow from next time onward, client will send cookie in SYN and if it stands valid, server can immediately send reply back without waiting for handshake to complete as shown below.\nWe can see that 3 way handshake still happens but application does not need to wait for it as data is delivered to it immediately if valid cookie is present.\nThis can potentially halve the latency depending upon the application.\nProblems: Not all the devices support it. (Although they will at some point) Some middleware (firewall,NAT) can cause problems as this is relatively new changes to an old protocol. If data that client need to send with SYN is large (\u003e ~1400 bytes), TCP Fast open does not optimize anything. Requests may get duplicated. (The first SYN packet) So applications need to handle that. In Action: We will build simple echo server with TCP Fast Open enabled and see the wireshark traces along with request time to see how fast does it get with TFO enabled.\nEcho server:\nimport socket def listen(): connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM) connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) connection.setsockopt(socket.SOL_TCP, 23, 5) connection.bind(('0.0.0.0', 8000)) connection.listen(10) while True: current_connection, address = connection.accept() while True: data = current_connection.recv(2048) if data: current_connection.send(data) print data current_connection.close() break if __name__ == \"__main__\": try: listen() except KeyboardInterrupt: pass The only new/different we do here is the line `connection.setsockopt(socket.SOL_TCP, 23, 5)` here 23 is the protocol number of **TCP_FASTOPEN **it is not defined in socket module if python2 so writing manually here and 5 is the queue length for number of TFO request which are yet to complete 3 way handshake.\nEcho client:\nimport socket addr = (\"ssh.movienight.gq\", 8000) s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) s.setsockopt(socket.SOL_TCP, 23, 5) s.sendto(\"hello!\",536870912,addr) print s.recv(1000) Here we used `sendto` to send SYN packet along with data. second argument is protocol number for MSG_FASTOPEN. Again because of python2. Setting this will send a TFO request to server.\nTo enable TFO support in linux:\necho 3 \u003e /proc/sys/net/ipv4/tcp_fastopen number 3 will add support for both TFO client and server.\nLet’s look at network traces to see TFO working in action:\nThis was trace for simple curl request to server. No TFO set. As we can see, first 3 way handshake happens [first 3 packets] then application (curl) sends HTTP request and after that it gets response.\nHere with –tcp-fastopen option to curl, in the fist packet itself [46645] client will send request data. and it was immediately delivered to application (echo server). Also note that the three way handshake still happens.\nAlso see how cookie was sent with SYN packet[46645] itself.\nHow fast was it? Let the results speak for themselves: [ okay, 270ms (TFO) vs 690ms (regular TCP) ]\nsanket@iamgroot /home/sanket/workspace/z_trivial/knetstat (0) (master)\u003e time curl ssh.movienight.gq:8000 19:59:12 GET / HTTP/1.1 Host: ssh.movienight.gq:8000 User-Agent: curl/7.56.1 Accept: */* 0.00user 0.00system 0:00.69elapsed 1%CPU (0avgtext+0avgdata 8860maxresident)k 0inputs+0outputs (0major+492minor)pagefaults 0swaps sanket@iamgroot /home/sanket/workspace/z_trivial/knetstat (0) (master)\u003e time curl ssh.movienight.gq:8000 --tcp-fastopen GET / HTTP/1.1 Host: ssh.movienight.gq:8000 User-Agent: curl/7.56.1 Accept: */* 0.00user 0.00system 0:00.27elapsed 1%CPU (0avgtext+0avgdata 8728maxresident)k 0inputs+0outputs (0major+494minor)pagefaults 0swaps Of course I did not tell the fine details. Please refer:\n[1] https://lwn.net/Articles/508865/\n[2] https://bradleyf.id.au/nix/shaving-your-rtt-wth-tfo/\nIf Websockets excites you, which is kinda long open TCP connection, speaking it’s own language, why don’t you look up to this article\n",
+  "wordCount" : "764",
+  "inLanguage": "en",
+  "datePublished": "2017-11-08T20:14:58Z",
+  "dateModified": "2017-11-08T20:14:58Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/tcp-fast-open-python/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -256,6 +293,19 @@ What is TCP Fast Open? TCP Fast Open is an optimization over TCP which eliminate
       <li><a href="http://localhost:1313/tags/networking/">Networking</a></li>
       <li><a href="http://localhost:1313/tags/python/">Python</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/upgrading-apache-phoenix-hdp/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Upgrading Apache Phoenix in HDP Cluster</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/websocket-server-python/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Writing Simple WebSocket Server in Python: PyWSocket</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

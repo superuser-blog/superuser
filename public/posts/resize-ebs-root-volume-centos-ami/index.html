@@ -4,14 +4,14 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Resize EBS Root Volume of CentOS 6 AMI | superuser</title>
 <meta name="keywords" content="ami, aws, EBS, filesystem, linux">
 <meta name="description" content="So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
 These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -28,48 +28,87 @@ These all went good and I proceed with launching instances for HDP cluster (12 w
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Resize EBS Root Volume of CentOS 6 AMI" />
+<meta property="og:description" content="So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
+These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/" />
+<meta property="og:image" content="http://localhost:1313/wp-content/uploads/2017/02/centos-825x479.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-02-28T00:03:41+00:00" />
+<meta property="article:modified_time" content="2017-02-28T00:03:41+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/wp-content/uploads/2017/02/centos-825x479.jpg" />
+<meta name="twitter:title" content="Resize EBS Root Volume of CentOS 6 AMI"/>
+<meta name="twitter:description" content="So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.
+These all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Resize EBS Root Volume of CentOS 6 AMI",
+      "item": "http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Resize EBS Root Volume of CentOS 6 AMI",
+  "name": "Resize EBS Root Volume of CentOS 6 AMI",
+  "description": "So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.\nThese all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete.",
+  "keywords": [
+    "ami", "aws", "EBS", "filesystem", "linux"
+  ],
+  "articleBody": "So the other day I had to create a CentOS 6 AMI for HDP installation as it had Hue package available only for CentOS 6. I launched an instance with EBS attached of 10 GB with CentOS 6. Went on to create AMI out of it with EBS size of 100GB.\nThese all went good and I proceed with launching instances for HDP cluster (12 was the number of instances). Everything went good and installation was complete. Later only Ambari Server started throwing warnings about disk space. Despite attaching a 100 GB EBS.\nUpon checking it came to my notice that the EBS attached is indeed 100 GB but the root partition was only 8 GB. So I can make an fs out of remaining space and mount it somewhere but that’s not what I wanted.\n[sanketp@hdpm01 ~]$ lsblk NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT xvda 202:0 0 100G 0 disk └─xvda1 202:1 0 8G 0 part / So I started searching on how to extend root partition. Found may solutions. Including one on AWS Docs. Most solutions were requiring\nTo unmount and attach it somewhere else and then perform extend operation Take a snapshot and then extend and then launch new instance Taking 12 instances offline and mounting their EBS on some other instance and extending was not feasible for me. Neither was taking snapshot of every instance and launch new one with extended partition. I wanted to do it online. Tried various tools like parted, resize2fs etc. None of them worked, until I finally found one that did the job while partition being online and mounted.\ngrowpart: So this was the savior. And following were the steps I took to get it resized:\nGet the repo in place. Install the package Run the utility (last number is for partition, here it was first partition) Reboot! sudo yum install //download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm -y sudo yum install cloud-utils-growpart -y sudo growpart /dev/xvda 1 sudo reboot So this little tool came to rescue and saved many hours. This problem tends to happen with older linux versions like CentOS 6, Debian-jessie, SELS11.X. This guy has solution for Debian with same problem.\nCheers!\n",
+  "wordCount" : "359",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/wp-content/uploads/2017/02/centos-825x479.jpg","datePublished": "2017-02-28T00:03:41Z",
+  "dateModified": "2017-02-28T00:03:41Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -186,6 +225,19 @@ These all went good and I proceed with launching instances for HDP cluster (12 w
       <li><a href="http://localhost:1313/tags/filesystem/">Filesystem</a></li>
       <li><a href="http://localhost:1313/tags/linux/">Linux</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/hbase-benchmarking/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>HBase Benchmarking</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/debugging-stuck-process-linux/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Debugging Stuck Process in Linux</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

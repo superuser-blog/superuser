@@ -4,14 +4,14 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Stuff You Can Do While Tuning HBase | superuser</title>
 <meta name="keywords" content="Hbase">
 <meta name="description" content="So you are setting up HBase! Congratulations!
 When it comes to tuning HBase there are so many things you can do. And most of the things will be dependent upon type of data you will be storing and it&rsquo;s access patterns. So I will be saying this a lot: &lsquo;value of this parameter depends upon your workload&rsquo;. Here I will try to enlist some of the variables that you can tweak while tuning hbase.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/tuning-hbase/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -28,48 +28,87 @@ When it comes to tuning HBase there are so many things you can do. And most of t
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Stuff You Can Do While Tuning HBase" />
+<meta property="og:description" content="So you are setting up HBase! Congratulations!
+When it comes to tuning HBase there are so many things you can do. And most of the things will be dependent upon type of data you will be storing and it&rsquo;s access patterns. So I will be saying this a lot: &lsquo;value of this parameter depends upon your workload&rsquo;. Here I will try to enlist some of the variables that you can tweak while tuning hbase." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/tuning-hbase/" />
+<meta property="og:image" content="http://localhost:1313/wp-content/uploads/2017/04/hbase-config.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-04-09T23:42:31+00:00" />
+<meta property="article:modified_time" content="2017-04-09T23:42:31+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/wp-content/uploads/2017/04/hbase-config.jpg" />
+<meta name="twitter:title" content="Stuff You Can Do While Tuning HBase"/>
+<meta name="twitter:description" content="So you are setting up HBase! Congratulations!
+When it comes to tuning HBase there are so many things you can do. And most of the things will be dependent upon type of data you will be storing and it&rsquo;s access patterns. So I will be saying this a lot: &lsquo;value of this parameter depends upon your workload&rsquo;. Here I will try to enlist some of the variables that you can tweak while tuning hbase."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Stuff You Can Do While Tuning HBase",
+      "item": "http://localhost:1313/posts/tuning-hbase/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Stuff You Can Do While Tuning HBase",
+  "name": "Stuff You Can Do While Tuning HBase",
+  "description": "So you are setting up HBase! Congratulations!\nWhen it comes to tuning HBase there are so many things you can do. And most of the things will be dependent upon type of data you will be storing and it\u0026rsquo;s access patterns. So I will be saying this a lot: \u0026lsquo;value of this parameter depends upon your workload\u0026rsquo;. Here I will try to enlist some of the variables that you can tweak while tuning hbase.",
+  "keywords": [
+    "Hbase"
+  ],
+  "articleBody": "So you are setting up HBase! Congratulations!\nWhen it comes to tuning HBase there are so many things you can do. And most of the things will be dependent upon type of data you will be storing and it’s access patterns. So I will be saying this a lot: ‘value of this parameter depends upon your workload’. Here I will try to enlist some of the variables that you can tweak while tuning hbase. This list is not at all exhaustive. 1. HBase RegionServer Maximum Memory (hbase_regionserver_heapsize) First thing’s first. If you have heavy load and/or available capacity in terms of RAM, you may want to increase this number. This means more space in memory to cache blocks for read and write. That simple.\n2. Percent of RegionServer Allocated to Read Buffers (hfile.block.cache.size) Now this one depends on your type of workload. If you have less writes compared to reads then you would want to set this higher (\u003e40%) This will allocate more heap to cache blocks used for reading.\n3. Percent of RegionServer Allocated to Write Buffers (hbase.regionserver.global.memstore.size) Same as above, depends on your workload. If you have heavy writes you may want to set this higher. The total of read and write buffers should be around 80%. If you are not sure, you may want to leave these values 40-40.\n4. Memstore Flush Size (hbase.hregion.memstore.flush.size) This value defines, after what size, for a particular column family, memstore should be flushed to disk. If you have heavy writes with large row size you may want to increase this size from 128MB to 256MB. This will reduce the frequency of memstore flushes and hence increase the performance. Recommended value for this parameter is the value of block size of HDFS you have set. (64MB or 128MB usually)\n5. Number of Handlers per RegionServer (hbase.regionserver.handler.count) This is number of handlers available per regionserver to serve request. Default might be around 30. If you are seeing long size for calls in queue then it’s time to increase number of handlers. Increasing this very high will also affect performance. Try to find a sweet spot.\n6. Maximum Region File Size (hbase.hregion.max.filesize) This defines a size after which a region will be split into two regions. You want to tune this size because very small size will create more number of regions and it is recommended to maintain no more than 200 regions per regionserver. So you should take in account number of regionserver and size of your dataset while setting this parameter. You also want to look at split policies in hbase and want to choose one which suits your purpose.\n7. Timeouts (Zookeeper Session, RPC, Phoenix Query ) The values for these defaults are set very low and you want to set this values in magnitude of minutes (10 minutes around) to avoid facing kinds of timeouts.\n8. RegionServer Lease Period (hbase.regionserver.lease.period) For some kinds of requests (queries) which takes more time to get processed, you may face Scanner Timeouts or Scanner not Found Errors. And to avert this you should increase this value.\n9. Setting Off-Peak Hours (base.offpeak.[end|start].hour) HBase also allow to schedule major compaction during certain time period. HBase will try to run major compaction during this time. You should set these values when load on your cluster is relatively low (night time maybe).\n10. Compression and Datablock Encoding This is one more functionality HBase provides for which there is no reason not to use it. This article provides more insights into this. While this may impact the performance a little but it will save you lots of disk space.\nAs I said, this list is not exhaustive and there is a lot you can do while tuning hbase. Take a look at this chapter from HBase book. You also can perform benchmarking after tuning parameters so that you know how that particular change affected the performance.\nHappy Tuning 😀\n",
+  "wordCount" : "650",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/wp-content/uploads/2017/04/hbase-config.jpg","datePublished": "2017-04-09T23:42:31Z",
+  "dateModified": "2017-04-09T23:42:31Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/tuning-hbase/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -185,6 +224,19 @@ When it comes to tuning HBase there are so many things you can do. And most of t
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/hbase/">Hbase</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/configure-ps-pynq-work-sdk/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Configure PS of PYNQ to work with SDK</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/hbase-benchmarking/">
+    <span class="title">Next »</span>
+    <br>
+    <span>HBase Benchmarking</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

@@ -4,14 +4,14 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Simple Distributed File System in Python : PyDFS | superuser</title>
 <meta name="keywords" content="distributed file system, hadoop, HDFS, python">
 <meta name="description" content="I was reading on HDFS (Hadoop&rsquo;s distributed file system) and it&rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
 So the choice of my language was python of course as it has vast number of modules available and you can code faster.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/distributed-file-system-python/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -28,48 +28,87 @@ So the choice of my language was python of course as it has vast number of modul
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Simple Distributed File System in Python : PyDFS" />
+<meta property="og:description" content="I was reading on HDFS (Hadoop&rsquo;s distributed file system) and it&rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
+So the choice of my language was python of course as it has vast number of modules available and you can code faster." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/distributed-file-system-python/" />
+<meta property="og:image" content="http://localhost:1313/wp-content/uploads/2017/01/PyDFS-825x416.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-01-02T23:55:01+00:00" />
+<meta property="article:modified_time" content="2017-01-02T23:55:01+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/wp-content/uploads/2017/01/PyDFS-825x416.png" />
+<meta name="twitter:title" content="Simple Distributed File System in Python : PyDFS"/>
+<meta name="twitter:description" content="I was reading on HDFS (Hadoop&rsquo;s distributed file system) and it&rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)
+So the choice of my language was python of course as it has vast number of modules available and you can code faster."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Simple Distributed File System in Python : PyDFS",
+      "item": "http://localhost:1313/posts/distributed-file-system-python/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Simple Distributed File System in Python : PyDFS",
+  "name": "Simple Distributed File System in Python : PyDFS",
+  "description": "I was reading on HDFS (Hadoop\u0026rsquo;s distributed file system) and it\u0026rsquo;s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)\nSo the choice of my language was python of course as it has vast number of modules available and you can code faster.",
+  "keywords": [
+    "distributed file system", "hadoop", "HDFS", "python"
+  ],
+  "articleBody": "I was reading on HDFS (Hadoop’s distributed file system) and it’s internals. How does it store data. What is reading path. What is writing path. How does replication works. And to understand it better my mentor suggested me to implement the same. And so I made PyDFS. (Screenshots at bottom of the post)\nSo the choice of my language was python of course as it has vast number of modules available and you can code faster. I tried to implement very basic distributed file system and the code is ~200 lines. Before I started coding, some decisions needed to be taken.\nUpdate: I gave a talk at SRECon 2019 on the same subject, if you prefer detailed explanation in video format, checkout SRECon19 Asia: Let’s Build a Distributed File System or just scroll down to the bottom of the page.\nArchitecture: Because it is a HDFS clone. It also has similar architecture. The naming for components are inspired from SaltStack. It has a Master(NameNode) and a Minion(DataNode). And a client to communicate with file system.\nMaster will store file system namespace: Files,blocks,file to block mapping,block to minion mapping.\nMinion will just store the blocks. And upon request read or write operations on blocks.\nFor communication between components, I first thought of exposing HTTP API. So that every component will listen on a port and calls can be made on HTTP as implementing the same would have been fairly easy using Flask. But as mentioned in HDFS architecture, it uses custom RPC protocol for communication over TCP, I searched for something similar for Python and found RPyC. RPyC is very simple and easy to use.\nHow does this distributed file system work? Because I was trying to clone HDFS, I tried to follow similar read and write patterns.\nTo write a file, master will allocate blocks and a minion on which it will be stored. Client will write it to one minion and that minion will pass data to next one. For reading master will provide list of blocks and its location and client will read sequentially. If reading fails from one minion, it will try next minion. File system persistence is implemented via pickling the object. When you give Ctrl+C to master, it will dump the matadata to a file and it will load the same when you fire master up. Implementation: I have uploaded the code on GitHub under sanketplus/PyDFS. I made this during a weekend and I have not added comments but I think code is fairly understandable. Feel free to Star it or make a PR 🙂\nHere’s couple of screenshots of PyDFS in action:\nIn first image we are putting a file into DFS (my public key) and the lines you see are the blocks of the file (I have set smaller block size here). In second image we are trying to get the image from DFS and it will print it on stdout.\nRecording of the talk: ",
+  "wordCount" : "492",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/wp-content/uploads/2017/01/PyDFS-825x416.png","datePublished": "2017-01-02T23:55:01Z",
+  "dateModified": "2017-01-02T23:55:01Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/distributed-file-system-python/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -187,6 +226,14 @@ So the choice of my language was python of course as it has vast number of modul
       <li><a href="http://localhost:1313/tags/hdfs/">HDFS</a></li>
       <li><a href="http://localhost:1313/tags/python/">Python</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/debugging-stuck-process-linux/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Debugging Stuck Process in Linux</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

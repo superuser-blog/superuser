@@ -4,14 +4,14 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>SRECon&#39;21: Leveraging ML to Detect Application HotSpots [@scale, of Course!] | superuser</title>
 <meta name="keywords" content="public speaking">
 <meta name="description" content="Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was supposed to happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.
 The talk describes the approach to detect application hotspots our team developed in collaboration with the ML team.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/srecon-21-ml-application-hotspot-detect/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -28,48 +28,87 @@ The talk describes the approach to detect application hotspots our team develope
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="SRECon&#39;21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]" />
+<meta property="og:description" content="Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was supposed to happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.
+The talk describes the approach to detect application hotspots our team developed in collaboration with the ML team." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/srecon-21-ml-application-hotspot-detect/" />
+<meta property="og:image" content="http://localhost:1313/assets/images/srecon-21.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-13T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/assets/images/srecon-21.jpg" />
+<meta name="twitter:title" content="SRECon&#39;21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]"/>
+<meta name="twitter:description" content="Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was supposed to happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.
+The talk describes the approach to detect application hotspots our team developed in collaboration with the ML team."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "SRECon'21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]",
+      "item": "http://localhost:1313/posts/srecon-21-ml-application-hotspot-detect/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SRECon'21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]",
+  "name": "SRECon\u002721: Leveraging ML to Detect Application HotSpots [@scale, of Course!]",
+  "description": "Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was supposed to happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.\nThe talk describes the approach to detect application hotspots our team developed in collaboration with the ML team.",
+  "keywords": [
+    "public speaking"
+  ],
+  "articleBody": "Long pandemic no see! I submitted two proposals for SRECon 20 Asia which was supposed to happen in Australia. One talk got selected. But instead of the conference, COVID-19 happened. The conference was delayed at first and ultimately cancelled. Comes 2021 and now the conference is arranged in virtual format. I submit the selected talk again, under MLOps section and it got selected again.\nThe talk describes the approach to detect application hotspots our team developed in collaboration with the ML team.\nLeveraging ML to Detect Application HotSpots [@scale, of Course!] The talk’s description looked something like:\nThis talk will explore various analyses done on service latency metrics and their correlation, while LinkedIn’s data-center is under a stress test. Note: you do not need to be a machine learning expert to make sense of this talk. We will not be diving deeper into the mathematics part of it but would rather focus on the approach.\nSlides and Recording Slides YouTube ",
+  "wordCount" : "160",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/assets/images/srecon-21.jpg","datePublished": "2021-10-13T00:00:00Z",
+  "dateModified": "2021-10-13T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/srecon-21-ml-application-hotspot-detect/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -172,6 +211,14 @@ Note: you do not need to be a machine learning expert to make sense of this talk
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/public-speaking/">Public Speaking</a></li>
     </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Python Metaprogramming: Functions, Flask and Google Cloud Functions</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

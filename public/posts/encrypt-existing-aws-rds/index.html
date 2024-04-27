@@ -4,7 +4,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Encrypt Existing AWS RDS : The GDPR Series | superuser</title>
 <meta name="keywords" content="AWS">
 <meta name="description" content="Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.
@@ -13,7 +13,7 @@ The Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero down
 The RDS instance we had was a MySQL one which is also multi AZ.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/encrypt-existing-aws-rds/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -30,48 +30,89 @@ The RDS instance we had was a MySQL one which is also multi AZ.">
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Encrypt Existing AWS RDS : The GDPR Series" />
+<meta property="og:description" content="Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.
+The task was dreaded because there is no way to enable encryption once RDS has been created and most ways, which we will discuss, incurred downtime.
+The Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.
+The RDS instance we had was a MySQL one which is also multi AZ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/encrypt-existing-aws-rds/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-09-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-09-30T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Encrypt Existing AWS RDS : The GDPR Series"/>
+<meta name="twitter:description" content="Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.
+The task was dreaded because there is no way to enable encryption once RDS has been created and most ways, which we will discuss, incurred downtime.
+The Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.
+The RDS instance we had was a MySQL one which is also multi AZ."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Encrypt Existing AWS RDS : The GDPR Series",
+      "item": "http://localhost:1313/posts/encrypt-existing-aws-rds/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Encrypt Existing AWS RDS : The GDPR Series",
+  "name": "Encrypt Existing AWS RDS : The GDPR Series",
+  "description": "Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.\nThe task was dreaded because there is no way to enable encryption once RDS has been created and most ways, which we will discuss, incurred downtime.\nThe Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.\nThe RDS instance we had was a MySQL one which is also multi AZ.",
+  "keywords": [
+    "AWS"
+  ],
+  "articleBody": "Last, and the most dreaded, comes the MySQL RDS. The most critical part of infrastructure which is responsible for auth, new sign-ups and other user related activities.\nThe task was dreaded because there is no way to enable encryption once RDS has been created and most ways, which we will discuss, incurred downtime.\nThe Task Encrypt existing MySQL RDS, which is also multi AZ, with near-zero downtime.\nThe RDS instance we had was a MySQL one which is also multi AZ. After lots of docs reading, googling around and chatting with AWS support we found following ways to go about it.\nThe Snapshot Way [huge downtime] The dump way. The DMS Way The Looong Way The Snapshot Way: Probably the easiest to follow, the one mentioned in AWS docs too. BUT. Huge downtime depending on the DB size. Because once the RDS instance has been created, there is no way to enable encryption, what AWS suggests is to do:\nTake a snapshot. Encrypt snapshot. Restore an RDS from encrypted snapshot. Clearly, if we don’t want to miss-out writes, we will have to shut the DB down and that is downtime. Not the way to go about it.\nThe Dump Way: Also has downtime bus lesser than the previous one. The idea is to take dump of whatever db you want to be encrypted only. And not whole DB instance. And upload it to newly created empty encrypted RDS. We tried taking dump and uploaded on new RDS and measured time. It was in minutes and not acceptable.\nThe DMS Way: AWS has this cool service called Database Migration Service [DMS] which lets you migrate databases across DB engines. And from same engine to same engine too ie from MySQL to MySQL.\nSo here we though the trick that should work is:\nCreate new RDS with encryption enabled (we can only do it while starting new one) Create DMS job to migrate existing DB to new one. Also choose replicate old data and continue to keep DBs in sync So what DMS basically does (I think) is you give them two DBs. Source and destination (encrypted here). And tell it to keep them in sync. So they will upload initial DB dump on new db and then continue replicating bin log on new one and thus keeping them in sync.\nThis should work, right? Wrong! It was all cool on test setup. It did replicate old db to new one and it also kept replicating live writes. And mind well that this was on dump of our production db that we wanted to encrypt. But when we tried to move this setup with staging infra. DMS replication started failing! Why? The JSON Columns. Turns out, DMS did not support replicating JSON columns so when one such cell is updated in source DB, it could not replicate the same on destination encrypted db.\nBUMMER! I thought life is easy. Nope! Hence,\nThe Looong Way: Running out of options we had to go this way:\nMake a read replica of existing non-encrypted DB Wait for replica to start and get in sync with source. Stop replication on read replica Note where replication was stopped. Take snapshot of read replica Encrypt snapshot Restore RDS from step 6 snapshot Start replication. Set RDS master as the original db and replication start point as noted in step 4 Now before you start, make sure binlog are enabled and is in row format (by default it is). Also increase bin log retention duration so that we have it to get replicated to new db.\nshow variables like 'binlog_format'; # Create replication user and increase binlog retention to 24hrs: CREATE USER 'rep_user'@'%' IDENTIFIED BY 'rep_user'; GRANT REPLICATION slave ON *.* TO 'rep_user'@'%' IDENTIFIED BY 'rep_user'; FLUSH PRIVILEGES; # increase binlog retention call mysql.rds_set_configuration('binlog retention hours', 24); Now create a read replica of existing RDS from AWS console. Wait for it to get in sync and be available fully. Monitor the console and see when it becomes available. Also you can log-in to ReadReplica (RR) and do show slave status\\G;\nNow moving to step 3, we will stop replication and note the points.\nStop replication: CALL mysql.rds_stop_replication; # Note the replication state: show slave status\\G; And note-down Relay_Master_log_file and Exec_Master_log_pos :: this basically says in which file till which position replication has been done. We will use the same position while resuming replication.\nRDS page should say replication has been stopped using command in RED fonts. Take snapshot from RDS UI. Check for snapshot progress and once done encrypt snapshot using RDS UI only. Restore RDS from encrypted snapshot. It will have most settings as default, you can set rds name here. You can make whatever modification you want to have in your new encrypted DB.\nOnce RDS has been started it will have default SG (no access from EC2 or office), have backup disabled, default parameter group etc. Just modify this RDS to have same setting as source RDS. we will need to reboot this RDS to apply parameter group.\nNow we have encrypted RDS which has data similar to what ReadReplica had. Now we need to enable replication from the points we noted above.On new encrypted RDS\nCALL mysql.rds_set_external_master('', 3306, '', '",
+  "wordCount" : "1148",
+  "inLanguage": "en",
+  "datePublished": "2018-09-30T00:00:00Z",
+  "dateModified": "2018-09-30T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/encrypt-existing-aws-rds/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -239,6 +280,19 @@ CALL mysql.rds_start_replication;
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/aws/">Aws</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/detect-memory-leak-python/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Detecting Memory Leak in Python</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/encrypt-s3-bucket/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Encrypt Existing S3 Bucket : The GDPR Series</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

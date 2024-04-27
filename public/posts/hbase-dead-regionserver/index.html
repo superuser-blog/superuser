@@ -4,7 +4,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>HBase YouAreDeadException: Dead RegionServer due to GC Pause | superuser</title>
 <meta name="keywords" content="Hbase, hdp">
 <meta name="description" content="So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.
@@ -12,7 +12,7 @@ The following was the logline:
 2017-05-23 06:59:22,173 FATAL [regionserver/&lt;hostname&gt;/10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server &lt;hostname&gt;,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing&lt;hostname&gt;,16020,1493962926376 as dead server This alone did not tell much.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/hbase-dead-regionserver/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -29,48 +29,89 @@ The following was the logline:
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="HBase YouAreDeadException: Dead RegionServer due to GC Pause" />
+<meta property="og:description" content="So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.
+The following was the logline:
+2017-05-23 06:59:22,173 FATAL [regionserver/&lt;hostname&gt;/10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server &lt;hostname&gt;,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing&lt;hostname&gt;,16020,1493962926376 as dead server This alone did not tell much." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/hbase-dead-regionserver/" />
+<meta property="og:image" content="http://localhost:1313/wp-content/uploads/2017/05/hbase_rs_status-811x510.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-05-26T17:24:15+00:00" />
+<meta property="article:modified_time" content="2017-05-26T17:24:15+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/wp-content/uploads/2017/05/hbase_rs_status-811x510.png" />
+<meta name="twitter:title" content="HBase YouAreDeadException: Dead RegionServer due to GC Pause"/>
+<meta name="twitter:description" content="So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.
+The following was the logline:
+2017-05-23 06:59:22,173 FATAL [regionserver/&lt;hostname&gt;/10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server &lt;hostname&gt;,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing&lt;hostname&gt;,16020,1493962926376 as dead server This alone did not tell much."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "HBase YouAreDeadException: Dead RegionServer due to GC Pause",
+      "item": "http://localhost:1313/posts/hbase-dead-regionserver/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HBase YouAreDeadException: Dead RegionServer due to GC Pause",
+  "name": "HBase YouAreDeadException: Dead RegionServer due to GC Pause",
+  "description": "So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.\nThe following was the logline:\n2017-05-23 06:59:22,173 FATAL [regionserver/\u0026lt;hostname\u0026gt;/10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server \u0026lt;hostname\u0026gt;,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing\u0026lt;hostname\u0026gt;,16020,1493962926376 as dead server This alone did not tell much.",
+  "keywords": [
+    "Hbase", "hdp"
+  ],
+  "articleBody": "So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.\nThe following was the logline:\n2017-05-23 06:59:22,173 FATAL [regionserver//10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server ,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing,16020,1493962926376 as dead server This alone did not tell much. Further scrolling up in logs, I found this:\n2017-05-24 04:55:34,712 INFO [RS_OPEN_REGION-hdps01:16020-2-SendThread(:2181)] zookeeper.ClientCnxn: Client session timed out, have not heard from server in 31947ms for sessionid 0x15be7e4d09e1c4c, closing socket connection and attempting reconnect 2017-05-24 04:55:34,713 WARN [regionserver//10.10.205.55:16020] util.Sleeper: We slept 16865ms instead of 3000ms, this is likely due to a long garbage collecting pause and it's usually bad, see //hbase.apache.org/book.html#trouble.rs.runtime.zkexpired 2017-05-24 04:55:34,718 WARN [JvmPauseMonitor] util.JvmPauseMonitor: Detected pause in JVM or host machine (eg GC): pause of approximately 15598ms 1434184 No GCs detected So according to these lines, something paused the JVM and it was not able to send hart-beat to zookeeper. The node there in zookeeper expired and the HBase Master marked it as dead regionserver. They also have given a link in log line which points out to a solution. Go ahead and have a look at it. So basically it says these could be the reasons behind:\nNot enough RAM while running large imports. Swap partition enabled Something hogging the CPU Low ZooKeeper timeout. So first three options were ruled out for my dead regionserver. What I had to do was increase zookeeper timeout. BUT! I already had set the zookeeper session timeout (zookeeper.session.timeout) to 30min. And dead regionserver appeared only after 30sec or so.\nAs suggested in link above, I tried to set tickTime value (hbase.zookeeper.property.tickTime) to 6s. The calculation is something like this:\nMin timeout = 2 * tickTime\nMax timeout = 20 * tickTime\nSo here it must be 120 sec as a zookeeper timeout. But still timeouts were occurring about 40s after.I pulled up GC longs, there was no such long GC. So I went in and checked zookeeper config. Zookeeper also had tickTime value. Confusing it was and now I was not sure which tickTime was be applicable to the dead regionserver. There were two different values of ticktime. One in ZK and one in HBase.\nAs confusing as it was, I went to check zookeeper logs. There I found the cause; the sessions negotiated with zookeeper from dead regionserver were of 40s (20*2s of original ticktime) So clearly the timeout and ticktime we set in regionserver on hbase side were not taking effect. Strange! Roaming around in HDP Server’s UI, I found this glorious piece of help-text. (Could not take a screenshot as that pop-up appeared only when I hover 😛 )\nNow it was evident that if you are using different set of zookeeper quorum, the value set in hbase wont affect! **What? Why do you not print this in bold on some heading?? **So this was the cause and the ticktime was needed to set in zookeeper (as done already: see the screenshot ^^). Many times GC cause long delays. Apart from increasing timeout, you may also want to tune your GC. Also you may want to look into Tuning Your HBase or maybe benchmark it.\nAfter increasing tickTime in zookeeper, it’s running fine and it’s been two days. Let’s hope it just stays that way 🙂\n",
+  "wordCount" : "576",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/wp-content/uploads/2017/05/hbase_rs_status-811x510.png","datePublished": "2017-05-26T17:24:15Z",
+  "dateModified": "2017-05-26T17:24:15Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/hbase-dead-regionserver/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -184,6 +225,19 @@ The following was the logline:
       <li><a href="http://localhost:1313/tags/hbase/">Hbase</a></li>
       <li><a href="http://localhost:1313/tags/hdp/">Hdp</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/websocket-server-python/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Writing Simple WebSocket Server in Python: PyWSocket</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/reconfigure-zynq-pl-go/">
+    <span class="title">Next »</span>
+    <br>
+    <span>How to reconfigure Zynq-PL on-the-go?</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

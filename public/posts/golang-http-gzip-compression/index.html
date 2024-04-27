@@ -4,7 +4,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Golang Http Client and Compression | superuser</title>
 <meta name="keywords" content="golang">
 <meta name="description" content="I had a very (seemingly) simple task. Verify my golang http client, talking with an ElasticSearch cluster, is compressing data on wire. Because in trials, there was around 8x data compression and 100ms latency improvement. Sounds simple? Apparently not!
@@ -12,7 +12,7 @@ ElasticSearch Side of Things Http compression is enabled by default and it&rsquo
 http.compression: true And verified it works by">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/golang-http-gzip-compression/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -29,48 +29,87 @@ http.compression: true And verified it works by">
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Golang Http Client and Compression" />
+<meta property="og:description" content="I had a very (seemingly) simple task. Verify my golang http client, talking with an ElasticSearch cluster, is compressing data on wire. Because in trials, there was around 8x data compression and 100ms latency improvement. Sounds simple? Apparently not!
+ElasticSearch Side of Things Http compression is enabled by default and it&rsquo;s an easy configuration. Despite it being enabled by default, still added following in config
+http.compression: true And verified it works by" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/golang-http-gzip-compression/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-03-31T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-03-31T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang Http Client and Compression"/>
+<meta name="twitter:description" content="I had a very (seemingly) simple task. Verify my golang http client, talking with an ElasticSearch cluster, is compressing data on wire. Because in trials, there was around 8x data compression and 100ms latency improvement. Sounds simple? Apparently not!
+ElasticSearch Side of Things Http compression is enabled by default and it&rsquo;s an easy configuration. Despite it being enabled by default, still added following in config
+http.compression: true And verified it works by"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Golang Http Client and Compression",
+      "item": "http://localhost:1313/posts/golang-http-gzip-compression/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Golang Http Client and Compression",
+  "name": "Golang Http Client and Compression",
+  "description": "I had a very (seemingly) simple task. Verify my golang http client, talking with an ElasticSearch cluster, is compressing data on wire. Because in trials, there was around 8x data compression and 100ms latency improvement. Sounds simple? Apparently not!\nElasticSearch Side of Things Http compression is enabled by default and it\u0026rsquo;s an easy configuration. Despite it being enabled by default, still added following in config\nhttp.compression: true And verified it works by",
+  "keywords": [
+    "golang"
+  ],
+  "articleBody": "I had a very (seemingly) simple task. Verify my golang http client, talking with an ElasticSearch cluster, is compressing data on wire. Because in trials, there was around 8x data compression and 100ms latency improvement. Sounds simple? Apparently not!\nElasticSearch Side of Things Http compression is enabled by default and it’s an easy configuration. Despite it being enabled by default, still added following in config\nhttp.compression: true And verified it works by\n~ $\u003e curl -v http://localhost:9200/_cat/health -H \"Accept-Encoding: gzip\" \u003e GET /_cat/health HTTP/1.1 \u003e User-Agent: curl/7.29.0 \u003e Host: localhost:9200 \u003e Accept: */* \u003e Accept-Encoding: gzip \u003e \u003c HTTP/1.1 200 OK \u003c content-type: text/plain; charset=UTF-8 \u003c content-encoding: gzip \u003c content-length: 84 \u003c Client Side of Things We are using olivere/elastic client to talk with ElasticSearch. This client takes a config parameter which is documented as following\nSetGzip(bool) enables or disables compression on the request side. It is disabled by default. Now this setting is supposed to enable compression. It does not. We will come to it. [Point 1]\nAbove ElasticSearch client also accepts an http client. And an HTTP client’s transport as well has a compression flag. Here’s how an HTTP client looks like, with compression enabled, which is what we had.\ntr := \u0026http.Transport{ MaxIdleConns: 10, IdleConnTimeout: 30 * time.Second, DisableCompression: false, } client := \u0026http.Client{Transport: tr} resp, err := client.Get(\"https://example.com\") // Documentation // DisableCompression, if true, prevents the Transport from // requesting compression with an \"Accept-Encoding: gzip\" // request header when the Request contains no existing // Accept-Encoding value. If the Transport requests gzip on // its own and gets a gzipped response, it's transparently // decoded in the Response.Body. However, if the user // explicitly requested gzip it is not automatically // uncompressed. DisableCompression bool But how do I verify that the communication indeed was compressing data on the wire?\nInspect Request/Response Headers From ElasticSearch Client I tried printing request response headers right at the place where the ES client performs the request. Pardon the formatting but they looked like following. You can see the request data is zipped but Accept-Encoding is missing. This is one problem that I mentioned. (Perhaps the Vary header is somehow able to achieve that but could not find anything promising). So the library’s documentation is bit unclear to me.\nmap[User-Agent:[elastic/5.0.64 (linux-amd64)] Accept:[application/json] Content-Type:[application/json] Content-Encoding:[gzip] Vary:[Accept-Encoding]] Inspect Headers at http.transport Since we enabled compression at transport layer, it is supposed to send relevant headers and compress the payload. Diving into source code of transport, I saw a line setting Accept-Encoding header. req.extraHeaders().Set(\"Accept-Encoding\", \"gzip\") But printing header did not show that encoding header. Apparently is was set in another variable of struct transportRequest called extra\nreq header at transport: map[Vary:[Accept-Encoding] User-Agent:[elastic/5.0.64 (linux-amd64)] Accept:[application/json] Content-Type:[application/json] Content-Encoding:[gzip]] extra: map[Accept-Encoding:[gzip]] Inspecting Response The same function, which set the above header, receives the response. Printing response’s header did not have content encoding.\n// Src code: case re := \u003c-resc: if (re.res == nil) == (re.err == nil) { panic(fmt.Sprintf(\"internal error: exactly one of res or err should be set; nil=%v\", re.res == nil)) } if debugRoundTrip { req.logf(\"resc recv: %p, %T/%#v\", re.res, re.err, re.err) } if re.err != nil { return nil, pc.mapRoundTripError(req, startBytesWritten, re.err) } fmt.Println(\"TRANSPORT RESS-=========-\") fmt.Println(re.res.Header) fmt.Println(\"-=========-\") // Outout: map[Content-Type:[application/json; charset=UTF-8]] This is where things get confusing. In the initial curl request, when we set the Accept-Encoding header, the ES server returned gzip response. But when go client set the same header, it did not return gzipped response.\nGoing Further Deep Something seemed wrong, so I went even deeper, to whatever function above transport’s roundTrip function was calling. Control seemed to be going to function called readLoop() where we can find following lines scrolling down a bit\nresp.Body = body if rc.addedGzip \u0026\u0026 strings.EqualFold(resp.Header.Get(\"Content-Encoding\"), \"gzip\") { fmt.Println(\"TRANSPORT RESPPPPPP -=========-\") fmt.Println(resp.Header) resp.Body = \u0026gzipReader{body: body} resp.Header.Del(\"Content-Encoding\") resp.Header.Del(\"Content-Length\") // Output TRANSPORT RESPPPPPP -=========- map[Content-Type:[application/json; charset=UTF-8] Content-Encoding:[gzip] Content-Length:[128]] HELL YEAH! There they are! The response was decompressed and headers were removed. That is why, at layers above this, we were not seeing the header set.\nSummary We set DisableCompression as false in http client’s transport\nTransport, for each request, if not already set, will set Accept-Encoding. (In a variable called extra)\nWhen the response arrives, it’ll check if transport added gzip\n3.1 If it did, unzip data 3.2 Remove headers which indicates the zipped response from server.\nSo it works good as a transparent system.\nThe Twist Apparently http.Response struct had a field called Uncompressed which states exactly what I investigated. RTFM!\n// Uncompressed reports whether the response was sent compressed but // was decompressed by the http package. When true, reading from // Body yields the uncompressed content instead of the compressed // content actually set from the server, ContentLength is set to -1, // and the \"Content-Length\" and \"Content-Encoding\" fields are deleted // from the responseHeader. To get the original response from // the server, set Transport.DisableCompression to true. Uncompressed bool // Go 1.7s Fin When I read I want off Mr. Golang’s Wild Ride, the author’s criticism felt valid to me. Later I realized even http timeouts are not as simple as they sound, this piece on cloudflare blog explains that. And now this abstraction for gzip! I feel the convenience that the language gives is good, until it’s not!\n",
+  "wordCount" : "876",
+  "inLanguage": "en",
+  "datePublished": "2020-03-31T00:00:00Z",
+  "dateModified": "2020-03-31T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/golang-http-gzip-compression/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -266,6 +305,19 @@ map[Content-Type:[application/json; charset=UTF-8]]
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/golang/">Golang</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Python Metaprogramming: Functions, Flask and Google Cloud Functions</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/debug-running-python-process/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Debugging a Running Python Process</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

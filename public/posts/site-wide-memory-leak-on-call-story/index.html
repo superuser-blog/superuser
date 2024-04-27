@@ -4,14 +4,14 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Site Wide Memory Leak: An On-Call Story | superuser</title>
 <meta name="keywords" content="linux">
 <meta name="description" content="This happened a while back, sometime in the year of 2017. I was on-call for the week and it was the weekend. Usually, things are quiet over the weekends but not that weekend. Pages started coming frequently affecting different hosts. The alert was titled
 WARNING: Memory usage is more than 80% And that was just not one or set of hosts. This started coming from random hosts from across the infrastructure.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/site-wide-memory-leak-on-call-story/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -28,48 +28,85 @@ WARNING: Memory usage is more than 80% And that was just not one or set of hosts
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Site Wide Memory Leak: An On-Call Story" />
+<meta property="og:description" content="This happened a while back, sometime in the year of 2017. I was on-call for the week and it was the weekend. Usually, things are quiet over the weekends but not that weekend. Pages started coming frequently affecting different hosts. The alert was titled
+WARNING: Memory usage is more than 80% And that was just not one or set of hosts. This started coming from random hosts from across the infrastructure." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/site-wide-memory-leak-on-call-story/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-08-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-08-14T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Site Wide Memory Leak: An On-Call Story"/>
+<meta name="twitter:description" content="This happened a while back, sometime in the year of 2017. I was on-call for the week and it was the weekend. Usually, things are quiet over the weekends but not that weekend. Pages started coming frequently affecting different hosts. The alert was titled
+WARNING: Memory usage is more than 80% And that was just not one or set of hosts. This started coming from random hosts from across the infrastructure."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Site Wide Memory Leak: An On-Call Story",
+      "item": "http://localhost:1313/posts/site-wide-memory-leak-on-call-story/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Site Wide Memory Leak: An On-Call Story",
+  "name": "Site Wide Memory Leak: An On-Call Story",
+  "description": "This happened a while back, sometime in the year of 2017. I was on-call for the week and it was the weekend. Usually, things are quiet over the weekends but not that weekend. Pages started coming frequently affecting different hosts. The alert was titled\nWARNING: Memory usage is more than 80% And that was just not one or set of hosts. This started coming from random hosts from across the infrastructure.",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "This happened a while back, sometime in the year of 2017. I was on-call for the week and it was the weekend. Usually, things are quiet over the weekends but not that weekend. Pages started coming frequently affecting different hosts. The alert was titled\nWARNING: Memory usage is more than 80% And that was just not one or set of hosts. This started coming from random hosts from across the infrastructure. Be it a data host, an app host, some ops specific hosts. Pretty random. Something was obviously wrong\nInitial Symptoms and Observations: Alerts were triggered from random hosts Checking Grafana memory usage graphs clearly indicated an increase in memory usage. This also included hosts like mail servers which had consistent memory usage for months and suddenly they too started using more memory The time when memory usage started going up across hosts was close enough. That means some change triggered this. Next Steps: There were two obvious things from the initial look at the situation.\nSomething is causing the memory leak Some change triggered this This is how it went finding answers for the above two questions\nWhat is using the memory? The most interesting hosts were the mail servers I mentioned earlier. They had nothing significant running on them and yet memory usage touch a GB. Tried finding processes using the highest amount of memory but they all were using a nominal amount of memory.\nsanket@tfs:~$ ps auxw --sort rss | tail Even tried totaling RSS of all the processes running on that host but that amount was still very very less than total memory used by the server\nsanket@tfs:~$ ps auxw | awk 'BEGIN {sum=0} {sum +=$6} END {print sum/1024}' So this still wasn’t telling where exactly the memory is being used. Now, what tells you the comprehensive memory usage picture? /proc/meminfo\nsanket@tfs:~$ cat /proc/meminfo ... MemTotal: 3524440 kB MemFree: 477176 kB MemAvailable: 2270304 kB ... Slab: 538216 kB SReclaimable: 482496 kB SUnreclaim: 55720 kB ... So apparently, most of the leaking memory was listed under Slab section. Initially had no idea what does it mean but further searches on revealed that it’s a cache for kernel’s data structures. To see what specific data structures are taking that space\nsanket@tfs:~$ sudo slabtop --once ... OBJS ACTIVE USE OBJ SIZE SLABS OBJ/SLAB CACHE SIZE NAME 71883 49685 0% 0.19K 3423 21 313692K dentry ... So something called dentry was eating all the memory. What is it? It is a directory entry which is cached. When you look up for a file or a directory, the operation goes iteratively scanning each component of the path. For example, to get /etc/passwd, it has to first find dir / and list its contents, after finding etc in it, it has to list contents of etc and so on. When this lookup is finally done, the kernel will cache it because the above iterative resolution has to do expensive disk reads. (If you want to know more on this, checkout talk I gave on filesystem)\nNow, something was filling up the cache. Wasn’t sure what it was but having found what was using the memory, a fix was also found. Because it’s a cache, it should be (moderately?) safe to drop it.\nroot@tfs:~# echo 3 \u003e /proc/sys/vm/drop_caches So this fixes the symptom at least. We did not need to restart the servers anymore to reclaim the memory.\nWho triggered this? One of the symptoms of the problem was that it was spread sitewide. What else works site-wide? The configuration management system. Saltstack.\nGoing through git logs of salt repo, there was one commit that was correlating with increase in memory usage.\nWhat was the change? An API that each host contacts to (called from custom salt grain module if I remember correctly) was moved from HTTP to HTTPS. But why would switching to HTTPS cause a memory leak?!?!\nThe Root Cause: Running that API in a loop on a host with ample free memory reproduced the problem. Putting it under strace revealed that it’s trying to access lot of non-existing files. Which also justifies the increase in dentry cache usage.\nWas not exactly sure why would it try to access those files but quick search on the internet landed me on StackExchange post Unusually high dentry cache usage which revealed that it was due to a bug in NSS (Network Security Services, library developed by Mozilla, used when we do SSL stuff)\nThe fix was to upgrade the library or temporarily adjust cache pressure.\nFin Guess who learned something new that weekend! The feeling after solving the mystery is so satisfying :D\nNote: The command executions shown above and its results are not from actual affected servers. The numbers are made up.\n",
+  "wordCount" : "790",
+  "inLanguage": "en",
+  "datePublished": "2019-08-14T00:00:00Z",
+  "dateModified": "2019-08-14T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/site-wide-memory-leak-on-call-story/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -207,6 +244,19 @@ This also included hosts like mail servers which had consistent memory usage for
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/linux/">Linux</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/python-2-integers/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Curious Case of Python 2 and Integers</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/lets-build-distributed-filesystem/">
+    <span class="title">Next »</span>
+    <br>
+    <span>SRECon19 Asia: Let&#39;s Build a Distributed File System</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

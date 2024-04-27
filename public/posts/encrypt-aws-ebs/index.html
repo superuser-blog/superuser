@@ -4,7 +4,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Encrypting Existing AWS EBS : The GDPR Series | superuser</title>
 <meta name="keywords" content="AWS">
 <meta name="description" content="It&rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were
@@ -12,7 +12,7 @@ Encrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I wi
 The Task Encrypt EBS that is currently in use by a MongoDB cluster.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/encrypt-aws-ebs/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -29,48 +29,87 @@ The Task Encrypt EBS that is currently in use by a MongoDB cluster.">
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Encrypting Existing AWS EBS : The GDPR Series" />
+<meta property="og:description" content="It&rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were
+Encrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I will be sharing my experiences and how did we went on with it.
+The Task Encrypt EBS that is currently in use by a MongoDB cluster." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/encrypt-aws-ebs/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-08-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-08-28T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Encrypting Existing AWS EBS : The GDPR Series"/>
+<meta name="twitter:description" content="It&rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were
+Encrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I will be sharing my experiences and how did we went on with it.
+The Task Encrypt EBS that is currently in use by a MongoDB cluster."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Encrypting Existing AWS EBS : The GDPR Series",
+      "item": "http://localhost:1313/posts/encrypt-aws-ebs/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Encrypting Existing AWS EBS : The GDPR Series",
+  "name": "Encrypting Existing AWS EBS : The GDPR Series",
+  "description": "It\u0026rsquo;s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were\nEncrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I will be sharing my experiences and how did we went on with it.\nThe Task Encrypt EBS that is currently in use by a MongoDB cluster.",
+  "keywords": [
+    "AWS"
+  ],
+  "articleBody": "It’s been some time since The GDPR has kicked in. And like every other ops person, I too had to work for compliance related tasks. Three major tasks that I took up, which involved mostly encrypting data at rest, were\nEncrypting existing EBS Encrypt S3 buckets Encrypt RDS In this GDPR series, I will be sharing my experiences and how did we went on with it.\nThe Task Encrypt EBS that is currently in use by a MongoDB cluster. With zero downtime.\nA word on encrypted EBS: EBS encryption makes data encrypted at rest and it is decrypted only on your physical hardware. So on wire ie. from EBS storage till your physical hardware where your instance runs, and on its storage, it is encrypted.\nThe setup was consisting 3 mongo node with data replicated on all. No fancy stuff like sharding. Because we had three node cluster, the goal of zero downtime was achievable. We could simply take one node down, do our stuff, put it back in cluster. We will discuss the ‘do our stuff’ part here and not the mongo specific instructions. Ie how to take a node out of cluster and put in back in.\nStep 1 : Unmount the volume In mongo terms, take node out of cluster, meaning make sure no process is using that volume and it is free to unmount.\nsudo umount If unmount fails stating volume is in use, you can find process using that volume using\nsudo lsof | grep Step 2 : Encrypt it We had two options to go with this step:\nAttach new encrypted volume and rsync your data Encrypt existing volume I remember measuring time for both the options and they were comparable. We found option 2 to be faster because the whole copying-encrypting process is done by AWS and not on your instance. So we decided to go with second way of doing it, which would involve following steps:\nTake a snapshot of your EBS volume Copy snapshot with encryption enabled. Create a new EBS from copied encrypted snapshot All the steps mentioned above may take some time depending on size of volume.\nStep 3 : Mount it Now newly restored EBS can be attached to instance and mounted to older mount point. With mongo, we just start mongo back again and it will get in sync with cluster by replicating missed data.\nYes so that is how that one went. While encrypting master node of mongo, we had to fail master over to other cluster member and then we followed the same procedure. More detailed docs info can be found on this AWS Guide\n",
+  "wordCount" : "444",
+  "inLanguage": "en",
+  "datePublished": "2018-08-28T00:00:00Z",
+  "dateModified": "2018-08-28T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/encrypt-aws-ebs/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -188,6 +227,19 @@ The Task Encrypt EBS that is currently in use by a MongoDB cluster.">
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/aws/">Aws</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/encrypt-s3-bucket/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Encrypt Existing S3 Bucket : The GDPR Series</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/aws-vpc-peering-latency-test/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Setting up Inter Region AWS VPC Peering and Latency Tests</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

@@ -4,7 +4,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Encrypt Existing S3 Bucket : The GDPR Series | superuser</title>
 <meta name="keywords" content="AWS">
 <meta name="description" content="So next in line was S3 bucket. This too did not have encryption enabled, ie: data encryption at rest.
@@ -12,7 +12,7 @@ The Task Encrypt existing S3 bucket which contains user data with zero downtime.
 A word on encrypted S3 objects/buckets: By default there is no encryption involved when you create or put objects in an S3 bucket. However, you can enable default encryption on a bucket and any object put in the bucket will be encrypted by default.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/encrypt-s3-bucket/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -29,48 +29,87 @@ A word on encrypted S3 objects/buckets: By default there is no encryption involv
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Encrypt Existing S3 Bucket : The GDPR Series" />
+<meta property="og:description" content="So next in line was S3 bucket. This too did not have encryption enabled, ie: data encryption at rest.
+The Task Encrypt existing S3 bucket which contains user data with zero downtime.
+A word on encrypted S3 objects/buckets: By default there is no encryption involved when you create or put objects in an S3 bucket. However, you can enable default encryption on a bucket and any object put in the bucket will be encrypted by default." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/encrypt-s3-bucket/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-09-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-09-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Encrypt Existing S3 Bucket : The GDPR Series"/>
+<meta name="twitter:description" content="So next in line was S3 bucket. This too did not have encryption enabled, ie: data encryption at rest.
+The Task Encrypt existing S3 bucket which contains user data with zero downtime.
+A word on encrypted S3 objects/buckets: By default there is no encryption involved when you create or put objects in an S3 bucket. However, you can enable default encryption on a bucket and any object put in the bucket will be encrypted by default."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Encrypt Existing S3 Bucket : The GDPR Series",
+      "item": "http://localhost:1313/posts/encrypt-s3-bucket/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Encrypt Existing S3 Bucket : The GDPR Series",
+  "name": "Encrypt Existing S3 Bucket : The GDPR Series",
+  "description": "So next in line was S3 bucket. This too did not have encryption enabled, ie: data encryption at rest.\nThe Task Encrypt existing S3 bucket which contains user data with zero downtime.\nA word on encrypted S3 objects/buckets: By default there is no encryption involved when you create or put objects in an S3 bucket. However, you can enable default encryption on a bucket and any object put in the bucket will be encrypted by default.",
+  "keywords": [
+    "AWS"
+  ],
+  "articleBody": "So next in line was S3 bucket. This too did not have encryption enabled, ie: data encryption at rest.\nThe Task Encrypt existing S3 bucket which contains user data with zero downtime.\nA word on encrypted S3 objects/buckets: By default there is no encryption involved when you create or put objects in an S3 bucket. However, you can enable default encryption on a bucket and any object put in the bucket will be encrypted by default. And there are ways to enforce it also. S3 at that moment had two types of server side encryption options available.\nSSE-S3 SSE-KMS In first option that is SSE-S3, you just ask S3 to encrypt your objects and the rest will be managed by them. Meaning you don’t have to specify a key using which objects will be encrypted. While going with the second option, you can choose your own KMS key which will be used for encryption.\nWe went with option 1 as we did not intend to use features provided by KMS keys like rotation and brining in your own key. Also KMS request rate is subject to S3 request rates so you have to be aware of that too.\nSo this is how we went with it.\nStep 1: Backup (of course) Goes without saying! Used S3 cli for this purpose. Be mindful of choosing number of threads/concurrency as S3 has some rate limit.1\naws s3 cp s3://bucket-name/ s3://backup-bucket-name/ --recursive Step 2: Enable Default Encryption In S3 console go to Properties Tab \u003e Default Encryption. You have option to select SSE-S3 or SSE-KMS. After enabling this, every object put in bucket will be encrypted by default. Now all that we have to do is encrypt older objects.\nStep 3: Encrypt Older Objects This can be done two ways. You can either use S3 CLI or write your own little python/java program to do it. Using CLI it would look something like:\naws s3 cp s3://bucket-name/ s3://bucket-name/ --recursive --sse So what you’re doing here is copying objects in-place and while doing that, enable encryption also with --sse. What we did it Java way by creating threadpool of 20 or 50.\nAnd that is it! Again, couple things to remember:\nBe mindful of S3 request limits. So that real traffic does not get affected. You can contact AWS support beforehand. If you’re using SSE-KMS, be careful to not delete the key that was used to encrypt. Otherwise the data is as good as trash. :) If using S3 cli, do look into max_queue_size and max_concurrent_requests to limit the request rate or to increase it. 2 Ref:\nS3 Request Rate Considerations ↩︎\nS3 CLI config ↩︎\n",
+  "wordCount" : "440",
+  "inLanguage": "en",
+  "datePublished": "2018-09-23T00:00:00Z",
+  "dateModified": "2018-09-23T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/encrypt-s3-bucket/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -194,6 +233,19 @@ A word on encrypted S3 objects/buckets: By default there is no encryption involv
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/aws/">Aws</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/encrypt-existing-aws-rds/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Encrypt Existing AWS RDS : The GDPR Series</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/encrypt-aws-ebs/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Encrypting Existing AWS EBS : The GDPR Series</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

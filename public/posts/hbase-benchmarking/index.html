@@ -4,13 +4,13 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>HBase Benchmarking | superuser</title>
 <meta name="keywords" content="Hbase">
 <meta name="description" content="Currently I am working with new setup of Apache HBase cluster to query data using Phoenix on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved. Now for the improvement part, understanding of HBase internals is needed. How does a write work in HBase.">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/hbase-benchmarking/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -27,48 +27,85 @@
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="HBase Benchmarking" />
+<meta property="og:description" content="Currently I am working with new setup of Apache HBase cluster to query data using Phoenix on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved. Now for the improvement part, understanding of HBase internals is needed. How does a write work in HBase." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/hbase-benchmarking/" />
+<meta property="og:image" content="http://localhost:1313/wp-content/uploads/2017/03/hbase-benchmarking-825x397.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-03-05T22:28:23+00:00" />
+<meta property="article:modified_time" content="2017-03-05T22:28:23+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/wp-content/uploads/2017/03/hbase-benchmarking-825x397.jpg" />
+<meta name="twitter:title" content="HBase Benchmarking"/>
+<meta name="twitter:description" content="Currently I am working with new setup of Apache HBase cluster to query data using Phoenix on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved. Now for the improvement part, understanding of HBase internals is needed. How does a write work in HBase."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "HBase Benchmarking",
+      "item": "http://localhost:1313/posts/hbase-benchmarking/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HBase Benchmarking",
+  "name": "HBase Benchmarking",
+  "description": "Currently I am working with new setup of Apache HBase cluster to query data using Phoenix on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved. Now for the improvement part, understanding of HBase internals is needed. How does a write work in HBase.",
+  "keywords": [
+    "Hbase"
+  ],
+  "articleBody": "Currently I am working with new setup of Apache HBase cluster to query data using Phoenix on top of HDP Distribution. After setting up cluster, the values for heap, cache and timeouts were all defaults. Now I needed to know how good is the cluster in current shape and how can it be improved. Now for the improvement part, understanding of HBase internals is needed. How does a write work in HBase. What is the read path. What is the data access and data writing patterns. By analyzing these aspects, you vary parameters. But after varying, one needs to see the effect of variance right? And thus you need something to measure performance and benchmark the cluster.\nI found two tools for this purpose:\nPerformanceEvaluation This comes built-in with the HBase. It has various parameters to run different kinds of workloads. So first we write data. I am using `–nomapred` option because I have not installed YARN. To get list of supported options and parameters just run the command without any options.\nSo here we first load the data. I am using randonWrite here. With 1 thread.\n$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation -nomapred randomWrite 1 The result may show something like:\n2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Min = 2.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Avg = 28.936847686767578 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest StdDev = 3293.3700704030302 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 50th = 3.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 75th = 3.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 95th = 5.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99th = 9.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.9th = 93.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.99th = 34495.983499997295 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.999th = 158854.06521204324 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Max = 2486451.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest valueSize after 0 measures 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Min = 0.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Avg = 0.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest StdDev = 0.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 50th = 0.0 2017-02-24 08:22:41,491 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 75th = 0.0 2017-02-24 08:22:41,492 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 95th = 0.0 2017-02-24 08:22:41,492 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99th = 0.0 2017-02-24 08:22:41,492 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.9th = 0.0 2017-02-24 08:22:41,492 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.99th = 0.0 2017-02-24 08:22:41,492 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest 99.999th = 0.0 2017-02-24 08:22:41,492 INFO [TestClient-0] hbase.PerformanceEvaluation: RandomWriteTest Max = 0.0 2017-02-24 08:22:41,572 INFO [TestClient-0] client.ConnectionManager$HConnectionImplementation: Closing zookeeper sessionid=0x25a46883b870366 2017-02-24 08:22:41,578 INFO [TestClient-0] zookeeper.ZooKeeper: Session: 0x25a46883b870366 closed 2017-02-24 08:22:41,578 INFO [TestClient-0-EventThread] zookeeper.ClientCnxn: EventThread shut down 2017-02-24 08:22:41,589 INFO [TestClient-0] hbase.PerformanceEvaluation: Finished class org.apache.hadoop.hbase.PerformanceEvaluation$RandomWriteTest in 32134ms at offset 0 for 1048576 rows (32.08 MB/s) 2017-02-24 08:22:41,589 INFO [TestClient-0] hbase.PerformanceEvaluation: Finished TestClient-0 in 32134ms over 1048576 rows 2017-02-24 08:22:41,590 INFO [main] hbase.PerformanceEvaluation: [RandomWriteTest] Summary of timings (ms): [32134] 2017-02-24 08:22:41,590 INFO [main] hbase.PerformanceEvaluation: [RandomWriteTest]\tMin: 32134ms\tMax: 32134ms\tAvg: 32134ms 2017-02-24 08:22:41,590 INFO [main] client.ConnectionManager$HConnectionImplementation: Closing zookeeper sessionid=0x25a46883b870365 2017-02-24 08:22:41,647 INFO [main] zookeeper.ZooKeeper: Session: 0x25a46883b870365 closed 2017-02-24 08:22:41,647 INFO [main-EventThread] zookeeper.ClientCnxn: EventThread shut down real\t0m38.204s user\t0m44.662s sys\t0m2.264s To write in parallel:\n$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation -nomapred randomWrite 3 And to read:\n$ time hbase org.apache.hadoop.hbase.PerformanceEvaluation --nomapred randomRead 1 $ time hbase org.apache.hadoop.hbase.PerformanceEvaluation --nomapred --rows=100000 sequentialRead 1 Again, there are so many options to this utility, try them as needed.\nYCSB Yahoo! Cloud Serving Benchmark is tool for benchmarking various kind of databases like Cassandra, MongoGB, Voldemort, HBase etc. The steps for setup are explained here. These will the steps to follow while using this tool:\nCreate table named usertable Load the data Run workload tests Now after creating table, we first need to load the data into this table. There are various kinds of workloads for different purpose. We will use workload A to load the data in table we created.\nLoading the data: first parameter `load` which tells to write data to table. Second parameter is type of database. `-P` tells type of workload. Next three parameters are self explanatory. `-s` prints progress as loading happens.\n$ ./bin/ycsb load hbase10 -P workloads/workloada -p columnfamily=f1 -p recordcount=1000000 -threads 10 -s \u003e new-A-load-1M.dat The output looks something like:\n[OVERALL], RunTime(ms), 396804.0 [OVERALL], Throughput(ops/sec), 2520.1358857269583 [TOTAL_GCS_PS_Scavenge], Count, 566.0 ... [TOTAL_GC_TIME_%], Time(%), 0.4821019949395672 [CLEANUP], Operations, 20.0 [CLEANUP], AverageLatency(us), 2676.6 [CLEANUP], MinLatency(us), 4.0 [CLEANUP], MaxLatency(us), 53055.0 [CLEANUP], 95thPercentileLatency(us), 252.0 [CLEANUP], 99thPercentileLatency(us), 53055.0 [INSERT], Operations, 1000000.0 [INSERT], AverageLatency(us), 3941.506955 [INSERT], MinLatency(us), 1125.0 [INSERT], MaxLatency(us), 664575.0 [INSERT], 95thPercentileLatency(us), 6155.0 [INSERT], 99thPercentileLatency(us), 8391.0 [INSERT], Return=OK, 1000000 So here I was getting around 2500 operations/sec\nReading the data I will use workload C which is read only. You can read more on types of workloads on link given above. Here first parameter is `run` as we are running the tests, as opposed to loading the data. All other parameters are familiar looking.\n$ ./bin/ycsb run hbase10 -P workloads/workloadc -p columnfamily=f1 -p recordcount=100000 -p operationcount=100000 -threads 10 -s \u003e new-C-run-100k.dat The output for above test should look like\n[OVERALL], RunTime(ms), 12776.0 [OVERALL], Throughput(ops/sec), 7827.175954915467 [TOTAL_GCS_PS_Scavenge], Count, 17.0 ... [TOTAL_GC_TIME_%], Time(%), 0.9862241703193488 [READ], Operations, 100000.0 [READ], AverageLatency(us), 1073.35956 [READ], MinLatency(us), 302.0 [READ], MaxLatency(us), 471551.0 [READ], 95thPercentileLatency(us), 1972.0 [READ], 99thPercentileLatency(us), 5703.0 [READ], Return=OK, 100000 ... So for reads I was getting around 7800 operations/second.\nFind a workload suitable for your usecase. Or create one. Run tests on them. And let me know how is your cluster doing 🙂 I am also planning to write some of my thoughts and findings on tuning the cluster. Until then, happy hadooping…\n",
+  "wordCount" : "915",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/wp-content/uploads/2017/03/hbase-benchmarking-825x397.jpg","datePublished": "2017-03-05T22:28:23Z",
+  "dateModified": "2017-03-05T22:28:23Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/hbase-benchmarking/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -255,6 +292,19 @@ sys	0m2.264s
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/hbase/">Hbase</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/tuning-hbase/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Stuff You Can Do While Tuning HBase</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/resize-ebs-root-volume-centos-ami/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Resize EBS Root Volume of CentOS 6 AMI</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

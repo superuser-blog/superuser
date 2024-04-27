@@ -4,7 +4,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Python Metaprogramming: Functions, Flask and Google Cloud Functions | superuser</title>
 <meta name="keywords" content="python">
 <meta name="description" content="Everything in Python is an object. And that includes functions. Let&rsquo;s see what I learned while I was trying to work with Google cloud functions with python runtime.
@@ -12,7 +12,7 @@ Python Functions Since functions too are objects, we can see what all attributes
 &gt;&gt;&gt; def hello(name): ... print(f&#34;Hello, {name}!&#34;) ... &gt;&gt;&gt; dir(hello) [&#39;__annotations__&#39;, &#39;__call__&#39;, &#39;__class__&#39;, &#39;__closure__&#39;, &#39;__code__&#39;, &#39;__defaults__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__get__&#39;, &#39;__getattribute__&#39;, &#39;__globals__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__kwdefaults__&#39;, &#39;__le__&#39;, &#39;__lt__&#39;, &#39;__module__&#39;, &#39;__name__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__qualname__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;] While there are a lot of them, let&rsquo;s look at some interesting ones">
 <meta name="author" content="Sanket">
 <link rel="canonical" href="http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -29,48 +29,87 @@ Python Functions Since functions too are objects, we can see what all attributes
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="Python Metaprogramming: Functions, Flask and Google Cloud Functions" />
+<meta property="og:description" content="Everything in Python is an object. And that includes functions. Let&rsquo;s see what I learned while I was trying to work with Google cloud functions with python runtime.
+Python Functions Since functions too are objects, we can see what all attributes a function contains as following
+&gt;&gt;&gt; def hello(name): ... print(f&#34;Hello, {name}!&#34;) ... &gt;&gt;&gt; dir(hello) [&#39;__annotations__&#39;, &#39;__call__&#39;, &#39;__class__&#39;, &#39;__closure__&#39;, &#39;__code__&#39;, &#39;__defaults__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__get__&#39;, &#39;__getattribute__&#39;, &#39;__globals__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__kwdefaults__&#39;, &#39;__le__&#39;, &#39;__lt__&#39;, &#39;__module__&#39;, &#39;__name__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__qualname__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;] While there are a lot of them, let&rsquo;s look at some interesting ones" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-08-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-08-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Python Metaprogramming: Functions, Flask and Google Cloud Functions"/>
+<meta name="twitter:description" content="Everything in Python is an object. And that includes functions. Let&rsquo;s see what I learned while I was trying to work with Google cloud functions with python runtime.
+Python Functions Since functions too are objects, we can see what all attributes a function contains as following
+&gt;&gt;&gt; def hello(name): ... print(f&#34;Hello, {name}!&#34;) ... &gt;&gt;&gt; dir(hello) [&#39;__annotations__&#39;, &#39;__call__&#39;, &#39;__class__&#39;, &#39;__closure__&#39;, &#39;__code__&#39;, &#39;__defaults__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__get__&#39;, &#39;__getattribute__&#39;, &#39;__globals__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__kwdefaults__&#39;, &#39;__le__&#39;, &#39;__lt__&#39;, &#39;__module__&#39;, &#39;__name__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__qualname__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;] While there are a lot of them, let&rsquo;s look at some interesting ones"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Python Metaprogramming: Functions, Flask and Google Cloud Functions",
+      "item": "http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Python Metaprogramming: Functions, Flask and Google Cloud Functions",
+  "name": "Python Metaprogramming: Functions, Flask and Google Cloud Functions",
+  "description": "Everything in Python is an object. And that includes functions. Let\u0026rsquo;s see what I learned while I was trying to work with Google cloud functions with python runtime.\nPython Functions Since functions too are objects, we can see what all attributes a function contains as following\n\u0026gt;\u0026gt;\u0026gt; def hello(name): ... print(f\u0026#34;Hello, {name}!\u0026#34;) ... \u0026gt;\u0026gt;\u0026gt; dir(hello) [\u0026#39;__annotations__\u0026#39;, \u0026#39;__call__\u0026#39;, \u0026#39;__class__\u0026#39;, \u0026#39;__closure__\u0026#39;, \u0026#39;__code__\u0026#39;, \u0026#39;__defaults__\u0026#39;, \u0026#39;__delattr__\u0026#39;, \u0026#39;__dict__\u0026#39;, \u0026#39;__dir__\u0026#39;, \u0026#39;__doc__\u0026#39;, \u0026#39;__eq__\u0026#39;, \u0026#39;__format__\u0026#39;, \u0026#39;__ge__\u0026#39;, \u0026#39;__get__\u0026#39;, \u0026#39;__getattribute__\u0026#39;, \u0026#39;__globals__\u0026#39;, \u0026#39;__gt__\u0026#39;, \u0026#39;__hash__\u0026#39;, \u0026#39;__init__\u0026#39;, \u0026#39;__init_subclass__\u0026#39;, \u0026#39;__kwdefaults__\u0026#39;, \u0026#39;__le__\u0026#39;, \u0026#39;__lt__\u0026#39;, \u0026#39;__module__\u0026#39;, \u0026#39;__name__\u0026#39;, \u0026#39;__ne__\u0026#39;, \u0026#39;__new__\u0026#39;, \u0026#39;__qualname__\u0026#39;, \u0026#39;__reduce__\u0026#39;, \u0026#39;__reduce_ex__\u0026#39;, \u0026#39;__repr__\u0026#39;, \u0026#39;__setattr__\u0026#39;, \u0026#39;__sizeof__\u0026#39;, \u0026#39;__str__\u0026#39;, \u0026#39;__subclasshook__\u0026#39;] While there are a lot of them, let\u0026rsquo;s look at some interesting ones",
+  "keywords": [
+    "python"
+  ],
+  "articleBody": "Everything in Python is an object. And that includes functions. Let’s see what I learned while I was trying to work with Google cloud functions with python runtime.\nPython Functions Since functions too are objects, we can see what all attributes a function contains as following\n\u003e\u003e\u003e def hello(name): ... print(f\"Hello, {name}!\") ... \u003e\u003e\u003e dir(hello) ['__annotations__', '__call__', '__class__', '__closure__', '__code__', '__defaults__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__get__', '__getattribute__', '__globals__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__kwdefaults__', '__le__', '__lt__', '__module__', '__name__', '__ne__', '__new__', '__qualname__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__'] While there are a lot of them, let’s look at some interesting ones\nglobals This attribute, as the name suggests, has references of global variables. If you ever need to know what all global variables are in the scope of this function, this will tell you. See how the function start seeing the new variable in globals\n\u003e\u003e\u003e hello.__globals__ {'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': \u003cclass '_frozen_importlib.BuiltinImporter'\u003e, '__spec__': None, '__annotations__': {}, '__builtins__': ",
+  "wordCount" : "1087",
+  "inLanguage": "en",
+  "datePublished": "2020-08-11T00:00:00Z",
+  "dateModified": "2020-08-11T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sanket"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/python-metaprogramming-flask-google-cloud-functions/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -300,6 +339,19 @@ Python Functions Since functions too are objects, we can see what all attributes
     <ul class="post-tags">
       <li><a href="http://localhost:1313/tags/python/">Python</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/srecon-21-ml-application-hotspot-detect/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>SRECon&#39;21: Leveraging ML to Detect Application HotSpots [@scale, of Course!]</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/golang-http-gzip-compression/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Golang Http Client and Compression</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>

@@ -4,7 +4,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>How to reconfigure Zynq-PL on-the-go? | superuser</title>
 <meta name="keywords" content="FPGA, linux, Vivado, Zynq">
 <meta name="description" content="You would have wondered if i&rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&rsquo;s possible and as simple as,
@@ -12,7 +12,7 @@ echo &#39;0&#39; &gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstrea
 Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard">
 <meta name="author" content="parth">
 <link rel="canonical" href="http://localhost:1313/posts/reconfigure-zynq-pl-go/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -29,48 +29,87 @@ Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linu
         }
 
     </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
 </noscript><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
     href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+  
+
+<meta property="og:title" content="How to reconfigure Zynq-PL on-the-go?" />
+<meta property="og:description" content="You would have wondered if i&rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&rsquo;s possible and as simple as,
+echo &#39;0&#39; &gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo &#39;1&#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit &amp;gt; /dev/xdevcfg Yeah, tha&rsquo;s it! Make sure you&rsquo;re running it as root.
+Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/reconfigure-zynq-pl-go/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-05-07T19:27:39+00:00" />
+<meta property="article:modified_time" content="2017-05-07T19:27:39+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to reconfigure Zynq-PL on-the-go?"/>
+<meta name="twitter:description" content="You would have wondered if i&rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i&rsquo;s possible and as simple as,
+echo &#39;0&#39; &gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo &#39;1&#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit &amp;gt; /dev/xdevcfg Yeah, tha&rsquo;s it! Make sure you&rsquo;re running it as root.
+Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "How to reconfigure Zynq-PL on-the-go?",
+      "item": "http://localhost:1313/posts/reconfigure-zynq-pl-go/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to reconfigure Zynq-PL on-the-go?",
+  "name": "How to reconfigure Zynq-PL on-the-go?",
+  "description": "You would have wondered if i\u0026rsquo;s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i\u0026rsquo;s possible and as simple as,\necho \u0026#39;0\u0026#39; \u0026gt; /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo \u0026#39;1\u0026#39; for partial bitstreams cat whatever_the_bit_file_name_is.bit \u0026amp;gt; /dev/xdevcfg Yeah, tha\u0026rsquo;s it! Make sure you\u0026rsquo;re running it as root.\nDon\u0026rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard",
+  "keywords": [
+    "FPGA", "linux", "Vivado", "Zynq"
+  ],
+  "articleBody": "You would have wondered if i’s possible to reconfigure the PL part without any interruption while PS is running Linux. Well, i’s possible and as simple as,\necho '0' \u003e /sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream #echo '1' for partial bitstreams cat whatever_the_bit_file_name_is.bit \u0026gt; /dev/xdevcfg Yeah, tha’s it! Make sure you’re running it as root.\nDon’t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linux on ZedBoard\n",
+  "wordCount" : "67",
+  "inLanguage": "en",
+  "datePublished": "2017-05-07T19:27:39Z",
+  "dateModified": "2017-05-07T19:27:39Z",
+  "author":{
+    "@type": "Person",
+    "name": "parth"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/reconfigure-zynq-pl-go/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "superuser",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
@@ -162,6 +201,19 @@ Don&rsquo;t have a nice Linux running on ZedBoard yet? have a look at PYNQ Linu
       <li><a href="http://localhost:1313/tags/vivado/">Vivado</a></li>
       <li><a href="http://localhost:1313/tags/zynq/">Zynq</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/hbase-dead-regionserver/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>HBase YouAreDeadException: Dead RegionServer due to GC Pause</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/pynq-linux-on-zedboard/">
+    <span class="title">Next »</span>
+    <br>
+    <span>PYNQ Linux on ZedBoard</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>
