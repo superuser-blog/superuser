@@ -15,7 +15,8 @@ params:
     Title: Hi there 👋
     Content: Welcome to superuser! Expect to find linux, python, SRE and related contents.
   assets:
-      disableFingerprinting: true # cloudflare has optimization which minifies css/js/html and fingerprin wont match 
+    favicon: /favicon.svg
+    disableFingerprinting: true # cloudflare has optimization which minifies css/js/html and fingerprin wont match 
 
 menu:
   main:
