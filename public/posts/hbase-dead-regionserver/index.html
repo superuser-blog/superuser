@@ -11,16 +11,16 @@
 The following was the logline:
 2017-05-23 06:59:22,173 FATAL [regionserver/&lt;hostname&gt;/10.10.205.55:16020] regionserver.HRegionServer: ABORTING region server &lt;hostname&gt;,16020,1493962926376: org.apache.hadoop.hbase.YouAreDeadException: Server REPORT rejected; currently processing&lt;hostname&gt;,16020,1493962926376 as dead server This alone did not tell much.">
 <meta name="author" content="Sanket">
-<link rel="canonical" href="//localhost:1313/posts/hbase-dead-regionserver/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="//localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:1313/posts/hbase-dead-regionserver/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.10cc8cce5d7a34dfd3df045838e6843c994c99484da02b9204426575aad0ca8d.css" integrity="sha256-EMyMzl16NN/T3wRYOOaEPJlMmUhNoCuSBEJldarQyo0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/posts/hbase-dead-regionserver/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/hbase-dead-regionserver/">
 <noscript>
     <style>
         #theme-toggle,
@@ -57,7 +57,11 @@ The following was the logline:
         }
 
     </style>
-</noscript>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+    rel="stylesheet">
 </head>
 
 <body class="" id="top">
@@ -75,7 +79,7 @@ The following was the logline:
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="superuser (Alt + H)">superuser</a>
+            <a href="http://localhost:1313/" accesskey="h" title="superuser (Alt + H)">superuser</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -101,17 +105,17 @@ The following was the logline:
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/archives" title="Archive">
+                <a href="http://localhost:1313/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="//localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="//localhost:1313/tags/" title="Tags">
+                <a href="http://localhost:1313/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -133,7 +137,7 @@ The following was the logline:
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       HBase YouAreDeadException: Dead RegionServer due to GC Pause
     </h1>
@@ -141,7 +145,7 @@ The following was the logline:
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="eager" src="//localhost:1313/wp-content/uploads/2017/05/hbase_rs_status-811x510.png" alt="">
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/wp-content/uploads/2017/05/hbase_rs_status-811x510.png" alt="">
         
 </figure>
   <div class="post-content"><p>So the CDH Cluster was replaced by HDP Cluster and everything was going smooth for time being. Until the time when I started getting a dead RegionServer. Frequently. So a deep dive was needed to dig out what indeed was happening. And it turned out to be a long dive.</p>
@@ -177,15 +181,15 @@ The following was the logline:
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="//localhost:1313/tags/hbase/">Hbase</a></li>
-      <li><a href="//localhost:1313/tags/hdp/">Hdp</a></li>
+      <li><a href="http://localhost:1313/tags/hbase/">Hbase</a></li>
+      <li><a href="http://localhost:1313/tags/hdp/">Hdp</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="//localhost:1313/">superuser</a></span> · 
+        <span>&copy; 2024 <a href="http://localhost:1313/">superuser</a></span> · 
 
     <span>
         Powered by
